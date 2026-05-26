@@ -1,0 +1,3109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GFE — Gestão Financeira Estratégica</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  /* ── TEMA CLARO (padrão) — Paleta GFE Oficial ──────────────── */
+  --navy:#0e1a3a;--navy2:#172040;--navy3:#1e2a50;--navy4:#243260;
+  --q:#7B2FBE;--q2:#9B4FDE;--qdark:#5A1F9A;
+  --gold:#b8966e;--gold2:#d4b896;--gold3:rgba(184,150,110,.15);
+  --beige:#C7B7AA;--beige2:#e8ddd6;
+
+  /* superfícies — CLARO */
+  --bg:#F5F4F2;
+  --card:#FFFFFF;
+  --card2:#F0EDE8;
+  --border:#E2DBD4;
+  --border2:#CFC6BC;
+  --silver:#8A7F74;
+  --silver2:#EDE8E2;
+
+  /* texto — CLARO: navy escuro para máximo contraste */
+  --text:#0e1a3a;
+  --text2:#2d3a5a;
+  --muted:#7a7065;
+  --muted2:#a89f94;
+
+  /* status — idênticos nos dois temas */
+  --green:#16A34A;--gbg:rgba(22,163,74,.1);--gborder:rgba(22,163,74,.25);
+  --red:#DC2626;--rbg:rgba(220,38,38,.1);--rborder:rgba(220,38,38,.25);
+  --yellow:#B45309;--ybg:rgba(180,83,9,.1);--yborder:rgba(180,83,9,.25);
+  --blue:#1D4ED8;--bbg:rgba(29,78,216,.1);
+
+  /* grid/chart */
+  --grid-color:rgba(14,26,58,.07);
+  --chart-txt:#7a7065;
+  --meta-line:rgba(14,26,58,.2);
+
+  /* sidebar específica — sempre navy escuro */
+  --sb-bg:#0e1a3a;
+  --sb-text:rgba(199,183,170,.75);
+  --sb-active-bg:rgba(184,150,110,.12);
+  --sb-active-text:#d4b896;
+  --sb-border:rgba(199,183,170,.1);
+  --sb-sec:rgba(199,183,170,.3);
+  /* carta */
+  --carta-txt:#1a2540;
+
+  /* topbar */
+  --tb-bg:rgba(245,244,242,.92);
+  --tb-border:#E2DBD4;
+
+  --sw:240px;--r:14px;
+  --sh:0 1px 4px rgba(14,26,58,.07),0 4px 16px rgba(14,26,58,.06);
+  --sh2:0 8px 32px rgba(14,26,58,.12);
+  --tr:all .2s cubic-bezier(.4,0,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── SPLASH ──────────────────────────────────────────────── */
+#splash{
+  position:fixed;inset:0;z-index:3000;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%, #0D1525 0%, #060C18 60%, #020810 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  animation:spFade .8s ease 3.4s forwards
+}
+@keyframes spFade{to{opacity:0;pointer-events:none}}
+
+#splash::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 50% 50% at 50% 46%, rgba(184,150,110,.15) 0%, transparent 65%);
+  animation:spGlow 3s ease-in-out infinite alternate
+}
+@keyframes spGlow{from{opacity:.5}to{opacity:1}}
+
+.sp-hex{
+  position:relative;width:120px;height:120px;
+  animation:spHexIn 1.2s cubic-bezier(.34,1.2,.64,1) .1s both;
+  margin-bottom:40px;
+  filter:drop-shadow(0 8px 40px rgba(184,150,110,.6)) drop-shadow(0 2px 12px rgba(0,0,0,.8))
+}
+@keyframes spHexIn{
+  from{opacity:0;transform:scale(.2) rotate(-25deg)}
+  to{opacity:1;transform:scale(1) rotate(0deg)}
+}
+.sp-hex svg{width:120px;height:120px}
+.sp-hex-letters{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;
+  color:rgba(255,255,255,.9);letter-spacing:2px;
+  text-shadow:0 2px 12px rgba(0,0,0,.8),0 0 20px rgba(255,220,140,.3)
+}
+.sp-brand{
+  text-align:center;
+  animation:spBrandIn .8s cubic-bezier(.4,0,.2,1) .8s both
+}
+@keyframes spBrandIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.sp-gfe{
+  font-family:'Cormorant Garamond',serif;
+  font-size:11px;font-weight:400;color:rgba(199,183,170,.6);
+  letter-spacing:10px;text-transform:uppercase;
+  margin-bottom:10px
+}
+.sp-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-weight:300;color:rgba(255,255,255,.88);
+  letter-spacing:1px;line-height:1.2
+}
+.sp-by{font-size:9px;color:rgba(199,183,170,.3);margin-top:10px;letter-spacing:4px;text-transform:uppercase}
+.sp-line{
+  width:48px;height:1px;
+  background:linear-gradient(to right,transparent,rgba(199,183,170,.4),transparent);
+  margin:28px auto;
+  animation:spBrandIn .4s ease 1.2s both
+}
+.sp-dots{
+  display:flex;align-items:center;gap:10px;
+  animation:spBrandIn .4s ease 1.4s both
+}
+.sp-d{
+  width:4px;height:4px;border-radius:50%;
+  background:rgba(199,183,170,.35);
+  animation:spD 1.8s ease infinite
+}
+.sp-d:nth-child(2){animation-delay:.3s;background:rgba(199,183,170,.2)}
+.sp-d:nth-child(3){animation-delay:.6s;background:rgba(199,183,170,.12)}
+@keyframes spD{0%,80%,100%{transform:scale(.5);opacity:.2}40%{transform:scale(1);opacity:1}}
+
+/* ── LOGIN ──────────────────────────────────────────────── */
+#login{
+  position:fixed;inset:0;z-index:2000;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%, #0D1525 0%, #060C18 60%, #020810 100%);
+  display:none;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .5s
+}
+#login.vis{display:flex;opacity:1}
+#login::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(199,183,170,.025) 1px, transparent 1px);
+  background-size:32px 32px;pointer-events:none
+}
+
+.lw{
+  display:grid;grid-template-columns:1fr 1fr;
+  width:100%;max-width:960px;min-height:580px;
+  border-radius:24px;overflow:hidden;
+  border:1px solid rgba(199,183,170,.12);
+  box-shadow:0 40px 120px rgba(0,0,0,.8),0 0 60px rgba(184,150,110,.06);
+  position:relative;z-index:1
+}
+
+/* painel esquerdo — SEMPRE navy escuro premium */
+.ll{
+  background:linear-gradient(160deg,#0E1828 0%,#141F35 40%,#0A1220 100%);
+  padding:52px 48px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;
+  border-right:1px solid rgba(199,183,170,.08)
+}
+/* luz radial dourada no centro-esquerdo */
+.ll::after{
+  content:'';position:absolute;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle, rgba(184,150,110,.1) 0%, transparent 70%);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none
+}
+.ll-orb1{position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(184,150,110,.06);filter:blur(80px);top:-60px;right:-60px;pointer-events:none}
+.ll-orb2{position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(184,150,110,.04);filter:blur(60px);bottom:-40px;left:-40px;pointer-events:none}
+
+.ll-logo{display:flex;align-items:center;gap:16px;margin-bottom:40px;position:relative;z-index:1}
+.ll-hex{width:64px;height:64px;position:relative}
+.ll-hex svg{width:64px;height:64px}
+.ll-hex-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:700;color:rgba(255,255,255,.95);letter-spacing:1.5px}
+.ll-brand{display:flex;flex-direction:column;gap:3px}
+.ll-gfe{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:#fff;letter-spacing:4px;line-height:1}
+.ll-gfe-sub{font-size:10px;font-weight:400;letter-spacing:5px;text-transform:uppercase;color:rgba(199,183,170,.4);margin-top:4px}
+
+.ll-headline{position:relative;z-index:1;margin-bottom:auto}
+.ll-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(184,150,110,.08);
+  border:1px solid rgba(184,150,110,.2);
+  border-radius:2px;padding:5px 16px;
+  font-size:9.5px;font-weight:500;
+  color:rgba(199,183,170,.7);letter-spacing:2.5px;
+  text-transform:uppercase;margin-bottom:24px
+}
+.ll-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:42px;font-weight:200;color:#fff;
+  line-height:1.1;letter-spacing:-.5px;margin-bottom:16px
+}
+.ll-title strong{font-weight:500;display:block;color:#C7B7AA}
+.ll-desc{font-size:13px;color:rgba(199,183,170,.45);line-height:1.9;font-style:italic}
+
+.ll-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;z-index:1;display:none}
+.ll-stat{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px 16px}
+.ll-sv{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:2px}
+.ll-sl{font-size:9.5px;color:rgba(255,255,255,.25);letter-spacing:.5px;text-transform:uppercase}
+
+/* painel direito — SEMPRE navy médio */
+.lr{
+  background:#080F1E;
+  padding:52px 48px;
+  display:flex;flex-direction:column;justify-content:center
+}
+.lr-logo{display:flex;align-items:center;gap:12px;margin-bottom:40px}
+.lr-hex{width:36px;height:36px;position:relative}
+.lr-hex svg{width:36px;height:36px}
+.lr-hex-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:700;color:#fff}
+.lr-brand-name{font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:rgba(199,183,170,.6);line-height:1.5}
+.lr-brand-sub{font-size:8.5px;color:rgba(199,183,170,.3);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+
+.lr-welcome{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;font-weight:300;font-style:italic;
+  color:rgba(199,183,170,.4);letter-spacing:.3px;margin-bottom:6px
+}
+.lr-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:400;color:#EEF2FA;
+  margin-bottom:32px;letter-spacing:-.3px;line-height:1.1
+}
+
+.lf{margin-bottom:18px}
+.lf label{
+  display:block;font-size:9px;font-weight:500;
+  letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(199,183,170,.4);margin-bottom:10px
+}
+.lf input{
+  width:100%;padding:14px 18px;
+  border:1px solid rgba(199,183,170,.1);border-radius:4px;
+  font-family:'DM Sans',sans-serif;font-size:14px;
+  color:#EEF2FA;background:rgba(255,255,255,.03);
+  outline:none;transition:var(--tr)
+}
+.lf input::placeholder{color:rgba(199,183,170,.2)}
+.lf input:focus{
+  border-color:rgba(184,150,110,.5);
+  background:rgba(184,150,110,.04);
+  box-shadow:0 0 0 3px rgba(184,150,110,.08)
+}
+
+.lbtn{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,#b8966e,#C7B7AA);
+  color:#060C18;border:none;border-radius:4px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;transition:var(--tr);margin-top:4px;
+  box-shadow:0 4px 24px rgba(184,150,110,.25);
+  letter-spacing:1.5px;text-transform:uppercase
+}
+.lbtn:hover{transform:translateY(-1px);box-shadow:0 6px 32px rgba(184,150,110,.4);filter:brightness(1.05)}
+
+.lerr{
+  font-size:12px;color:#EF4444;text-align:center;margin-top:10px;
+  display:none;padding:9px;
+  background:rgba(239,68,68,.08);border-radius:4px;border:1px solid rgba(239,68,68,.2)
+}
+.lnote{
+  text-align:center;font-size:10px;color:rgba(199,183,170,.2);
+  margin-top:20px;letter-spacing:1px;text-transform:uppercase
+}
+
+/* ── PORTAL ──────────────────────────────────────────────── */
+#portal{display:none;min-height:100vh}
+
+/* ── SIDEBAR ──────────────────────────────────────────────── */
+.sb{
+  position:fixed;top:0;left:0;bottom:0;width:var(--sw);
+  background:var(--sb-bg);
+  display:flex;flex-direction:column;z-index:100;
+  border-right:1px solid var(--sb-border)
+}
+.sb::after{
+  content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(184,150,110,.25),transparent)
+}
+
+.sb-brand{
+  padding:22px 20px 18px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--sb-border)
+}
+.sb-hex{width:38px;height:38px;position:relative;flex-shrink:0}
+.sb-hex svg{width:38px;height:38px}
+.sb-hex-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:700;color:#fff}
+.sb-gfe{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#fff;letter-spacing:1.5px;line-height:1}
+.sb-gfe-sub{font-size:8.5px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:rgba(199,183,170,.4);margin-top:3px}
+
+.sb-nav{padding:14px 10px;flex:1;overflow-y:auto}
+.sb-nav::-webkit-scrollbar{width:0}
+
+.sb-sec{
+  font-size:8.5px;font-weight:600;text-transform:uppercase;
+  letter-spacing:2px;color:var(--sb-sec);
+  padding:14px 10px 6px;margin-top:2px
+}
+.ni{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:9px;cursor:pointer;
+  color:var(--sb-text);font-size:12.5px;font-weight:500;
+  margin-bottom:1px;transition:var(--tr);text-decoration:none;
+  border:1px solid transparent
+}
+.ni:hover{background:rgba(199,183,170,.08);color:#C7B7AA}
+.ni.active{
+  background:var(--sb-active-bg);color:var(--sb-active-text);
+  border-color:rgba(184,150,110,.2)
+}
+.ni-ico{font-size:14px;width:18px;text-align:center;flex-shrink:0;opacity:.6}
+.ni.active .ni-ico{opacity:1}
+.ni-badge{
+  margin-left:auto;
+  background:rgba(123,47,190,.25);color:#b89ede;
+  font-size:8px;font-weight:700;
+  padding:2px 7px;border-radius:5px;letter-spacing:.3px;
+  border:1px solid rgba(123,47,190,.2)
+}
+.ni.active .ni-badge{background:rgba(184,150,110,.15);color:var(--gold2);border-color:rgba(184,150,110,.2)}
+.ni-dot{margin-left:auto;width:5px;height:5px;background:#EF4444;border-radius:50%;box-shadow:0 0 5px rgba(239,68,68,.7)}
+
+.sb-ft{padding:14px 16px;border-top:1px solid var(--sb-border)}
+.th-btn{
+  display:flex;align-items:center;gap:8px;margin-bottom:10px;
+  padding:8px 10px;border-radius:8px;
+  background:rgba(199,183,170,.06);cursor:pointer;
+  font-size:11px;color:rgba(199,183,170,.5);
+  border:1px solid rgba(199,183,170,.1);
+  font-family:'DM Sans',sans-serif;transition:var(--tr);width:100%
+}
+.th-btn:hover{background:rgba(199,183,170,.12);color:#C7B7AA}
+.sb-ft p{font-size:9.5px;color:rgba(199,183,170,.3);line-height:1.7;font-style:italic}
+
+/* ── TOPBAR ──────────────────────────────────────────────── */
+.tb{
+  position:fixed;top:0;left:var(--sw);right:0;height:56px;
+  background:var(--tb-bg);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--tb-border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;z-index:90
+}
+.tb-l{display:flex;align-items:center;gap:12px}
+.tb-pg{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:600;color:var(--text);letter-spacing:-.2px
+}
+.tb-sep{width:1px;height:14px;background:var(--border)}
+.tb-dt{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;color:var(--muted);font-weight:400;font-style:italic
+}
+
+.tb-r{display:flex;align-items:center;gap:8px;position:relative}
+.nb{
+  position:relative;width:34px;height:34px;border-radius:8px;
+  background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:14px;transition:var(--tr)
+}
+.nb:hover{background:var(--card2);border-color:var(--border2)}
+.nb-dot{position:absolute;top:7px;right:7px;width:5px;height:5px;background:var(--red);border-radius:50%;border:1.5px solid var(--bg)}
+.uc{
+  display:flex;align-items:center;gap:7px;
+  padding:4px 12px 4px 5px;
+  background:var(--card);border:1px solid var(--border);border-radius:20px
+}
+.uca{
+  width:24px;height:24px;
+  background:linear-gradient(135deg,var(--q),var(--q2));
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:#fff
+}
+.ucn{font-size:11.5px;font-weight:600;color:var(--text2)}
+.lo{
+  display:flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:8px;background:none;
+  border:1px solid var(--border);
+  font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:600;
+  color:var(--muted);cursor:pointer;transition:var(--tr)
+}
+.lo:hover{background:var(--rbg);border-color:var(--rborder);color:var(--red)}
+.tb-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:6px 13px;border-radius:8px;
+  border:1px solid var(--border);
+  font-family:'DM Sans',sans-serif;font-size:11.5px;font-weight:600;
+  color:var(--muted);cursor:pointer;transition:var(--tr);
+  background:var(--card)
+}
+.tb-btn:hover{background:var(--card2);border-color:var(--gold);color:var(--gold2)}
+.tb-btn.present{
+  background:rgba(201,168,76,.1);color:var(--gold2);
+  border-color:rgba(201,168,76,.25);
+  box-shadow:0 2px 8px rgba(201,168,76,.1)
+}
+.tb-btn.present:hover{box-shadow:0 4px 16px rgba(201,168,76,.2);transform:translateY(-1px)}
+
+/* ── NOTIF POPUP ──────────────────────────────────────────────── */
+.np{
+  position:absolute;top:48px;right:0;width:300px;
+  background:var(--navy2);border-radius:12px;
+  border:1px solid var(--border2);box-shadow:var(--sh2);
+  z-index:200;display:none;overflow:hidden
+}
+.np.open{display:block;animation:pgIn .2s ease}
+.np-h{
+  padding:12px 16px;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center
+}
+.np-ht{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:var(--text)}
+.np-cl{font-size:10.5px;color:var(--gold2);cursor:pointer;font-weight:600}
+.np-i{
+  padding:12px 16px;border-bottom:1px solid var(--border);
+  display:flex;gap:10px;align-items:flex-start;transition:var(--tr)
+}
+.np-i:hover{background:var(--silver2)}
+.np-i:last-child{border-bottom:none}
+.ni2{font-size:16px;flex-shrink:0;margin-top:1px}
+.np-txt{font-size:11.5px;color:var(--text2);line-height:1.5}
+.np-time{font-size:9.5px;color:var(--muted);margin-top:2px}
+
+/* ── MAIN CONTENT ──────────────────────────────────────────────── */
+.mc{margin-left:var(--sw);margin-top:56px;padding:24px;min-height:calc(100vh - 56px)}
+.page{display:none}
+.page.active{display:block;animation:pgIn .3s cubic-bezier(.4,0,.2,1)}
+@keyframes pgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ── CARDS BASE ──────────────────────────────────────────────── */
+.card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:22px;margin-bottom:14px;
+  box-shadow:var(--sh)
+}
+.ct{
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;font-weight:600;color:var(--text);
+  margin-bottom:16px;display:flex;align-items:center;gap:8px;letter-spacing:-.1px
+}
+
+/* ── PAGE HEADER ──────────────────────────────────────────────── */
+.ph{margin-bottom:22px}
+.ph h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;font-weight:300;color:var(--text);
+  margin-bottom:4px;letter-spacing:-.5px
+}
+.ph p{font-size:12.5px;color:var(--muted)}
+
+/* ── GREETING BANNER ──────────────────────────────────────────────── */
+.gb{
+  background:linear-gradient(155deg,var(--card),var(--card2) 60%,var(--silver2));
+  border-radius:var(--r);padding:22px 26px;
+  margin-bottom:14px;
+  display:flex;align-items:center;justify-content:space-between;
+  border:1px solid var(--border);
+  box-shadow:var(--sh);position:relative;overflow:hidden
+}
+.gb-orb1{position:absolute;width:160px;height:160px;border-radius:50%;background:rgba(201,168,76,.06);filter:blur(40px);top:-40px;right:120px;pointer-events:none}
+.gb-orb2{position:absolute;width:120px;height:120px;border-radius:50%;background:rgba(123,47,190,.08);filter:blur(35px);bottom:-30px;right:240px;pointer-events:none}
+.gb-line{position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,transparent,var(--gold),transparent)}
+.gb-l{position:relative;z-index:1}
+.gb-g{
+  font-family:'Cormorant Garamond',serif;
+  font-size:13px;font-style:italic;color:var(--muted);margin-bottom:2px
+}
+.gb-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:600;color:var(--text);
+  margin-bottom:6px;letter-spacing:-.2px
+}
+.gb-s{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.gb-dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.gb-r{position:relative;z-index:1;text-align:right}
+.gb-t{
+  font-family:'Cormorant Garamond',serif;
+  font-size:36px;font-weight:300;color:var(--text);line-height:1;letter-spacing:-1px
+}
+.gb-ds{font-size:11px;color:var(--muted);margin-top:4px;font-family:'Cormorant Garamond',serif;font-style:italic}
+
+/* ── KPI MINI CARDS ──────────────────────────────────────────────── */
+.mini-dash{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.md-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:16px 18px;
+  box-shadow:var(--sh);position:relative;overflow:hidden;
+  transition:var(--tr)
+}
+.md-card:hover{background:var(--card2);border-color:var(--border2);transform:translateY(-1px)}
+.md-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px
+}
+.md-card.c1::after{background:linear-gradient(90deg,transparent,var(--green),transparent)}
+.md-card.c2::after{background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.md-card.c3::after{background:linear-gradient(90deg,transparent,var(--q2),transparent)}
+.md-card.c4::after{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.md-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:10px}
+.md-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:400;letter-spacing:-.5px;margin-bottom:3px
+}
+.md-val.g{color:var(--green)}.md-val.r{color:var(--red)}.md-val.p{color:var(--q2)}.md-val.y{color:var(--gold2)}
+.md-sub{font-size:10.5px;color:var(--muted)}
+.md-ico{position:absolute;bottom:10px;right:12px;font-size:22px;opacity:.05}
+
+/* ── TERMÔMETRO ──────────────────────────────────────────────── */
+.term{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:16px 20px;
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:14px;box-shadow:var(--sh)
+}
+.term-iw{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0
+}
+.term-iw.v{background:var(--gbg);border:1px solid var(--gborder)}
+.term-iw.y{background:var(--ybg);border:1px solid var(--yborder)}
+.term-iw.r{background:var(--rbg);border:1px solid var(--rborder)}
+.term-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:5px}
+.term-row{display:flex;align-items:center;gap:10px}
+.tbadge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 12px;border-radius:20px;font-size:11.5px;font-weight:600
+}
+.tbadge.v{background:var(--gbg);color:var(--green);border:1px solid var(--gborder)}
+.tbadge.y{background:var(--ybg);color:var(--yellow);border:1px solid var(--yborder)}
+.tbadge.r{background:var(--rbg);color:var(--red);border:1px solid var(--rborder)}
+.term-txt{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-weight:500;color:var(--text2)
+}
+
+/* ── PROGRESS BAR ──────────────────────────────────────────────── */
+.prog{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:20px;
+  margin-bottom:14px;box-shadow:var(--sh)
+}
+.prog-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.prog-ttl{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-weight:600;color:var(--text)
+}
+.prog-pct{
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;font-weight:300;color:var(--gold2);letter-spacing:-1px
+}
+.prog-trk{background:var(--border2);border-radius:20px;height:4px;overflow:hidden}
+.prog-fill{
+  height:4px;border-radius:20px;
+  background:linear-gradient(90deg,var(--qdark),var(--q),var(--q2));
+  transition:width 1.4s cubic-bezier(.4,0,.2,1)
+}
+.prog-sub{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:10px}
+.prog-sub strong{color:var(--gold2);font-weight:600}
+
+/* ── AVISOS ──────────────────────────────────────────────── */
+.avisos{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:20px;
+  margin-bottom:14px;box-shadow:var(--sh)
+}
+.av-t{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-weight:600;color:var(--text);
+  margin-bottom:14px;display:flex;align-items:center;gap:8px
+}
+.av-g{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.av-item{
+  background:var(--silver2);border:1px solid var(--border);
+  border-radius:10px;padding:12px 14px;
+  display:flex;align-items:flex-start;gap:10px;transition:var(--tr)
+}
+.av-item:hover{background:var(--card2);border-color:var(--border2)}
+.av-ico{font-size:16px;flex-shrink:0;margin-top:1px}
+.av-txt{font-size:12px;color:var(--text2);line-height:1.5}
+
+/* ── CARTA DO CONSULTOR ──────────────────────────────────────────────── */
+.carta{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:24px;
+  margin-bottom:14px;box-shadow:var(--sh);
+  position:relative;overflow:hidden
+}
+.carta-hd{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.carta-ico{font-size:18px}
+.carta-ttl{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:600;color:var(--text)
+}
+.carta-per{
+  font-size:10px;color:var(--muted);margin-left:auto;
+  background:var(--silver2);padding:3px 10px;border-radius:20px;border:1px solid var(--border)
+}
+.carta-txt{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;color:var(--carta-txt);line-height:2;font-style:italic;margin-bottom:16px
+}
+.carta-ass{
+  display:flex;align-items:center;gap:10px;
+  padding-top:14px;border-top:1px solid var(--border)
+}
+.carta-av{
+  width:48px;height:48px;
+  border-radius:50%;
+  overflow:hidden;
+  flex-shrink:0;
+  border:2px solid var(--gold);
+  box-shadow:0 2px 8px rgba(184,150,110,.25)
+}
+.carta-av img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 15%
+}
+.carta-an{font-weight:600;color:var(--text);font-size:12.5px}
+.carta-as{font-size:10.5px;color:var(--muted)}
+
+/* ── KPI ROW ──────────────────────────────────────────────── */
+.krow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.kcard{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:18px;
+  box-shadow:var(--sh);position:relative;overflow:hidden;transition:var(--tr)
+}
+.kcard:hover{background:var(--card2);border-color:var(--border2)}
+.kcard-accent{position:absolute;bottom:0;left:0;right:0;height:1px}
+.kcard-accent.g{background:linear-gradient(90deg,transparent,var(--green),transparent)}
+.kcard-accent.y{background:linear-gradient(90deg,transparent,var(--yellow),transparent)}
+.k-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:8px}
+.k-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:28px;font-weight:300;line-height:1;margin-bottom:4px;letter-spacing:-.5px
+}
+.k-val.g{color:var(--green)}.k-val.r{color:var(--red)}.k-val.y{color:var(--yellow)}
+.k-sub{font-size:10.5px;color:var(--muted)}
+.k-icon{position:absolute;bottom:12px;right:14px;font-size:24px;opacity:.05}
+
+/* ── TIMELINE ──────────────────────────────────────────────── */
+.tl-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:20px;
+  margin-bottom:14px;box-shadow:var(--sh)
+}
+.tl-pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.tp{padding:6px 14px;border-radius:7px;font-size:11.5px;font-weight:600;cursor:default;transition:var(--tr);letter-spacing:.2px}
+.tp.done{background:rgba(201,168,76,.1);color:var(--gold2);border:1px solid rgba(201,168,76,.2)}
+.tp.cur{background:linear-gradient(135deg,var(--q),var(--q2));color:#fff;box-shadow:0 2px 8px rgba(123,47,190,.3)}
+.tp.fut{background:var(--silver2);color:var(--muted);border:1px solid var(--border)}
+
+/* ── PLACAR ──────────────────────────────────────────────── */
+.pl-item{margin-bottom:14px}
+.pl-item:last-child{margin-bottom:0}
+.pl-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.pl-lbl{font-size:12.5px;color:var(--text2);font-weight:500}
+.pl-pcts{font-size:11px;color:var(--muted)}
+.pl-trk{background:var(--border2);border-radius:20px;height:4px;overflow:hidden}
+.pl-fill{height:4px;border-radius:20px;transition:width .8s ease}
+
+/* ── DASH CARDS ──────────────────────────────────────────────── */
+.dg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+.dc{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:22px;
+  box-shadow:var(--sh);transition:var(--tr)
+}
+.dc.av{cursor:pointer}
+.dc.av:hover{transform:translateY(-2px);box-shadow:var(--sh2);border-color:rgba(201,168,76,.25)}
+.dc.lk{opacity:.5}
+.dc-ico{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;margin-bottom:14px;
+  background:var(--silver2);border:1px solid var(--border)
+}
+.dc.av .dc-ico{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.2)}
+.dc-m{
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;font-weight:600;color:var(--text);margin-bottom:14px
+}
+.dc.lk .dc-m{color:var(--muted)}
+.bd{
+  width:100%;padding:10px;border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;
+  cursor:pointer;border:none;transition:var(--tr);letter-spacing:.2px
+}
+.bd.on{
+  background:linear-gradient(135deg,var(--q),var(--q2));
+  color:#fff;box-shadow:0 3px 12px rgba(123,47,190,.25)
+}
+.bd.on:hover{box-shadow:0 4px 16px rgba(123,47,190,.4)}
+.bd.off{background:var(--silver2);color:var(--muted);cursor:default;border:1px solid var(--border)}
+.dc-del{font-size:10px;color:var(--muted);text-align:center;margin-top:8px;font-style:italic}
+
+/* ── METAS ──────────────────────────────────────────────── */
+.mg{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px}
+.mc2{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:20px;box-shadow:var(--sh)
+}
+.mc2-l{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:8px}
+.mc2-v{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;font-weight:300;margin-bottom:4px;letter-spacing:-.5px
+}
+.mc2-s{font-size:10.5px;color:var(--muted);margin-bottom:12px}
+
+/* ── INSIGHTS ──────────────────────────────────────────────── */
+.ins-list{display:flex;flex-direction:column;gap:8px}
+.ins-item{
+  background:var(--silver2);border:1px solid var(--border);
+  border-radius:10px;padding:12px 14px;
+  display:flex;align-items:center;gap:12px;transition:var(--tr)
+}
+.ins-item:hover{background:var(--card2);border-color:var(--border2)}
+.ins-n{
+  width:26px;height:26px;border-radius:7px;
+  background:rgba(201,168,76,.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:var(--gold2);flex-shrink:0;
+  border:1px solid rgba(201,168,76,.2)
+}
+.ins-txt{font-size:12.5px;color:var(--text2);line-height:1.5}
+
+/* ── CALENDÁRIO ──────────────────────────────────────────────── */
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:10px}
+.cdh{text-align:center;font-size:9px;font-weight:600;color:var(--muted);padding:6px 0;text-transform:uppercase;letter-spacing:.5px}
+.cd{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:7px;font-size:11.5px;font-weight:500;color:var(--text2)}
+.cd.e{background:transparent}
+.cd.n{background:var(--silver2);border:1px solid var(--border)}
+.cd.hq{
+  background:linear-gradient(135deg,#6D28D9,#7B2FBE);
+  color:#fff;font-weight:700;
+  box-shadow:0 0 10px rgba(109,40,217,.55);
+  border:1px solid rgba(139,92,246,.6)
+}
+.cd.hn{
+  background:linear-gradient(135deg,#B45309,#C9A84C);
+  color:#fff;font-weight:700;
+  box-shadow:0 0 10px rgba(201,168,76,.5);
+  border:1px solid rgba(234,179,8,.5)
+}
+.cd.hg{
+  background:linear-gradient(135deg,#1D4ED8,#3B82F6);
+  color:#fff;font-weight:700;
+  box-shadow:0 0 10px rgba(59,130,246,.5);
+  border:1px solid rgba(96,165,250,.6)
+}
+.cl{display:flex;gap:14px;margin-top:12px;flex-wrap:wrap}
+.cl-i{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.cl-d{width:8px;height:8px;border-radius:2px}
+
+/* ── DOCUMENTOS ──────────────────────────────────────────────── */
+.docs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.dcard{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:20px;box-shadow:var(--sh)
+}
+.dh{
+  display:flex;align-items:center;gap:8px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;font-weight:600;color:var(--text);margin-bottom:14px
+}
+.di{
+  padding:10px 0;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:8px
+}
+.dn{font-size:11.5px;color:var(--text2);flex:1;line-height:1.4}
+.ds2{font-size:9.5px;color:var(--muted);font-style:italic}
+.bdo{
+  padding:5px 10px;border-radius:6px;font-size:10.5px;font-weight:600;
+  border:1px solid var(--border);background:var(--silver2);
+  color:var(--muted);cursor:default;font-family:'DM Sans',sans-serif
+}
+.dn2{text-align:center;font-size:11.5px;color:var(--muted);margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-style:italic}
+
+/* ── PERFIL ──────────────────────────────────────────────── */
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.pr{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+.pr:last-child{border-bottom:none}
+.pl2{color:var(--muted)}.pv{font-weight:600;color:var(--text);text-align:right}
+.mh{
+  background:linear-gradient(155deg,var(--navy),#0e1a3a 60%,#172040);
+  border-radius:var(--r);padding:28px;margin-bottom:14px;
+  box-shadow:var(--sh);position:relative;overflow:hidden;
+  border:1px solid rgba(14,26,58,.3)
+}
+.mh-orb{
+  position:absolute;width:200px;height:200px;border-radius:50%;
+  background:rgba(201,168,76,.06);filter:blur(40px);
+  bottom:-60px;right:-40px;pointer-events:none
+}
+.mhl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px;position:relative;z-index:1}
+.mhv{
+  font-family:'Cormorant Garamond',serif;
+  font-size:56px;font-weight:300;color:var(--gold2);
+  line-height:1;margin-bottom:4px;letter-spacing:-2px;position:relative;z-index:1
+}
+.mhs{font-size:11.5px;color:var(--muted);font-style:italic;position:relative;z-index:1}
+.ind{display:flex;flex-wrap:wrap;gap:7px}
+.it{
+  padding:5px 12px;background:rgba(201,168,76,.06);color:var(--gold2);
+  border-radius:7px;font-size:11.5px;font-weight:500;
+  border:1px solid rgba(201,168,76,.15)
+}
+
+/* ── CONTATO ──────────────────────────────────────────────── */
+.cw{max-width:540px;margin:0 auto}
+.ccard{
+  background:var(--card);border-radius:20px;
+  border:1px solid var(--border);padding:44px;
+  text-align:center;box-shadow:var(--sh2)
+}
+.ctl{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:24px}
+.ct-hex{width:52px;height:52px;position:relative}
+.ct-hex svg{width:52px;height:52px}
+.ct-hex-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:var(--gold);letter-spacing:0}
+.cts{width:1px;height:34px;background:var(--border2)}
+.ctc{
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;font-weight:600;color:var(--text);letter-spacing:.5px
+}
+.ctc span{display:block;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;color:var(--muted);letter-spacing:.5px;margin-top:2px;text-transform:uppercase}
+.cts{width:1px;height:34px;background:var(--border)}
+.ctc{
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;font-weight:600;color:var(--text);letter-spacing:.5px
+}
+.ctc span{display:block;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:500;color:var(--muted);letter-spacing:.5px;margin-top:2px;text-transform:uppercase}
+.ctt{
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;color:var(--text2);margin-bottom:28px;line-height:1.8;font-style:italic
+}
+.ctbs{display:flex;gap:10px;justify-content:center}
+.bw{
+  display:flex;align-items:center;gap:7px;
+  padding:13px 24px;background:#25D366;color:#fff;border:none;border-radius:10px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;transition:var(--tr);text-decoration:none;
+  box-shadow:0 3px 12px rgba(37,211,102,.2)
+}
+.bw:hover{background:#1EB857;transform:translateY(-1px)}
+.be{
+  display:flex;align-items:center;gap:7px;
+  padding:13px 24px;background:var(--navy3);color:var(--text);border:none;border-radius:10px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
+  cursor:pointer;transition:var(--tr);text-decoration:none;
+  border:1px solid var(--border)
+}
+.be:hover{background:var(--navy4);transform:translateY(-1px)}
+
+/* ── CARTAS HISTÓRICO ──────────────────────────────────────────────── */
+.cartas-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.ch-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:20px;
+  box-shadow:var(--sh);position:relative;overflow:hidden;
+  transition:var(--tr);cursor:pointer
+}
+.ch-card:hover{transform:translateY(-2px);box-shadow:var(--sh2);border-color:rgba(201,168,76,.25)}
+.ch-card::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,transparent,var(--gold),transparent)
+}
+.ch-mes{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:5px}
+.ch-titulo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px
+}
+.ch-preview{
+  font-family:'Cormorant Garamond',serif;
+  font-size:12.5px;color:var(--text2);line-height:1.7;font-style:italic
+}
+.ch-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:10px;padding-top:10px;border-top:1px solid var(--border)
+}
+.ch-autor{font-size:10px;color:var(--muted)}
+.ch-ler{font-size:10.5px;color:var(--gold2);font-weight:600}
+
+/* ── MODAL CARTA ──────────────────────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);
+  backdrop-filter:blur(6px);z-index:500;
+  display:none;align-items:center;justify-content:center;padding:20px
+}
+.modal-overlay.open{display:flex;animation:pgIn .2s ease}
+.modal-box{
+  background:var(--card);border-radius:16px;padding:36px;
+  max-width:580px;width:100%;
+  box-shadow:0 30px 80px rgba(0,0,0,.3);
+  border:1px solid var(--border2);
+  position:relative;max-height:80vh;overflow-y:auto
+}
+.modal-close{
+  position:absolute;top:14px;right:14px;width:30px;height:30px;
+  border-radius:7px;background:var(--silver2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:12px;transition:var(--tr);color:var(--muted)
+}
+.modal-close:hover{background:var(--rbg);color:var(--red)}
+.modal-mes{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:7px}
+.modal-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;font-weight:600;color:var(--text);
+  margin-bottom:18px;letter-spacing:-.2px
+}
+.modal-txt{
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px;color:var(--carta-txt);line-height:2;font-style:italic
+}
+.modal-ass{
+  display:flex;align-items:center;gap:10px;
+  margin-top:22px;padding-top:16px;border-top:1px solid var(--border)
+}
+.modal-av{
+  width:48px;height:48px;
+  border-radius:50%;overflow:hidden;flex-shrink:0;
+  border:2px solid var(--gold);
+  box-shadow:0 2px 8px rgba(184,150,110,.25)
+}
+.modal-an{font-weight:600;color:var(--text);font-size:12.5px}
+.modal-as{font-size:10.5px;color:var(--muted)}
+
+/* ── RELATÓRIO ANUAL ──────────────────────────────────────────────── */
+.ra-hero{
+  background:linear-gradient(155deg,var(--card),var(--card2) 55%,var(--silver2));
+  border-radius:var(--r);padding:26px;margin-bottom:14px;
+  border:1px solid var(--border);
+  box-shadow:var(--sh);
+  position:relative;overflow:hidden
+}
+.ra-line{position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold),transparent)}
+.ra-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;font-weight:300;margin-bottom:4px;letter-spacing:-.5px;color:var(--text)
+}
+.ra-sub{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:18px}
+.ra-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ra-kpi{
+  background:var(--silver2);border:1px solid var(--border);
+  border-radius:10px;padding:12px
+}
+.ra-kv{
+  font-family:'Cormorant Garamond',serif;
+  font-size:24px;font-weight:600;color:var(--navy);margin-bottom:2px;letter-spacing:-.3px
+}
+.ra-kl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+
+/* ── APRESENTAÇÃO ──────────────────────────────────────────────── */
+#presentation{
+  position:fixed;inset:0;z-index:5000;
+  background:var(--navy);
+  display:none;flex-direction:column;align-items:center;justify-content:center;padding:60px
+}
+#presentation::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size:30px 30px
+}
+#presentation.open{display:flex}
+.pres-slide{width:100%;max-width:860px;text-align:center;animation:pgIn .4s ease;position:relative;z-index:1}
+.pres-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:2.5px;color:var(--muted);margin-bottom:14px}
+.pres-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:48px;font-weight:300;color:#fff;
+  margin-bottom:10px;letter-spacing:-2px;line-height:1.1
+}
+.pres-sub{font-size:15px;color:var(--muted);font-style:italic;margin-bottom:36px}
+.pres-data{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:36px}
+.pres-kpi{
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  border-radius:14px;padding:18px
+}
+.pres-kv{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:300;color:#fff;margin-bottom:4px;letter-spacing:-.5px
+}
+.pres-kl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.pres-nav{display:flex;align-items:center;gap:14px;justify-content:center;position:relative;z-index:1}
+.pres-btn{
+  padding:9px 22px;border-radius:9px;
+  border:1px solid var(--border);background:rgba(255,255,255,.04);
+  color:var(--text2);font-family:'DM Sans',sans-serif;
+  font-size:12.5px;font-weight:600;cursor:pointer;transition:var(--tr)
+}
+.pres-btn:hover{background:var(--silver2);color:#fff}
+.pres-close{
+  position:absolute;top:20px;right:24px;
+  width:36px;height:36px;border-radius:9px;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);
+  color:var(--muted);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;transition:var(--tr);z-index:1
+}
+.pres-close:hover{background:var(--silver2);color:#fff}
+.pres-counter{
+  font-size:11.5px;color:var(--muted);
+  padding:5px 12px;background:rgba(255,255,255,.04);border-radius:20px
+}
+
+/* ── ADMIN PANEL ──────────────────────────────────────────────── */
+#admin-panel{
+  position:fixed;inset:0;z-index:4000;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;padding:20px
+}
+#admin-panel.open{display:flex;animation:pgIn .25s ease}
+.ap-box{
+  background:var(--navy2);border-radius:16px;padding:32px;
+  width:100%;max-width:660px;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  border:1px solid var(--border2);
+  max-height:85vh;overflow-y:auto;position:relative
+}
+.ap-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border)
+}
+.ap-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:600;color:var(--text)
+}
+.ap-close{
+  width:30px;height:30px;border-radius:7px;
+  background:var(--silver2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:12px;transition:var(--tr);color:var(--muted)
+}
+.ap-close:hover{background:var(--rbg);color:var(--red)}
+.ap-section{margin-bottom:22px}
+.ap-sec-title{
+  font-size:10px;font-weight:600;text-transform:uppercase;
+  letter-spacing:1.5px;color:var(--muted);
+  margin-bottom:12px;display:flex;align-items:center;gap:6px
+}
+.ap-field{margin-bottom:12px}
+.ap-field label{display:block;font-size:10.5px;font-weight:600;color:var(--text2);margin-bottom:6px}
+.ap-field input,.ap-field textarea,.ap-field select{
+  width:100%;padding:10px 13px;
+  border:1px solid var(--border);border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:12.5px;
+  color:var(--text);background:rgba(255,255,255,.04);
+  outline:none;transition:var(--tr)
+}
+.ap-field input:focus,.ap-field textarea:focus{
+  border-color:var(--gold);background:rgba(255,255,255,.06);
+  box-shadow:0 0 0 3px var(--gold3)
+}
+.ap-field textarea{min-height:90px;resize:vertical;font-family:'Cormorant Garamond',serif;font-size:13.5px;line-height:1.7;font-style:italic}
+.ap-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ap-btn{
+  padding:11px 22px;border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;transition:var(--tr);border:none
+}
+.ap-btn.save{
+  background:linear-gradient(135deg,var(--q),var(--q2));
+  color:#fff;box-shadow:0 3px 12px rgba(123,47,190,.25);width:100%
+}
+.ap-btn.save:hover{box-shadow:0 4px 16px rgba(123,47,190,.4);transform:translateY(-1px)}
+.ap-success{
+  display:none;background:var(--gbg);border:1px solid var(--gborder);
+  color:var(--green);padding:9px 13px;border-radius:8px;
+  font-size:12px;font-weight:600;text-align:center;margin-top:10px
+}
+
+/* ── PDF BTN ──────────────────────────────────────────────── */
+.pdf-btn{
+  display:flex;align-items:center;gap:7px;padding:10px 18px;border-radius:8px;
+  background:var(--silver2);border:1px solid var(--border);
+  font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:600;
+  color:var(--text2);cursor:pointer;transition:var(--tr);margin-bottom:14px
+}
+.pdf-btn:hover{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.25);color:var(--gold2)}
+
+/* ── CHARTS ──────────────────────────────────────────────── */
+.ch-wrap{position:relative;height:200px;margin-top:8px}
+.ch-wrap-lg{position:relative;height:250px;margin-top:8px}
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.pf{
+  margin-left:var(--sw);padding:14px 24px;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--card)
+}
+.pfl{font-size:10.5px;color:var(--muted);font-style:italic}
+.pfr{font-size:10.5px;color:var(--muted2)}
+
+/* ── WATERMARK ──────────────────────────────────────────────── */
+.wm{
+  position:fixed;bottom:14px;right:18px;
+  font-size:9.5px;color:var(--muted2);
+  letter-spacing:.5px;pointer-events:none;z-index:50;
+  display:none;font-style:italic
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media(max-width:960px){
+  .mini-dash{grid-template-columns:1fr 1fr}
+  .dg,.mg,.docs,.cartas-grid{grid-template-columns:1fr 1fr}
+  .av-g,.krow,.ra-kpis{grid-template-columns:1fr 1fr}
+  .pg{grid-template-columns:1fr}
+  .pres-data{grid-template-columns:1fr 1fr}
+  .period-grid{grid-template-columns:1fr 1fr}
+  .estrat-grid{grid-template-columns:1fr}
+}
+@media(max-width:660px){
+  :root{--sw:0px}
+  .sb{transform:translateX(-240px)}
+  .dg,.docs,.mg,.krow,.mini-dash,.cartas-grid,.period-grid,.estrat-grid{grid-template-columns:1fr}
+  .ctbs,.pres-data,.ra-kpis{grid-template-columns:1fr 1fr}
+  .lw{grid-template-columns:1fr}
+  .ll{display:none}
+}
+
+/* ── CARDS KPI PERÍODO ──────────────────────────────────────────────── */
+.period-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.period-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:18px 20px;
+  box-shadow:var(--sh);position:relative;overflow:hidden;transition:var(--tr)
+}
+.period-card:hover{background:var(--card2);border-color:var(--border2)}
+.period-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px
+}
+.period-card.fat::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.period-card.desp::before{background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.period-card.res::before{background:linear-gradient(90deg,transparent,var(--green),transparent)}
+.period-card.prev::before{background:linear-gradient(90deg,transparent,var(--blue),transparent)}
+.pc-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:6px}
+.pc-ref{font-size:9.5px;color:var(--muted);margin-bottom:10px;font-style:italic}
+.pc-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:600;letter-spacing:-.5px;margin-bottom:4px
+}
+.pc-val.fat{color:#b8966e}
+.pc-val.desp{color:var(--red)}
+.pc-val.res-pos{color:var(--green)}
+.pc-val.res-neg{color:var(--red)}
+.pc-val.prev{color:var(--blue)}
+.pc-delta{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:600;padding:2px 8px;border-radius:5px
+}
+.pc-delta.up{background:var(--gbg);color:var(--green);border:1px solid var(--gborder)}
+.pc-delta.down{background:var(--rbg);color:var(--red);border:1px solid var(--rborder)}
+.pc-delta.neutral{background:var(--bbg);color:var(--blue);border:1px solid rgba(59,130,246,.3)}
+.pc-sub{font-size:10.5px;color:var(--muted);margin-top:5px}
+.pc-bar-wrap{margin-top:10px}
+.pc-bar-lbl{display:flex;justify-content:space-between;font-size:9.5px;color:var(--muted);margin-bottom:4px}
+.pc-bar{background:var(--border2);border-radius:20px;height:3px;overflow:hidden}
+.pc-bar-fill{height:3px;border-radius:20px}
+
+/* ── ESTRATÉGIA: LAYOUT SIDE BY SIDE ──────────────────────────────────────────────── */
+.estrat-grid{display:grid;grid-template-columns:1fr 320px;gap:14px;margin-bottom:14px;align-items:stretch}
+.cal-compact .cg{gap:2px}
+.cal-compact .cd{font-size:10.5px;border-radius:5px}
+.cal-compact .cdh{font-size:8.5px;padding:4px 0}
+
+/* ── GFE SCORE PAGE ──────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Questrial&family=Bellefair&display=swap');
+
+.score-hero{
+  background:linear-gradient(155deg,var(--navy) 0%,#0B1628 60%,#0E1E38 100%);
+  border-radius:var(--r);border:1px solid rgba(199,183,170,.18);
+  padding:40px 44px;margin-bottom:14px;
+  display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;
+  position:relative;overflow:hidden;box-shadow:var(--sh2)
+}
+.score-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 10% 50%,rgba(199,183,170,.06) 0%,transparent 70%)
+}
+/* hexágono decorativo fundo */
+.score-hero-hex-bg{
+  position:absolute;right:-40px;top:50%;transform:translateY(-50%);
+  opacity:.04;pointer-events:none
+}
+
+/* número grande */
+.score-num-wrap{position:relative;z-index:1;text-align:center;min-width:180px}
+.score-num-val{
+  font-family:'Questrial',sans-serif;
+  font-size:100px;line-height:1;
+  color:#C7B7AA;letter-spacing:-4px;
+  transition:all .6s cubic-bezier(.4,0,.2,1)
+}
+.score-num-max{
+  font-family:'Bellefair',serif;
+  font-size:20px;color:rgba(199,183,170,.4);
+  vertical-align:super;letter-spacing:0
+}
+.score-num-lbl{
+  font-family:'Bellefair',serif;
+  font-size:9px;letter-spacing:5px;
+  text-transform:uppercase;color:rgba(199,183,170,.45);
+  margin-top:6px
+}
+.score-status-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:14px;padding:6px 18px;
+  border:1px solid rgba(199,183,170,.25);border-radius:2px;
+  font-family:'Bellefair',serif;font-size:10px;
+  letter-spacing:3px;text-transform:uppercase;color:#C7B7AA;
+  transition:var(--tr)
+}
+.score-status-dot{width:7px;height:7px;border-radius:50%}
+
+/* lado direito: barras + escala */
+.score-right{position:relative;z-index:1}
+.score-period{
+  font-family:'Bellefair',serif;font-size:9px;
+  letter-spacing:4px;text-transform:uppercase;
+  color:rgba(199,183,170,.4);margin-bottom:20px
+}
+.score-evol{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Questrial',sans-serif;font-size:12px;
+  color:#C7B7AA;margin-left:12px;
+  background:rgba(199,183,170,.07);
+  padding:2px 10px;border-radius:2px;
+  border:1px solid rgba(199,183,170,.15)
+}
+
+/* dimensões */
+.score-dims{display:flex;flex-direction:column;gap:13px}
+.score-dim{display:flex;flex-direction:column;gap:5px}
+.score-dim-top{display:flex;justify-content:space-between;align-items:center}
+.score-dim-name{
+  font-family:'Questrial',sans-serif;
+  font-size:11px;letter-spacing:1.5px;
+  text-transform:uppercase;color:rgba(199,183,170,.55)
+}
+.score-dim-val{
+  font-family:'Questrial',sans-serif;
+  font-size:13px;color:#C7B7AA
+}
+.score-dim-delta{
+  font-size:10px;font-weight:600;
+  padding:1px 6px;border-radius:2px;margin-left:6px
+}
+.score-dim-delta.up{color:#22C55E;background:rgba(34,197,94,.1)}
+.score-dim-delta.down{color:#EF4444;background:rgba(239,68,68,.1)}
+.score-dim-delta.eq{color:rgba(199,183,170,.5);background:rgba(199,183,170,.06)}
+.score-bar-track{height:2px;background:rgba(255,255,255,.07);position:relative;border-radius:1px}
+.score-bar-fill{
+  position:absolute;top:0;left:0;height:100%;border-radius:1px;
+  background:linear-gradient(to right,#b8966e,#C7B7AA);
+  transition:width 1.2s cubic-bezier(.4,0,.2,1)
+}
+
+/* card de escala */
+.score-scale-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:22px;
+  margin-bottom:14px;box-shadow:var(--sh)
+}
+.score-scale-title{
+  font-family:'Bellefair',serif;
+  font-size:10px;letter-spacing:4px;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:16px
+}
+.score-scale-table{width:100%;border-collapse:collapse}
+.score-scale-table th{
+  font-family:'Questrial',sans-serif;
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);padding:8px 14px;
+  border-bottom:1px solid var(--border);text-align:left;font-weight:400
+}
+.score-scale-table td{
+  padding:12px 14px;border-bottom:1px solid var(--border);
+  font-size:12.5px;color:var(--text2);vertical-align:middle
+}
+.score-scale-table tr:last-child td{border-bottom:none}
+.score-scale-table tr:hover td{background:var(--card2)}
+.score-scale-ico{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Questrial',sans-serif;font-size:12px;color:var(--text)
+}
+.score-scale-ico .ico{font-size:14px}
+
+/* badge de faixa colorido */
+.scale-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:3px;
+  font-family:'Questrial',sans-serif;font-size:11.5px;font-weight:600
+}
+.scale-badge.critico{background:rgba(239,68,68,.12);color:#EF4444;border:1px solid rgba(239,68,68,.25)}
+.scale-badge.alerta{background:rgba(245,158,11,.12);color:#F59E0B;border:1px solid rgba(245,158,11,.25)}
+.scale-badge.saudavel{background:rgba(34,197,94,.12);color:#22C55E;border:1px solid rgba(34,197,94,.25)}
+.scale-badge.estrategico{background:rgba(199,183,170,.12);color:#C7B7AA;border:1px solid rgba(199,183,170,.25)}
+
+/* histórico de evolução */
+.score-hist-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.score-hist-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:16px;
+  box-shadow:var(--sh);text-align:center;transition:var(--tr)
+}
+.score-hist-card:hover{background:var(--card2);border-color:var(--border2)}
+.score-hist-card.active{border-color:rgba(199,183,170,.4);background:rgba(199,183,170,.05)}
+.score-hist-mes{
+  font-family:'Bellefair',serif;
+  font-size:9px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--muted);margin-bottom:8px
+}
+.score-hist-val{
+  font-family:'Questrial',sans-serif;
+  font-size:28px;color:#C7B7AA;line-height:1;margin-bottom:4px
+}
+.score-hist-lbl{
+  font-size:10px;color:var(--muted);
+  font-family:'Bellefair',serif;letter-spacing:1px
+}
+.score-hist-delta{font-size:10px;font-weight:600;margin-top:4px}
+
+/* gauge SVG */
+.score-gauge-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:8px 0
+}
+
+/* ── RUNWAY DE CAIXA ──────────────────────────────────────────────── */
+.runway-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:20px;
+  margin-bottom:14px;box-shadow:var(--sh);
+  display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center
+}
+.runway-gauge{position:relative;width:100px;height:100px;flex-shrink:0}
+.runway-gauge svg{width:100px;height:100px}
+.runway-center{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center
+}
+.runway-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:30px;font-weight:300;color:var(--text);line-height:1
+}
+.runway-unit{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.5px;text-transform:uppercase}
+.runway-info{}
+.runway-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:18px;font-weight:500;color:var(--text);margin-bottom:4px
+}
+.runway-sub{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:12px}
+.runway-zones{display:flex;gap:6px;flex-wrap:wrap}
+.rz{font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid transparent}
+.rz.critico{background:var(--rbg);color:var(--red);border-color:var(--rborder)}
+.rz.atencao{background:var(--ybg);color:var(--yellow);border-color:var(--yborder)}
+.rz.saudavel{background:var(--gbg);color:var(--green);border-color:var(--gborder)}
+.rz.seguro{background:var(--bbg);color:var(--blue);border-color:rgba(29,78,216,.25)}
+.rz.ativo{font-weight:700;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+
+/* ── TIMELINE DE VENCIMENTOS ──────────────────────────────────────────────── */
+.timeline-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:20px;
+  margin-bottom:14px;box-shadow:var(--sh)
+}
+.tl-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px
+}
+.tl-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px;font-weight:600;color:var(--text)
+}
+.tl-legend{display:flex;gap:12px}
+.tl-leg-item{display:flex;align-items:center;gap:5px;font-size:10.5px;color:var(--muted)}
+.tl-leg-dot{width:8px;height:8px;border-radius:50%}
+.tl-list{display:flex;flex-direction:column;gap:8px}
+.tl-item{
+  display:grid;grid-template-columns:56px 1fr auto;gap:12px;
+  align-items:center;padding:10px 14px;border-radius:10px;
+  background:var(--silver2);border:1px solid var(--border);
+  transition:var(--tr)
+}
+.tl-item:hover{background:var(--card2);border-color:var(--border2)}
+.tl-item.vencido{background:var(--rbg);border-color:var(--rborder)}
+.tl-item.urgente{background:var(--ybg);border-color:var(--yborder)}
+.tl-item.ok{background:var(--gbg);border-color:var(--gborder)}
+.tl-date{text-align:center}
+.tl-day{
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px;font-weight:600;line-height:1
+}
+.tl-item.vencido .tl-day{color:var(--red)}
+.tl-item.urgente .tl-day{color:var(--yellow)}
+.tl-item.ok .tl-day{color:var(--green)}
+.tl-month{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.tl-body{}
+.tl-nome{font-size:12.5px;font-weight:600;color:var(--text);margin-bottom:2px}
+.tl-tipo{font-size:10.5px;color:var(--muted)}
+.tl-valor{text-align:right}
+.tl-val-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-weight:600
+}
+.tl-item.vencido .tl-val-num{color:var(--red)}
+.tl-item.urgente .tl-val-num{color:var(--yellow)}
+.tl-item.ok .tl-val-num{color:var(--green)}
+.tl-val-lbl{font-size:9.5px;color:var(--muted)}
+.tl-empty{text-align:center;padding:20px;font-size:12px;color:var(--muted);font-style:italic}
+
+/* ── SCORE HISTÓRICO AUTOMÁTICO ──────────────────────────────────────────────── */
+.score-auto-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.score-auto-card{
+  background:var(--card);border-radius:var(--r);
+  border:1px solid var(--border);padding:14px;
+  text-align:center;box-shadow:var(--sh);
+  transition:var(--tr);position:relative;overflow:hidden
+}
+.score-auto-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px
+}
+.score-auto-card.critico::after{background:var(--red)}
+.score-auto-card.alerta::after{background:var(--yellow)}
+.score-auto-card.saudavel::after{background:var(--green)}
+.score-auto-card.estrategico::after{background:var(--gold)}
+.score-auto-card.ativo{border-color:var(--gold);box-shadow:var(--sh2)}
+.sa-mes{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.sa-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;font-weight:300;line-height:1;margin-bottom:4px
+}
+.sa-val.critico{color:var(--red)}
+.sa-val.alerta{color:var(--yellow)}
+.sa-val.saudavel{color:var(--green)}
+.sa-val.estrategico{color:var(--gold2)}
+.sa-lbl{font-size:10px;color:var(--muted);font-family:'Cormorant Garamond',serif}
+.sa-delta{font-size:10.5px;font-weight:600;margin-top:4px}
+.sa-delta.up{color:var(--green)}.sa-delta.down{color:var(--red)}.sa-delta.eq{color:var(--muted)}
+
+/* ── SVG HEXAGON ──────────────────────────────────────────────── */
+.hex-svg-border{fill:none;stroke:var(--gold);stroke-width:1.5;opacity:.6}
+.hex-svg-fill{fill:rgba(201,168,76,.08)}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="sp-hex">
+    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" width="58" height="58">
+      <polygon points="60,12 101,34 101,78 60,100 19,78 19,34" fill="#0d1b2a"/>
+      <polygon points="60,12 101,34 101,78 60,100 19,78 19,34" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity=".7"/>
+    </svg>
+    <div class="sp-hex-letters">GFE</div>
+  </div>
+  <div class="sp-brand">
+    <div class="sp-gfe">Gestão Financeira Estratégica</div>
+    <div class="sp-tagline">Portal Exclusivo</div>
+    <div class="sp-by">by Chanquini</div>
+  </div>
+  <div class="sp-line"></div>
+  <div class="sp-dots"><div class="sp-d"></div><div class="sp-d"></div><div class="sp-d"></div></div>
+</div>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="lw">
+    <div class="ll">
+      <div class="ll-orb1"></div><div class="ll-orb2"></div>
+      <div>
+        <div class="ll-logo">
+          <div class="ll-hex" style="width:64px;height:64px">
+            <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" width="64" height="64">
+              <polygon points="28,6 51,18 51,38 28,50 5,38 5,18" fill="#0d1b2a"/>
+              <polygon points="28,6 51,18 51,38 28,50 5,38 5,18" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity=".7"/>
+            </svg>
+            <div class="ll-hex-txt">GFE</div>
+          </div>
+          <div class="ll-brand">
+            <div class="ll-gfe">GFE</div>
+            <div class="ll-gfe-sub">Gestão Financeira Estratégica</div>
+          </div>
+        </div>
+        <div class="ll-headline">
+          <div class="ll-badge">✦ Portal Exclusivo</div>
+          <div class="ll-title">Seu financeiro<br><strong>organizado, visual<br>e estratégico.</strong></div>
+          <div class="ll-desc">Gestão financeira de alta precisão para empresas que buscam clareza nos números e crescimento sustentável.</div>
+        </div>
+      </div>
+      <div class="ll-stats" style="display:none">
+        <div class="ll-stat"><div class="ll-sv">65%</div><div class="ll-sl">Margem Alvo</div></div>
+        <div class="ll-stat"><div class="ll-sv">R$ 0,00</div><div class="ll-sl">Meta Anual</div></div>
+        <div class="ll-stat"><div class="ll-sv">30.4%</div><div class="ll-sl">Executado 2026</div></div>
+        <div class="ll-stat"><div class="ll-sv">Abr</div><div class="ll-sl">Último Fechamento</div></div>
+      </div>
+    </div>
+    <div class="lr">
+      <div class="lr-logo">
+        <div style="width:56px;height:56px;position:relative;flex-shrink:0">
+          <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" width="56" height="56">
+            <polygon points="28,3 52,16 52,40 28,53 4,40 4,16" fill="rgba(184,150,110,.12)"/>
+            <polygon points="28,3 52,16 52,40 28,53 4,40 4,16" fill="none" stroke="rgba(184,150,110,.55)" stroke-width="1.5"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:#C7B7AA;letter-spacing:0">C</div>
+        </div>
+        <div style="display:flex;flex-direction:column;justify-content:center;gap:3px">
+          <div style="font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:#C7B7AA;line-height:1">CHANQUINI</div>
+          <div style="font-family:'DM Sans',sans-serif;font-size:9px;font-weight:400;letter-spacing:2px;text-transform:uppercase;color:#4A5A7A">Estratégias Financeiras</div>
+        </div>
+      </div>
+      <div class="lr-welcome">Bem-vindo ao</div>
+      <div class="lr-title">Portal Financeiro GFE</div>
+      <div class="lf"><label>E-mail</label><input type="email" id="le" placeholder="seu@email.com.br"/></div>
+      <div class="lf"><label>Senha</label><input type="password" id="lp" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"/></div>
+      <!-- Lembrar login -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;margin-top:-4px">
+        <input type="checkbox" id="lembrar" style="width:15px;height:15px;accent-color:#b8966e;cursor:pointer"/>
+        <label for="lembrar" style="font-size:11.5px;color:#5A6A8A;cursor:pointer;letter-spacing:.2px;user-select:none">Lembrar meu acesso</label>
+      </div>
+      <button class="lbtn" onclick="login()">Entrar na Plataforma →</button>
+      <div class="lerr" id="lerr">E-mail ou senha incorretos.</div>
+      <div class="lnote">🔒 Acesso seguro e individual · Seus dados são confidenciais</div>
+    </div>
+  </div>
+</div>
+
+<!-- PORTAL -->
+<div id="portal">
+  <nav class="sb">
+    <div class="sb-brand">
+      <div class="sb-hex">
+        <svg viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="19,2 35,10 35,28 19,36 3,28 3,10" fill="rgba(201,168,76,.1)"/>
+          <polygon points="19,2 35,10 35,28 19,36 3,28 3,10" fill="none" stroke="rgba(201,168,76,.45)" stroke-width="1.5"/>
+        </svg>
+        <div class="sb-hex-txt">GFE</div>
+      </div>
+      <div>
+        <div class="sb-gfe">GFE</div>
+        <div class="sb-gfe-sub">by Chanquini</div>
+      </div>
+    </div>
+    <div class="sb-nav">
+      <div class="sb-sec">Principal</div>
+      <a class="ni active" onclick="nav('inicio',this)"><span class="ni-ico">⬡</span>Início<span class="ni-dot" id="nd"></span></a>
+      <a class="ni" onclick="nav('dashboards',this)"><span class="ni-ico">◫</span>Dashboards</a>
+      <a class="ni" onclick="nav('painel',this)"><span class="ni-ico">◉</span>Painel Financeiro</a>
+      <a class="ni" onclick="nav('estrategia',this)"><span class="ni-ico">◈</span>Estratégia</a>
+      <a class="ni" onclick="nav('score',this)"><span class="ni-ico">⬡</span>GFE Score</a>
+      <a class="ni" onclick="nav('relatorio',this)"><span class="ni-ico">◉</span>Relatório Anual</a>
+      <a class="ni" onclick="nav('cartas',this)"><span class="ni-ico">✦</span>Cartas do Consultor</a>
+      <div class="sb-sec">Gestão</div>
+      <a class="ni" onclick="nav('documentos',this)"><span class="ni-ico">◻</span>Documentos</a>
+      <a class="ni" onclick="nav('perfil',this)"><span class="ni-ico">◑</span>Perfil da Empresa</a>
+      <div class="sb-sec">Suporte</div>
+      <a class="ni" onclick="nav('contato',this)"><span class="ni-ico">◎</span>Contato Chanquini</a>
+    </div>
+    <div class="sb-ft">
+      <button class="th-btn" onclick="toggleTheme()"><span id="thi">🌙</span> <span id="thl">Modo escuro</span></button>
+      <p>Chanquini Estratégias<br>Financeiras © 2026</p>
+    </div>
+  </nav>
+
+  <header class="tb">
+    <div class="tb-l">
+      <div class="tb-pg" id="tbpg">Início</div>
+      <div class="tb-sep"></div>
+      <div class="tb-dt" id="tbdt"></div>
+    </div>
+    <div class="tb-r">
+      <button class="tb-btn" onclick="exportPDF()">↓ Exportar PDF</button>
+      <button class="tb-btn present" onclick="openPresentation()">▶ Apresentação</button>
+      <button class="tb-btn" id="btn-admin" onclick="openAdmin()" style="display:none;border-color:rgba(201,168,76,.3);color:var(--gold2)">⚙ Admin</button>
+      <div class="nb" onclick="toggleNotif()">🔔<div class="nb-dot" id="nbd"></div></div>
+      <div class="np" id="np">
+        <div class="np-h"><div class="np-ht">Notificações</div><div class="np-cl" onclick="clearN()">Limpar</div></div>
+        <div id="notif-list">
+          <div class="np-i"><div class="ni2">◫</div><div><div class="np-txt">Nenhum dashboard disponível ainda</div><div class="np-time">Em breve</div></div></div>
+          <div class="np-i"><div class="ni2">🔔</div><div><div class="np-txt">Entrega dos documentos até dia 03/06</div><div class="np-time">Prazo se aproximando</div></div></div>
+          <div class="np-i"><div class="ni2">✦</div><div><div class="np-txt">Fechamento de Abril concluído com sucesso</div><div class="np-time">Chanquini · 05/05/2026</div></div></div>
+        </div>
+      </div>
+      <div class="uc"><div class="uca">C</div><div class="ucn" id="ucn-name">Chanquini</div></div>
+      <button class="lo" onclick="logout()">↪ Sair</button>
+    </div>
+  </header>
+
+  <main class="mc" id="main-content">
+
+    <!-- INÍCIO -->
+    <div id="page-inicio" class="page active">
+
+      <!-- GREETING COMPACTO -->
+      <div class="gb">
+        <div class="gb-orb1"></div><div class="gb-orb2"></div>
+        <div class="gb-line"></div>
+        <div class="gb-l">
+          <div class="gb-g" id="gbg">Bom dia,</div>
+          <div class="gb-n" id="gb-client-name">Portal Financeiro GFE</div>
+          <div class="gb-s"><div class="gb-dot"></div><span id="gb-status">Último fechamento disponível · —</span></div>
+        </div>
+        <div class="gb-r">
+          <div class="gb-t" id="gbt">--:--</div>
+          <div class="gb-ds" id="gbds"></div>
+        </div>
+      </div>
+
+      <!-- TERMÔMETRO -->
+      <div class="term">
+        <div class="term-iw v">⬡</div>
+        <div>
+          <div class="term-lbl">GFE Score — Status do Mês</div>
+          <div class="term-row">
+            <span class="tbadge v" id="term-badge" class="tbadge a">● Aguardando dados</span>
+            <span class="term-txt" id="term-txt">Sem dados ainda</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPIs DE PERÍODO — dados reais extraídos das planilhas 18/05/2026 -->
+      <div class="period-grid">
+        <div class="period-card fat">
+          <div class="pc-label">Faturamento</div>
+          <div class="pc-ref" id="pc-ref-fat">Aguardando dados</div>
+          <div class="pc-val fat" id="pc-val-fat">R$ 0,00</div>
+          
+          <div class="pc-bar-wrap">
+            <div class="pc-bar-lbl"><span>Progresso vs meta mensal</span><span id="pc-pct-fat">0%</span></div>
+            <div class="pc-bar"><div class="pc-bar-fill" id="pc-fill-fat" style="width:0%"></div></div>
+          </div>
+          <div class="pc-sub">Meta mensal: R$ 100.000,00 · Vencidos: R$ 0,00</div>
+        </div>
+        <div class="period-card desp">
+          <div class="pc-label">Despesas</div>
+          <div class="pc-ref" id="pc-ref-desp">Aguardando dados</div>
+          <div class="pc-val desp" id="pc-val-desp">R$ 0,00</div>
+          <span class="pc-delta down" id="pc-delta-desp">↑ Atenção ao limite</span>
+          <div class="pc-bar-wrap">
+            <div class="pc-bar-lbl"><span>% do faturamento esperado</span><span id="pc-pct-desp">28%</span></div>
+            <div class="pc-bar"><div class="pc-bar-fill" id="pc-fill-desp" style="width:28%;background:linear-gradient(90deg,var(--red),#F87171)"></div></div>
+          </div>
+          <div class="pc-sub">A pagar em aberto: R$ 0,00</div>
+        </div>
+        <div class="period-card res">
+          <div class="pc-label">Resultado Acumulado 2026</div>
+          <div class="pc-ref">Jan → Abr · 4 meses fechados</div>
+          <div class="pc-val res-pos">R$ 0,00</div>
+          <span class="pc-delta up">↑ Positivo</span>
+          <div class="pc-bar-wrap">
+            <div class="pc-bar-lbl"><span>Execução meta anual</span><span>31,4%</span></div>
+            <div class="pc-bar"><div class="pc-bar-fill" style="width:31%;background:linear-gradient(90deg,var(--green),#4ADE80)"></div></div>
+          </div>
+          <div class="pc-sub">Meta anual: R$ 0,00 · Saldo: R$ 0,00</div>
+        </div>
+        <div class="period-card prev">
+          <div class="pc-label">A Receber em aberto</div>
+          <div class="pc-ref">Vencimento até 12/Jun · 5 contratos</div>
+          <div class="pc-val prev">R$ 0,00</div>
+          <span class="pc-delta neutral">◎ Vence em Junho</span>
+          <div class="pc-bar-wrap">
+            <div class="pc-bar-lbl"><span>—</span><span></span></div>
+            <div class="pc-bar"><div class="pc-bar-fill" style="width:35%;background:linear-gradient(90deg,var(--blue),#60A5FA)"></div></div>
+          </div>
+          <div class="pc-sub">A receber 30d: R$ 0,00</div>
+        </div>
+      </div>
+
+      <!-- PROGRESS META ANUAL -->
+      <div class="prog">
+        <div class="prog-h">
+          <div class="prog-ttl">Meta Anual 2026</div>
+          <div class="prog-pct">0%</div>
+        </div>
+        <div class="prog-trk"><div class="prog-fill" style="width:0%"></div></div>
+        <div class="prog-sub"><span>R$ 0,00 (Jan–Abr)</span><span>Meta: <strong>R$ 0,00</strong></span></div>
+      </div>
+
+      <!-- GRÁFICO DE EVOLUÇÃO (só o de barras — removido o doughnut) -->
+      <div class="card" style="margin-bottom:14px">
+        <div class="ct">◫ Evolução — Faturamento 2026</div>
+        <div class="ch-wrap"><canvas id="cFat"></canvas></div>
+      </div>
+
+      <div class="card" style="margin-bottom:14px">
+        <div class="ct">◈ Receitas · Despesas · Resultado</div>
+        <div class="ch-wrap-lg"><canvas id="cEvol"></canvas></div>
+      </div>
+
+      <!-- CARTA DO CONSULTOR -->
+      <div class="carta" id="carta-home">
+        <div class="carta-hd">
+          <span class="carta-ico">✦</span>
+          <span class="carta-ttl">Carta do Consultor</span>
+          <span class="carta-per" id="carta-periodo-home">—</span>
+        </div>
+        <div class="carta-txt" id="carta-texto-home">"Abril trouxe desafios típicos do período de sazonalidade, mas o controle operacional se manteve sólido. O foco agora é fortalecer o caixa para os meses de menor volume comercial e garantir que os recebimentos em aberto sejam convertidos antes do fechamento de maio. Estamos no caminho certo para retomar o ritmo de crescimento no segundo semestre."</div>
+        <div class="carta-ass">
+          <div class="carta-av"><img src="https://chanquinioperacional.github.io/dashboards/mari.jpg" alt="Mari Chanquini"/></div>
+          <div>
+            <div class="carta-an" id="carta-autor-home">Equipe Chanquini</div>
+            <div class="carta-as" id="carta-data-home">Estratégias Financeiras · 05/05/2026</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AVISOS -->
+      <div class="avisos">
+        <div class="av-t">🔔 Avisos da Chanquini</div>
+        <div class="av-g">
+          <div class="av-item"><div class="av-ico">🔔</div><div class="av-txt" id="aviso1">Próximo fechamento: entrega dos documentos até dia 03/06</div></div>
+          <div class="av-item"><div class="av-ico">✦</div><div class="av-txt" id="aviso2">Fechamento de — disponível no menu Dashboards</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAINEL FINANCEIRO -->
+    <div id="page-painel" class="page">
+      <div class="ph"><h1>Painel Financeiro</h1><p>Reserva de caixa, score histórico e vencimentos</p></div>
+
+      <!-- ── RUNWAY INTERATIVO ── -->
+      <div class="card" style="margin-bottom:14px">
+        <div class="ct">◉ Reserva de Caixa — Quantos dias seu dinheiro aguenta</div>
+        <div style="display:grid;grid-template-columns:160px 1fr;gap:28px;align-items:center;padding:8px 0">
+
+          <!-- Gauge -->
+          <div style="position:relative;width:160px;height:160px;flex-shrink:0">
+            <svg viewBox="0 0 160 160" width="160" height="160">
+              <circle cx="80" cy="80" r="64" fill="none" stroke="var(--border2)" stroke-width="10"/>
+              <circle cx="80" cy="80" r="64" fill="none" id="rw-arc-p"
+                stroke="#16A34A" stroke-width="10"
+                stroke-dasharray="402" stroke-dashoffset="100"
+                stroke-linecap="round"
+                transform="rotate(-90 80 80)"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+              <div style="font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--text);line-height:1" id="rw-days-p">75</div>
+              <div style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:2px">dias</div>
+              <div style="font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--muted);margin-top:4px" id="rw-meses-p">~2,5 meses</div>
+            </div>
+          </div>
+
+          <!-- Info + Slider -->
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--text);margin-bottom:6px">
+              Caixa suficiente para <span id="rw-meses-label-p" style="color:var(--green)">~2,5 meses</span>
+            </div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:14px">
+              Saldo disponível <strong id="rw-saldo-label-p">—</strong> ÷ saída diária estimada <strong id="rw-diario-p">—</strong><br>
+              Referência: 18/05/2026 
+            </div>
+
+            <!-- Slider interativo -->
+            <div style="background:var(--silver2);border-radius:10px;padding:14px 16px;margin-bottom:14px;border:1px solid var(--border)">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:600;color:var(--text);text-transform:uppercase;letter-spacing:.5px">Simular despesa mensal</span>
+                <span style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--text)" id="rw-slider-val-p">—</span>
+              </div>
+              <div style="font-size:11px;color:var(--muted);font-style:italic;margin-bottom:10px">
+                Arraste para simular diferentes cenários de despesa e ver o impacto na sua reserva de caixa
+              </div>
+              <input type="range" id="rw-slider-p"
+                min="20000" max="106199" step="1000" value="62174"
+                style="width:100%;accent-color:var(--gold);height:4px;cursor:pointer">
+              <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px">
+                <span>—</span><span style="color:var(--muted);font-style:italic">máx: saldo atual —</span>
+              </div>
+            </div>
+
+            <!-- Zonas -->
+            <div style="display:flex;gap:8px;flex-wrap:wrap" id="rw-zones-p">
+              <span class="rz critico">&lt;30d Crítico</span>
+              <span class="rz atencao">30–60d Atenção</span>
+              <span class="rz saudavel ativo">60–90d Saudável ✓</span>
+              <span class="rz seguro">&gt;90d Seguro</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TIMELINE DE VENCIMENTOS ── -->
+      <div class="timeline-card">
+        <div class="tl-header">
+          <div class="tl-title">◎ Vencimentos — Próximos 30 dias</div>
+          <div class="tl-legend">
+            <div class="tl-leg-item"><div class="tl-leg-dot" style="background:var(--red)"></div>Vencido</div>
+            <div class="tl-leg-item"><div class="tl-leg-dot" style="background:var(--yellow)"></div>Urgente ≤7d</div>
+            <div class="tl-leg-item"><div class="tl-leg-dot" style="background:var(--green)"></div>A vencer</div>
+          </div>
+        </div>
+        <div class="tl-list" id="tl-list"></div>
+      </div>
+    </div>
+
+    <!-- DASHBOARDS -->
+    <div id="page-dashboards" class="page">
+      <div class="ph"><h1>Dashboards</h1><p>Relatórios mensais de fechamento financeiro</p></div>
+      <div class="dg" id="dg"></div>
+    </div>
+
+    <!-- ESTRATÉGIA -->
+    <div id="page-estrategia" class="page">
+      <div class="ph"><h1>Estratégia</h1><p>Insights, calendário e placar de metas</p></div>
+
+      <!-- INSIGHTS + CALENDÁRIO LADO A LADO -->
+      <div class="estrat-grid">
+        <div class="card" style="margin-bottom:0">
+          <div class="ct">✦ Insights do Consultor</div>
+          <div class="ins-list">
+            <div class="ins-item"><div class="ins-n">1</div><div class="ins-txt"><strong>Inadimplência controlada em 3.4%</strong> — Dentro da meta de 5%. R$ 19.301,00 em atraso.</div></div>
+            <div class="ins-item"><div class="ins-n">2</div><div class="ins-txt"><strong>Resultado negativo em Abril</strong> — Saídas (R$ 0,00) superaram entradas (R$ 0,00) em R$ 890,10.</div></div>
+            <div class="ins-item"><div class="ins-n">3</div><div class="ins-txt"><strong>R$ 0,00 a pagar</strong> — Representa 762% do saldo (R$ 0,00). Gestão de caixa prioritária.</div></div>
+            <div class="ins-item"><div class="ins-n">4</div><div class="ins-txt"><strong>R$ 0,00 a receber</strong> — R$ 80.850,35 vencem nos próximos 30 dias.</div></div>
+            <div class="ins-item"><div class="ins-n">5</div><div class="ins-txt"><strong>Ritmo anualizado: R$ 1.094.530,92</strong> — Ano fecha em 30.4% da meta anual (R$ 0,00).</div></div>
+          </div>
+        </div>
+        <div class="card cal-compact" style="margin-bottom:0">
+          <div class="ct" style="margin-bottom:10px">◎ Calendário — Mai 2026</div>
+          <div id="cal"></div>
+          <div class="cl" style="flex-direction:column;gap:6px;margin-top:10px">
+            <div class="cl-i"><div class="cl-d" style="background:#7B2FBE;box-shadow:0 0 6px rgba(123,47,190,.5)"></div>Docs (dia 03)</div>
+            <div class="cl-i"><div class="cl-d" style="background:#C9A84C;box-shadow:0 0 6px rgba(201,168,76,.5)"></div>Fechamento (dia 05)</div>
+            <div class="cl-i"><div class="cl-d" style="background:#3B82F6;box-shadow:0 0 6px rgba(59,130,246,.5)"></div>Reunião (dia 10)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mg" style="margin-top:14px;display:none">
+        <div class="mc2"><div class="mc2-l">Meta Faturamento Mensal</div><div class="mc2-v" style="color:var(--yellow)">88.4%</div><div class="mc2-s">R$ 0,00 de R$ 100.000,00</div><div class="pl-trk"><div class="pl-fill" style="width:84%;background:linear-gradient(90deg,var(--yellow),var(--gold2))"width:88.4%"width:100%"></div></div></div>
+        <div class="mc2"><div class="mc2-l">Meta Faturamento Anual</div><div class="mc2-v" style="color:var(--q2)">30.4%</div><div class="mc2-s">R$ 0,00 de R$ 0,00</div><div class="pl-trk"><div class="pl-fill" style="width:31.4%;background:linear-gradient(90deg,var(--qdark),var(--q))"width:30.4%"width:100%"></div></div></div>
+        <div class="mc2"><div class="mc2-l">Margem Líquida</div><div class="mc2-v" style="color:var(--green)">-1.5%</div><div class="mc2-s">-1.0% atual · meta 65.0%</div><div class="pl-trk"><div class="pl-fill" style="width:94%;background:linear-gradient(90deg,var(--green),#4ADE80)"width:-1.5%"width:-194.3%"></div></div></div>
+        <div class="mc2"><div class="mc2-l">Redução de Custos</div><div class="mc2-v" style="color:var(--blue)">40%</div><div class="mc2-s">2% atual · meta 5%</div><div class="pl-trk"><div class="pl-fill" style="width:40%;background:linear-gradient(90deg,var(--blue),#60A5FA)"></div></div></div>
+      </div>
+
+      <div style="border-top:1px solid var(--border);margin:24px 0 20px"></div>
+      <div class="ph" style="margin-bottom:18px">
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--text);letter-spacing:-.3px">Metas 2026</h2>
+        <p>Acompanhamento dos objetivos financeiros</p>
+      </div>
+      <!-- 4 widgets grandes com números em destaque -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px">
+
+        <div class="card" style="padding:28px">
+          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">META FATURAMENTO MENSAL</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:var(--yellow);line-height:1;letter-spacing:-2px;margin-bottom:6px">84%</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px">— de —</div>
+          <div class="pl-trk"><div class="pl-fill" style="width:84%;background:linear-gradient(90deg,var(--yellow),#FCD34D)"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:8px"><span>—</span><span style="color:var(--yellow);font-weight:600">0% executado</span></div>
+        </div>
+
+        <div class="card" style="padding:28px">
+          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">META FATURAMENTO ANUAL</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:var(--q2);line-height:1;letter-spacing:-2px;margin-bottom:6px">31,4%</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px">— de —</div>
+          <div class="pl-trk"><div class="pl-fill" style="width:31.4%;background:linear-gradient(90deg,var(--qdark),var(--q2))"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:8px"><span>Jan → Abr 2026</span><span style="color:var(--q2);font-weight:600">31,4% executado</span></div>
+        </div>
+
+        <div class="card" style="padding:28px">
+          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">MARGEM LÍQUIDA</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:var(--green);line-height:1;letter-spacing:-2px;margin-bottom:6px">94%</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px">61% atual · meta 65%</div>
+          <div class="pl-trk"><div class="pl-fill" style="width:94%;background:linear-gradient(90deg,var(--green),#4ADE80)"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:8px"><span>94% da meta atingida</span><span style="color:var(--green);font-weight:600">Saudável</span></div>
+        </div>
+
+        <div class="card" style="padding:28px">
+          <div style="font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">REDUÇÃO DE CUSTOS</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:var(--blue);line-height:1;letter-spacing:-2px;margin-bottom:6px">40%</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:14px">2% atual · meta 5%</div>
+          <div class="pl-trk"><div class="pl-fill" style="width:40%;background:linear-gradient(90deg,var(--blue),#60A5FA)"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:8px"><span>40% da meta atingida</span><span style="color:var(--blue);font-weight:600">Em progresso</span></div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- GFE SCORE -->
+    <div id="page-score" class="page">
+      <div class="ph"><h1>GFE Score</h1><p>Saúde financeira em tempo real · 2026</p></div>
+
+      <!-- HERO: NÚMERO GRANDE + BARRAS -->
+      <div class="score-hero">
+        <!-- hexágono decorativo fundo -->
+        <svg class="score-hero-hex-bg" width="320" height="360" viewBox="0 0 100 110" fill="none">
+          <polygon points="50,4 93,27 93,83 50,106 7,83 7,27" fill="none" stroke="#C7B7AA" stroke-width="1" opacity="1"/>
+          <polygon points="50,12 86,32 86,78 50,98 14,78 14,32" fill="none" stroke="#C7B7AA" stroke-width="0.6" opacity="0.6"/>
+          <polygon points="50,22 80,38 80,72 50,88 20,72 20,38" fill="none" stroke="#C7B7AA" stroke-width="0.4" opacity="0.4"/>
+        </svg>
+
+        <!-- NÚMERO -->
+        <div class="score-num-wrap">
+          <!-- gauge circular SVG -->
+          <div class="score-gauge-wrap">
+            <svg width="160" height="160" viewBox="0 0 160 160">
+              <!-- trilha de fundo -->
+              <circle cx="80" cy="80" r="66" fill="none" stroke="rgba(199,183,170,.1)" stroke-width="6"/>
+              <!-- arco de progresso: 74/100 = 74% de 339.3 (circunferência) = 251 -->
+              <circle cx="80" cy="80" r="66" fill="none"
+                stroke="url(#scoreGrad)" stroke-width="6"
+                stroke-linecap="round"
+                stroke-dasharray="307 415"
+                stroke-dashoffset="78"
+                transform="rotate(-90 80 80)"/>
+              <!-- marcadores de faixa -->
+              <defs>
+                <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#b8966e"/>
+                  <stop offset="100%" stop-color="#C7B7AA"/>
+                </linearGradient>
+              </defs>
+              <!-- valor central -->
+              <text x="80" y="72" text-anchor="middle"
+                font-family="Questrial,sans-serif" font-size="38"
+                fill="#C7B7AA" letter-spacing="-2">74</text>
+              <text x="80" y="90" text-anchor="middle"
+                font-family="Bellefair,serif" font-size="9"
+                fill="rgba(199,183,170,.45)" letter-spacing="3">GFE SCORE</text>
+              <text x="80" y="108" text-anchor="middle"
+                font-family="Bellefair,serif" font-size="8"
+                fill="rgba(199,183,170,.3)" letter-spacing="2">/ 100</text>
+            </svg>
+          </div>
+          <div class="score-status-pill">
+            <div class="score-status-dot" style="background:#22C55E;box-shadow:0 0 6px rgba(34,197,94,.6)"></div>
+            Saudável
+          </div>
+        </div>
+
+        <!-- DIMENSÕES -->
+        <div class="score-right">
+          <div class="score-period">
+            Maio 2026 · Último fechamento
+            <span class="score-evol">↑ +5 pts vs Abril</span>
+          </div>
+          <div class="score-dims" id="score-dims">
+            <!-- gerado via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTÓRICO MENSAL -->
+      <div class="card" style="margin-bottom:14px">
+        <div class="ct">◎ Evolução do Score — 2026</div>
+        <div class="score-hist-grid" id="score-hist"></div>
+      </div>
+
+      <!-- ESCALA DE PONTUAÇÃO -->
+      <div class="score-scale-card">
+        <div class="score-scale-title">Escala de Pontuação</div>
+        <table class="score-scale-table">
+          <thead>
+            <tr>
+              <th>Score</th>
+              <th>Faixa</th>
+              <th>Significado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="score-scale-ico"><span class="ico">◻</span> Crítico</span></td>
+              <td><span class="scale-badge critico">0 – 40</span></td>
+              <td>Ação imediata necessária</td>
+            </tr>
+            <tr>
+              <td><span class="score-scale-ico"><span class="ico">◎</span> Em Alerta</span></td>
+              <td><span class="scale-badge alerta">41 – 65</span></td>
+              <td>Pontos de melhoria identificados</td>
+            </tr>
+            <tr>
+              <td><span class="score-scale-ico"><span class="ico">⬡</span> Saudável</span></td>
+              <td><span class="scale-badge saudavel">66 – 85</span></td>
+              <td>Gestão equilibrada</td>
+            </tr>
+            <tr>
+              <td><span class="score-scale-ico"><span class="ico">✦</span> Estratégico</span></td>
+              <td><span class="scale-badge estrategico">86 – 100</span></td>
+              <td>Excelência financeira</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- COMPOSIÇÃO DETALHADA -->
+      <div class="card">
+        <div class="ct">✦ Composição do Score — Cada dimensão impacta a pontuação final</div>
+        <div id="score-composicao" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px"></div>
+      </div>
+    </div>
+
+    <!-- RELATÓRIO ANUAL -->
+    <div id="page-relatorio" class="page">
+      <div class="ra-hero">
+        <div class="ra-line"></div>
+        <div class="ra-title">Relatório Anual 2026</div>
+        <div class="ra-sub">Visão consolidada do desempenho financeiro</div>
+        <div class="ra-kpis">
+          <div class="ra-kpi"><div class="ra-kv">R$ 0,00</div><div class="ra-kl">Faturamento Acumulado</div></div>
+          <div class="ra-kpi"><div class="ra-kv">R$ 0,00</div><div class="ra-kl">Despesas Acumuladas</div></div>
+          <div class="ra-kpi"><div class="ra-kv">R$ 0,00</div><div class="ra-kl">Resultado Acumulado</div></div>
+          <div class="ra-kpi"><div class="ra-kv">30.4%</div><div class="ra-kl">Meta Anual Executada</div></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="card"><div class="ct">◫ Faturamento Mensal</div><div class="ch-wrap-lg"><canvas id="cAnualFat"></canvas></div></div>
+        <div class="card"><div class="ct">◈ Resultado Mensal</div><div class="ch-wrap-lg"><canvas id="cAnualRes"></canvas></div></div>
+      </div>
+      <div class="card">
+        <div class="ct">◉ Progresso das Metas Anuais</div>
+        <div class="pl-item"><div class="pl-row"><span class="pl-lbl">Faturamento Anual — — de —</span><span class="pl-pcts" style="color:var(--q2);font-weight:700">28%</span></div><div class="pl-trk"><div class="pl-fill" style="width:31.4%;background:linear-gradient(90deg,var(--qdark),var(--q))"></div></div></div>
+        <div class="pl-item" style="margin-top:14px"><div class="pl-row"><span class="pl-lbl">Margem Líquida — 61% atual vs meta 65%</span><span class="pl-pcts" style="color:var(--yellow);font-weight:700">94% da meta</span></div><div class="pl-trk"><div class="pl-fill" style="width:94%;background:linear-gradient(90deg,var(--yellow),var(--gold2))"></div></div></div>
+        <div class="pl-item" style="margin-top:14px"><div class="pl-row"><span class="pl-lbl">Redução de Custos — 2% atual vs meta 5%</span><span class="pl-pcts" style="color:var(--green);font-weight:700">40% da meta</span></div><div class="pl-trk"><div class="pl-fill" style="width:40%;background:linear-gradient(90deg,var(--green),#4ADE80)"></div></div></div>
+      </div>
+    </div>
+
+    <!-- CARTAS DO CONSULTOR -->
+    <div id="page-cartas" class="page">
+      <div class="ph"><h1>Cartas do Consultor</h1><p>Histórico de análises mensais da Chanquini</p></div>
+      <div class="cartas-grid" id="cartas-grid"></div>
+    </div>
+
+    <!-- DOCUMENTOS -->
+    <div id="page-documentos" class="page">
+      <div class="ph"><h1>Documentos Importantes</h1><p>Arquivos e contratos</p></div>
+      <div class="docs">
+        <div class="dcard"><div class="dh"><span style="color:var(--gold2)">◻</span>Contratos</div><div class="di"><div><div class="dn">Contrato de Prestação de Serviços — Chanquini · 2026.pdf</div><div class="ds2">Em breve</div></div><button class="bdo">Visualizar</button></div></div>
+        <div class="dcard"><div class="dh"><span style="color:var(--silver)">◻</span>Relatórios Especiais</div><div class="di"><div><div class="dn">Diagnóstico Financeiro Inicial — Março 2026.pdf</div><div class="ds2">Em breve</div></div><button class="bdo">Visualizar</button></div></div>
+        <div class="dcard"><div class="dh"><span style="color:var(--green)">◻</span>Propostas</div><div class="di"><div><div class="dn">Proposta Comercial Chanquini — Janeiro 2026.pdf</div><div class="ds2">Em breve</div></div><button class="bdo">Visualizar</button></div></div>
+      </div>
+      <div class="dn2">Para adicionar documentos, entre em contato com a equipe Chanquini.</div>
+    </div>
+
+    <!-- PERFIL -->
+    <div id="page-perfil" class="page">
+      <div class="ph"><h1>Perfil da Empresa</h1><p>Informações estratégicas e indicadores acompanhados.</p></div>
+      <div class="pg">
+        <div class="card"><div class="ct">⬡ Identificação</div><div class="pr"><span class="pl2">Nome</span><span class="pv" id="pf-nome">—</span></div><div class="pr"><span class="pl2">Segmento</span><span class="pv" id="pf-seg" style="max-width:200px">—</span></div><div class="pr"><span class="pl2">Regime Tributário</span><span class="pv">Simples Nacional</span></div><div class="pr"><span class="pl2">BPO Financeiro</span><span class="pv">Chanquini</span></div></div>
+        <div class="card"><div class="ct">◈ Metas Financeiras</div><div class="pr"><span class="pl2">Faturamento Mensal</span><span class="pv">—</span></div><div class="pr"><span class="pl2">Faturamento Anual</span><span class="pv">—</span></div><div class="pr"><span class="pl2">Margem Líquida Desejada</span><span class="pv">65%</span></div><div class="pr"><span class="pl2">Redução de Custos</span><span class="pv">5%</span></div></div>
+      </div>
+      <div class="mh"><div class="mh-orb"></div><div class="mhl">Margem Líquida Desejada</div><div class="mhv">65%</div><div class="mhs">Sobre o faturamento líquido projetado</div></div>
+      <div class="card"><div class="ct">◎ Indicadores Acompanhados</div><div class="ind"><span class="it">Faturamento Bruto</span><span class="it">Receita Líquida</span><span class="it">Margem Bruta</span><span class="it">Margem Líquida</span><span class="it">EBITDA</span><span class="it">Ticket Médio</span><span class="it">CMV</span><span class="it">Inadimplência</span><span class="it">Fluxo de Caixa</span><span class="it">Contas a Pagar/Receber</span><span class="it">Capital de Giro</span></div></div>
+    </div>
+
+    <!-- CONTATO -->
+    <div id="page-contato" class="page">
+      <div class="ph"><h1>Contato Chanquini</h1><p>Estamos prontos para apoiar suas decisões financeiras.</p></div>
+      <div class="cw">
+        <div class="ccard">
+          <div class="ctl">
+            <div class="ct-hex">
+              <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" width="52" height="52">
+                <polygon points="26,3 48,15 48,37 26,49 4,37 4,15" fill="rgba(184,150,110,.1)"/>
+                <polygon points="26,3 48,15 48,37 26,49 4,37 4,15" fill="none" stroke="rgba(184,150,110,.6)" stroke-width="1.5"/>
+              </svg>
+              <div class="ct-hex-txt">C</div>
+            </div>
+            <div class="cts"></div>
+            <div class="ctc">CHANQUINI<span>Estratégias Financeiras</span></div>
+          </div>
+          <div class="ctt">"Dúvidas ou precisando de suporte?<br>Fale com sua equipe."</div>
+          <div class="ctbs">
+            <a class="bw" href="https://wa.me/5500000000000" target="_blank">💬 Falar no WhatsApp</a>
+            <a class="be" href="mailto:contato@chanquini.com.br">✉ Enviar E-mail</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="pf">
+    <div class="pfl">Chanquini Estratégias Financeiras © 2026</div>
+    <div class="pfr">GFE · Portal Financeiro · v5.0</div>
+  </footer>
+</div>
+
+<!-- MODAL CARTA -->
+<div class="modal-overlay" id="modal-carta">
+  <div class="modal-box">
+    <div class="modal-close" onclick="closeModal()">✕</div>
+    <div class="modal-mes" id="modal-mes"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-txt" id="modal-txt"></div>
+    <div class="modal-ass">
+      <div class="modal-av"><img src="https://chanquinioperacional.github.io/dashboards/mari.jpg" alt="Mari Chanquini" style="width:100%;height:100%;object-fit:cover;object-position:center 15%"/></div>
+      <div><div class="modal-an">Equipe Chanquini</div><div class="modal-as">Estratégias Financeiras</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- APRESENTAÇÃO -->
+<div id="presentation">
+  <div class="pres-close" onclick="closePresentation()">✕</div>
+  <div class="pres-slide" id="pres-slide"></div>
+  <div class="pres-nav">
+    <button class="pres-btn" onclick="presNav(-1)">← Anterior</button>
+    <div class="pres-counter" id="pres-counter">1 / 4</div>
+    <button class="pres-btn" onclick="presNav(1)">Próximo →</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="ap-box">
+    <div class="ap-header">
+      <div class="ap-title">⚙ Painel Admin</div>
+      <div class="ap-close" onclick="closeAdmin()">✕</div>
+    </div>
+    <div class="ap-section">
+      <div class="ap-sec-title">✦ Carta do Consultor</div>
+      <div class="ap-row">
+        <div class="ap-field"><label>Período</label><input type="text" id="ap-carta-periodo" placeholder="Ex: Maio 2026"/></div>
+        <div class="ap-field"><label>Autor</label><input type="text" id="ap-carta-autor" placeholder="Ex: Equipe Chanquini"/></div>
+      </div>
+      <div class="ap-field"><label>Data</label><input type="text" id="ap-carta-data" placeholder="Ex: Estratégias Financeiras · 05/06/2026"/></div>
+      <div class="ap-field"><label>Texto da Carta</label><textarea id="ap-carta-txt" placeholder="Digite o texto da carta aqui..."></textarea></div>
+    </div>
+    <div class="ap-section">
+      <div class="ap-sec-title">🔔 Avisos</div>
+      <div class="ap-field"><label>Aviso 1</label><input type="text" id="ap-aviso1" placeholder="Texto do aviso 1"/></div>
+      <div class="ap-field"><label>Aviso 2</label><input type="text" id="ap-aviso2" placeholder="Texto do aviso 2"/></div>
+    </div>
+    <div class="ap-section">
+      <div class="ap-sec-title">⬡ GFE Score / Status</div>
+      <div class="ap-row">
+        <div class="ap-field"><label>Status</label>
+          <select id="ap-term-status" style="color:var(--text);background:rgba(255,255,255,.04)">
+            <option value="Verde">● Saudável</option>
+            <option value="Amarelo">● Atenção</option>
+            <option value="Vermelho">● Crítico</option>
+          </select>
+        </div>
+        <div class="ap-field"><label>Texto do Mês</label><input type="text" id="ap-term-txt" placeholder="Ex: Maio 2026 — No caminho certo"/></div>
+      </div>
+    </div>
+    <button class="ap-btn save" onclick="saveAdmin()">Salvar Alterações</button>
+    <div class="ap-success" id="ap-success">✦ Alterações salvas com sucesso!</div>
+  </div>
+</div>
+
+<div class="wm" id="wm">Chanquini · GFE · Portal Privado</div>
+
+
+<script>
+
+// ══ CONFIG — EDITE AQUI TODO MÊS ══════════════════════════════════════
+const CFG = {
+  email:"cliente@empresa.com.br",
+  senha:"senha2026",
+  senhaAdmin:"admin2026",
+  cliente:{ nome:"Minha Empresa", segmento:"" },
+  meta: 100000,
+  dashboards:{},
+  cartas:[]
+};
+// ══════════════════════════════════════════════════════════════════════
+
+const dadosMensais={labels:[],fat:[],desp:[],res:[]};
+
+// SPLASH → LOGIN
+setTimeout(()=>{
+  document.getElementById('splash').style.display='none';
+  const l=document.getElementById('login');l.style.display='flex';
+  setTimeout(()=>l.classList.add('vis'),10);
+},2900);
+
+// CLOCK
+function tick(){
+  const n=new Date(),h=String(n.getHours()).padStart(2,'0'),m=String(n.getMinutes()).padStart(2,'0');
+  const hr=n.getHours(),g=hr<12?'Bom dia,':hr<18?'Boa tarde,':'Boa noite,';
+  const ds=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'],
+        ms=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],
+        ml=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const id=x=>document.getElementById(x);
+  if(id('gbt'))id('gbt').textContent=`${h}:${m}`;
+  if(id('gbg'))id('gbg').textContent=g;
+  if(id('gbds'))id('gbds').textContent=`${ds[n.getDay()]}, ${n.getDate()} ${ms[n.getMonth()]}`;
+  if(id('tbdt'))id('tbdt').textContent=`${ds[n.getDay()]}, ${n.getDate()} de ${ml[n.getMonth()]}`;
+}
+setInterval(tick,1000);tick();
+
+// LOGIN
+// Preenche e-mail salvo se lembrar estiver ativo
+window.addEventListener('DOMContentLoaded',()=>{
+  const saved=localStorage.getItem('gfe_email');
+  if(saved){
+    document.getElementById('le').value=saved;
+    document.getElementById('lembrar').checked=true;
+  }
+});
+
+function login(){
+  const e=document.getElementById('le').value.trim(),s=document.getElementById('lp').value;
+  const lembrar=document.getElementById('lembrar').checked;
+  const err=document.getElementById('lerr');
+  if(e===CFG.email&&(s===CFG.senha||s===CFG.senhaAdmin)){
+    if(lembrar){localStorage.setItem('gfe_email',e);}
+    else{localStorage.removeItem('gfe_email');}
+    const isAdmin=s===CFG.senhaAdmin;
+    const l=document.getElementById('login');l.classList.remove('vis');
+    setTimeout(()=>{l.style.display='none';},400);
+    document.getElementById('portal').style.display='block';
+    document.getElementById('wm').style.display='block';
+    document.getElementById('btn-admin').style.display=isAdmin?'flex':'none';
+    // preenche dados do cliente
+    const id=x=>document.getElementById(x);
+    if(id('ucn-name'))id('ucn-name').textContent=CFG.cliente.nome;
+    if(id('gb-client-name'))id('gb-client-name').textContent=CFG.cliente.nome+' 👋';
+    if(id('pf-nome'))id('pf-nome').textContent=CFG.cliente.nome;
+    if(id('pf-seg'))id('pf-seg').textContent=CFG.cliente.segmento;
+    buildDash();buildCal();buildCartas();buildScore();buildScoreAuto();buildRunway();buildTimeline();initCharts();initAnualCharts();
+  }else{
+    err.style.display='block';
+    document.getElementById('lp').style.borderColor='var(--red)';
+    setTimeout(()=>{err.style.display='none';document.getElementById('lp').style.borderColor='';},3000);
+  }
+}
+
+function logout(){
+  document.getElementById('portal').style.display='none';
+  document.getElementById('wm').style.display='none';
+  document.getElementById('le').value='';
+  document.getElementById('lp').value='';
+  const l=document.getElementById('login');l.style.display='flex';
+  setTimeout(()=>l.classList.add('vis'),10);
+}
+
+// NAV
+const PNS={inicio:'Início',dashboards:'Dashboards',painel:'Painel Financeiro',estrategia:'Estratégia',score:'GFE Score',relatorio:'Relatório Anual',cartas:'Cartas do Consultor',documentos:'Documentos',perfil:'Perfil da Empresa',contato:'Contato Chanquini'};
+function nav(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(el)el.classList.add('active');
+  document.getElementById('tbpg').textContent=PNS[id]||id;
+  if(id==='relatorio')initAnualCharts();
+}
+
+// NOTIF
+function toggleNotif(){document.getElementById('np').classList.toggle('open')}
+function clearN(){
+  document.getElementById('np').innerHTML='<div class="np-h"><div class="np-ht">Notificações</div></div><div style="padding:22px;text-align:center;font-size:11.5px;color:var(--muted);font-style:italic">Nenhuma notificação pendente ✦</div>';
+  document.getElementById('nbd').style.display='none';
+  document.getElementById('nd').style.display='none';
+}
+document.addEventListener('click',e=>{if(!e.target.closest('.nb')&&!e.target.closest('.np'))document.getElementById('np')?.classList.remove('open');});
+
+// TEMA — CLARO é padrão, ESCURO é opção
+let light=true; // começa claro
+const LIGHT={
+  '--bg':'#F5F4F2','--card':'#FFFFFF','--card2':'#F0EDE8',
+  '--border':'#E2DBD4','--border2':'#CFC6BC',
+  '--text':'#0e1a3a','--text2':'#2d3a5a','--muted':'#7a7065','--muted2':'#a89f94',
+  '--silver':'#8A7F74','--silver2':'#EDE8E2',
+  '--gold':'#b8966e','--gold2':'#d4b896','--gold3':'rgba(184,150,110,.15)',
+  '--green':'#16A34A','--gbg':'rgba(22,163,74,.1)','--gborder':'rgba(22,163,74,.25)',
+  '--red':'#DC2626','--rbg':'rgba(220,38,38,.1)','--rborder':'rgba(220,38,38,.25)',
+  '--yellow':'#B45309','--ybg':'rgba(180,83,9,.1)','--yborder':'rgba(180,83,9,.25)',
+  '--blue':'#1D4ED8','--bbg':'rgba(29,78,216,.1)',
+  '--grid-color':'rgba(14,26,58,.07)','--chart-txt':'#7a7065','--meta-line':'rgba(14,26,58,.2)',
+  '--tb-bg':'rgba(245,244,242,.95)','--tb-border':'#E2DBD4',
+  '--sh':'0 1px 4px rgba(14,26,58,.07),0 4px 16px rgba(14,26,58,.06)',
+  '--sh2':'0 8px 32px rgba(14,26,58,.12)',
+  '--carta-txt':'#1a2540',
+};
+const DARK={
+  '--bg':'#0B1220','--card':'#111C32','--card2':'#162238',
+  '--border':'#1E2E48','--border2':'#273D5E',
+  '--text':'#EEF2FA','--text2':'#B0C0DA','--muted':'#607090','--muted2':'#384E6A',
+  '--silver':'#8A9BB8','--silver2':'#1A2B44',
+  '--gold':'#C9A84C','--gold2':'#E8C96A','--gold3':'rgba(201,168,76,.15)',
+  '--green':'#22C55E','--gbg':'rgba(34,197,94,.12)','--gborder':'rgba(34,197,94,.28)',
+  '--red':'#EF4444','--rbg':'rgba(239,68,68,.12)','--rborder':'rgba(239,68,68,.28)',
+  '--yellow':'#F59E0B','--ybg':'rgba(245,158,11,.12)','--yborder':'rgba(245,158,11,.28)',
+  '--blue':'#3B82F6','--bbg':'rgba(59,130,246,.12)',
+  '--grid-color':'rgba(255,255,255,.05)','--chart-txt':'#8A9BB8','--meta-line':'rgba(255,255,255,.18)',
+  '--tb-bg':'rgba(11,18,32,.95)','--tb-border':'#1E2E48',
+  '--sh':'0 1px 3px rgba(0,0,0,.35),0 4px 16px rgba(0,0,0,.25)',
+  '--sh2':'0 8px 32px rgba(0,0,0,.5)',
+  '--carta-txt':'#B0C0DA',
+};
+function applyTheme(t){Object.entries(t).forEach(([k,v])=>document.documentElement.style.setProperty(k,v));}
+function toggleTheme(){
+  light=!light;
+  applyTheme(light?LIGHT:DARK);
+  document.getElementById('thi').textContent=light?'🌙':'☀';
+  document.getElementById('thl').textContent=light?'Modo escuro':'Modo claro';
+  initCharts();
+  if(document.getElementById('page-relatorio').classList.contains('active'))initAnualCharts();
+}
+// aplica tema claro no carregamento
+applyTheme(LIGHT);
+
+// DASH CARDS
+function buildDash(){
+  const hoje_=new Date();const meses=Array.from({length:6},(_,i)=>{const d=new Date(hoje_.getFullYear(),hoje_.getMonth()+i,1);return d.toLocaleDateString("pt-BR",{month:"long",year:"numeric"}).replace(/^./,s=>s.toUpperCase());});
+  const g=document.getElementById('dg');g.innerHTML='';
+  meses.forEach(mes=>{
+    const d=CFG.dashboards[mes],av=!!d,c=document.createElement('div');
+    c.className='dc '+(av?'av':'lk');
+    if(av)c.onclick=()=>window.open(d.url,'_blank');
+    c.innerHTML=`<div class="dc-ico">${av?'◫':'◻'}</div><div class="dc-m">${mes}</div><button class="bd ${av?'on':'off'}">${av?'Ver Dashboard':'Em breve'}</button>${av?`<div class="dc-del">Entregue em ${d.entrega}</div>`:''}`;
+    g.appendChild(c);
+  });
+}
+
+// CALENDÁRIO
+function buildCal(){
+  const hl={3:'hq',5:'hn',10:'hg'},sd=5,tot=31,ds=['D','S','T','Q','Q','S','S'];
+  let h='<div class="cg">';
+  ds.forEach(d=>{h+=`<div class="cdh">${d}</div>`;});
+  for(let i=0;i<sd;i++)h+='<div class="cd e"></div>';
+  for(let d=1;d<=tot;d++)h+=`<div class="cd ${hl[d]||'n'}">${d}</div>`;
+  h+='</div>';
+  const el=document.getElementById('cal');if(el)el.innerHTML=h;
+}
+
+// CARTAS
+function buildCartas(){
+  const g=document.getElementById('cartas-grid');if(!g)return;g.innerHTML='';
+  CFG.cartas.forEach((c,i)=>{
+    const div=document.createElement('div');div.className='ch-card';
+    div.innerHTML=`<div class="ch-mes">${c.mes}</div><div class="ch-titulo">${c.titulo}</div><div class="ch-preview">${c.texto.substring(0,110)}...</div><div class="ch-footer"><span class="ch-autor">Chanquini · ${c.data}</span><span class="ch-ler">Ler completo →</span></div>`;
+    div.onclick=()=>openModal(i);
+    g.appendChild(div);
+  });
+}
+
+function openModal(i){
+  const c=CFG.cartas[i];
+  document.getElementById('modal-mes').textContent=c.mes;
+  document.getElementById('modal-title').textContent=c.titulo;
+  document.getElementById('modal-txt').textContent=c.texto;
+  document.getElementById('modal-carta').classList.add('open');
+}
+function closeModal(){document.getElementById('modal-carta').classList.remove('open')}
+
+// GRÁFICOS
+let charts={};
+function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
+
+function getCSSVar(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+
+function initCharts(){
+  const gridColor=getCSSVar('--grid-color')||'rgba(255,255,255,.05)';
+  const chartTxt=getCSSVar('--chart-txt')||'#8A9BB8';
+  const metaLine=getCSSVar('--meta-line')||'rgba(255,255,255,.18)';
+  const font={family:'DM Sans',size:10};
+  Chart.defaults.color=chartTxt;
+
+  destroyChart('cFat');
+  charts['cFat']=new Chart(document.getElementById('cFat'),{
+    type:'line',
+    data:{
+      labels:dadosMensais.labels,
+      datasets:[
+        {label:'Faturamento',data:dadosMensais.fat,borderColor:'rgba(59,130,246,.85)',backgroundColor:'rgba(59,130,246,.07)',fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'rgba(59,130,246,.95)',borderWidth:2},
+        {label:'Meta Mensal',data:[140383,140383,140383,140383,140383],borderColor:metaLine,borderDash:[6,4],fill:false,tension:0,pointRadius:0,borderWidth:1.5}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font,boxWidth:8,padding:12,color:chartTxt}}},scales:{y:{ticks:{callback:v=>'R$'+(Math.abs(v)/1000).toFixed(0)+'k',font,color:chartTxt},grid:{color:gridColor}},x:{ticks:{font,color:chartTxt},grid:{display:false}}}}
+  });
+
+  destroyChart('cEvol');
+  charts['cEvol']=new Chart(document.getElementById('cEvol'),{
+    type:'bar',
+    data:{
+      labels:dadosMensais.labels,
+      datasets:[
+        {label:'Receitas',data:dadosMensais.fat,backgroundColor:'rgba(34,197,94,.65)',borderRadius:5,borderSkipped:false},
+        {label:'Despesas',data:dadosMensais.desp,backgroundColor:'rgba(239,68,68,.65)',borderRadius:5,borderSkipped:false},
+        {label:'Resultado',data:dadosMensais.res,backgroundColor:dadosMensais.res.map(v=>v>=0?'rgba(201,168,76,.75)':'rgba(239,68,68,.35)'),borderRadius:5,borderSkipped:false}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font,boxWidth:8,padding:12,color:chartTxt}}},scales:{y:{ticks:{callback:v=>'R$'+(Math.abs(v)/1000).toFixed(0)+'k',font,color:chartTxt},grid:{color:gridColor}},x:{ticks:{font,color:chartTxt},grid:{display:false}}}}
+  });
+}
+
+function initAnualCharts(){
+  const gridColor=getCSSVar('--grid-color')||'rgba(255,255,255,.05)';
+  const chartTxt=getCSSVar('--chart-txt')||'#8A9BB8';
+  const font={family:'DM Sans',size:10};
+
+  destroyChart('cAnualFat');
+  charts['cAnualFat']=new Chart(document.getElementById('cAnualFat'),{
+    type:'bar',
+    data:{labels:dadosMensais.labels,datasets:[
+      {label:'Faturamento',data:dadosMensais.fat,backgroundColor:'rgba(201,168,76,.7)',borderRadius:6,borderSkipped:false},
+      {label:'Meta',data:[140383,140383,140383,140383],backgroundColor:light?'rgba(28,43,74,.12)':'rgba(255,255,255,.07)',borderRadius:6,borderSkipped:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font,boxWidth:8,padding:12,color:chartTxt}}},scales:{y:{ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'k',font,color:chartTxt},grid:{color:gridColor}},x:{ticks:{font,color:chartTxt},grid:{display:false}}}}
+  });
+
+  destroyChart('cAnualRes');
+  charts['cAnualRes']=new Chart(document.getElementById('cAnualRes'),{
+    type:'bar',
+    data:{labels:dadosMensais.labels,datasets:[{label:'Resultado',data:dadosMensais.res,backgroundColor:dadosMensais.res.map(v=>v>=0?'rgba(34,197,94,.7)':'rgba(239,68,68,.7)'),borderRadius:6,borderSkipped:false}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font,boxWidth:8,padding:12,color:chartTxt}}},scales:{y:{ticks:{callback:v=>'R$'+(v/1000).toFixed(0)+'k',font,color:chartTxt},grid:{color:gridColor}},x:{ticks:{font,color:chartTxt},grid:{display:false}}}}
+  });
+}
+
+// ══ RUNWAY DE CAIXA ══════════════════════════════════════════════════════
+const RUNWAY_CFG = {saldo:0, despMensal:1, dataRef:"—"};
+
+function buildRunway(){
+  const {saldo, despMensal} = RUNWAY_CFG;
+
+  function fmt3(v){return 'R$ '+Math.round(v).toLocaleString('pt-BR');}
+
+  function update(desp){
+    const despDia = desp / 30;
+    const days = Math.round(saldo / despDia);
+    const meses = (days / 30).toFixed(1);
+    const mesesStr = '~' + meses + ' meses';
+
+    // IDs página Painel
+    const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+    set('rw-days-p', days);
+    set('rw-meses-p', mesesStr);
+    set('rw-meses-label-p', mesesStr);
+    set('rw-diario-p', fmt3(despDia) + '/dia');
+    set('rw-slider-val-p', fmt3(desp));
+
+    // Cor e arco do gauge
+    const cor = days < 30 ? '#DC2626' : days < 60 ? '#B45309' : days < 90 ? '#16A34A' : '#1D4ED8';
+    const arc = document.getElementById('rw-arc-p');
+    if(arc){
+      const circ = 402;
+      const pct = Math.min(days / 120, 1);
+      const offset = circ - circ * pct;
+      arc.setAttribute('stroke-dashoffset', offset + circ * 0.25);
+      arc.style.stroke = cor;
+    }
+
+    // Label de cor do meses
+    const lblMeses = document.getElementById('rw-meses-label-p');
+    if(lblMeses) lblMeses.style.color = cor;
+
+    // Zonas ativas
+    const zonesEl = document.getElementById('rw-zones-p');
+    if(zonesEl){
+      zonesEl.querySelectorAll('.rz').forEach(z => z.classList.remove('ativo'));
+      const idx = days < 30 ? 0 : days < 60 ? 1 : days < 90 ? 2 : 3;
+      const zones = zonesEl.querySelectorAll('.rz');
+      if(zones[idx]) zones[idx].classList.add('ativo');
+    }
+  }
+
+  // Inicializa com despesa configurada
+  update(despMensal);
+
+  // Listener do slider
+  const slider = document.getElementById('rw-slider-p');
+  if(slider){
+    slider.addEventListener('input', () => update(parseInt(slider.value)));
+  }
+}
+
+// ══ SCORE GFE HISTÓRICO AUTOMÁTICO ═══════════════════════════════════════
+function buildScoreAuto(){
+  const grid = document.getElementById('score-auto-grid');
+  if(!grid) return;
+  grid.innerHTML = SCORE_CFG.historico.map((h, i) => {
+    const st = SCORE_LABELS[h.status] || SCORE_LABELS.saudavel;
+    const prev = i > 0 ? SCORE_CFG.historico[i-1].val : null;
+    const delta = prev !== null ? h.val - prev : null;
+    const deltaHtml = delta !== null
+      ? `<div class="sa-delta ${delta > 0 ? 'up' : delta < 0 ? 'down' : 'eq'}">${delta > 0 ? '↑ +' : delta < 0 ? '↓ ' : '= '}${delta}</div>`
+      : '<div class="sa-delta eq">—</div>';
+    return `
+    <div class="score-auto-card ${h.status}${h.atual ? ' ativo' : ''}">
+      <div class="sa-mes">${h.mes} 2026${h.atual ? ' ✦' : ''}</div>
+      <div class="sa-val ${h.status}">${h.val}</div>
+      <div class="sa-lbl">${st.txt}</div>
+      ${deltaHtml}
+    </div>`;
+  }).join('');
+}
+
+// ══ TIMELINE DE VENCIMENTOS ═══════════════════════════════════════════════
+// Dados dos vencimentos — atualize todo mês junto com os cards de período
+const VENCIMENTOS = [];
+
+function buildTimeline(){
+  const list = document.getElementById('tl-list');
+  if(!list) return;
+
+  const hoje = new Date();
+  const itens = VENCIMENTOS.map(v => {
+    const mesNum = {Jan:0,Fev:1,Mar:2,Abr:3,Mai:4,Jun:5,Jul:6,Ago:7,Set:8,Out:9,Nov:10,Dez:11}[v.mes] ?? 4;
+    const dataVenc = new Date(2026, mesNum, v.dia);
+    const diffDias = Math.round((dataVenc - hoje) / (1000*60*60*24));
+    return {...v, diffDias, dataVenc};
+  }).sort((a,b) => a.diffDias - b.diffDias);
+
+  if(!itens.length){
+    list.innerHTML = '<div class="tl-empty">Nenhum vencimento nos próximos 30 dias</div>';
+    return;
+  }
+
+  list.innerHTML = itens.map(v => {
+    const cls = v.diffDias < 0 ? 'vencido' : v.diffDias <= 7 ? 'urgente' : 'ok';
+    const lbl = v.diffDias < 0 ? `${Math.abs(v.diffDias)}d atrasado` : v.diffDias === 0 ? 'Hoje' : `em ${v.diffDias}d`;
+    const tipoCor = v.tipo === 'receber' ? 'color:var(--blue)' : 'color:var(--red)';
+    const tipoLbl = v.tipo === 'receber' ? '↓ A Receber' : '↑ A Pagar';
+    return `
+    <div class="tl-item ${cls}">
+      <div class="tl-date">
+        <div class="tl-day">${String(v.dia).padStart(2,'0')}</div>
+        <div class="tl-month">${v.mes}</div>
+      </div>
+      <div class="tl-body">
+        <div class="tl-nome">${v.nome}</div>
+        <div class="tl-tipo" style="${tipoCor}">${tipoLbl} · ${lbl}</div>
+      </div>
+      <div class="tl-valor">
+        <div class="tl-val-num">${v.valor}</div>
+        <div class="tl-val-lbl">vencimento</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+// ══════════════════════════════════════════════════════════════════════════
+
+
+const SCORE_CFG = {
+  atual:0, status:'alerta', periodo:'—', evolucao:'+0',
+  dims:[
+    {nome:'Liquidez',val:0,prev:0,peso:'25%',descr:'Aguardando dados'},
+    {nome:'Inadimplência',val:0,prev:0,peso:'25%',descr:'Aguardando dados'},
+    {nome:'Margem',val:0,prev:0,peso:'20%',descr:'Aguardando dados'},
+    {nome:'Fluxo de Caixa',val:0,prev:0,peso:'20%',descr:'Aguardando dados'},
+    {nome:'Organização',val:0,prev:0,peso:'10%',descr:'Aguardando dados'},
+  ],
+  historico:[]
+};
+
+const SCORE_LABELS = {
+  critico:    {txt:'Crítico',     cls:'critico',    cor:'#EF4444'},
+  alerta:     {txt:'Em Alerta',   cls:'alerta',     cor:'#F59E0B'},
+  saudavel:   {txt:'Saudável',    cls:'saudavel',   cor:'#22C55E'},
+  estrategico:{txt:'Estratégico', cls:'estrategico',cor:'#C7B7AA'},
+};
+
+function getScoreStatus(v){
+  if(v<=40)return'critico'; if(v<=65)return'alerta'; if(v<=85)return'saudavel'; return'estrategico';
+}
+
+function buildScore(){
+  // --- dimensões na hero ---
+  const dims = document.getElementById('score-dims');
+  if(!dims) return;
+  dims.innerHTML = SCORE_CFG.dims.map(d => {
+    const delta = d.val - d.prev;
+    const deltaClass = delta > 0 ? 'up' : delta < 0 ? 'down' : 'eq';
+    const deltaTxt = delta > 0 ? `↑ +${delta}` : delta < 0 ? `↓ ${delta}` : `= 0`;
+    return `
+    <div class="score-dim">
+      <div class="score-dim-top">
+        <span class="score-dim-name">${d.nome}</span>
+        <span class="score-dim-val">${d.val}<span class="score-dim-delta ${deltaClass}">${deltaTxt}</span></span>
+      </div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill" style="width:${d.val}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // --- histórico ---
+  const hist = document.getElementById('score-hist');
+  if(hist){
+    hist.innerHTML = SCORE_CFG.historico.map(h => {
+      const st = SCORE_LABELS[h.status];
+      const delta = SCORE_CFG.historico.indexOf(h) > 0
+        ? h.val - SCORE_CFG.historico[SCORE_CFG.historico.indexOf(h)-1].val : null;
+      return `
+      <div class="score-hist-card${h.atual?' active':''}">
+        <div class="score-hist-mes">${h.mes} 2026</div>
+        <div class="score-hist-val" style="color:${st.cor}">${h.val}</div>
+        <div class="score-hist-lbl">${st.txt}</div>
+        ${delta!==null?`<div class="score-hist-delta" style="color:${delta>=0?'#22C55E':'#EF4444'}">${delta>=0?'↑ +'+delta:'↓ '+delta}</div>`:'<div class="score-hist-delta" style="color:var(--muted)">—</div>'}
+      </div>`;
+    }).join('');
+  }
+
+  // --- composição detalhada ---
+  const comp = document.getElementById('score-composicao');
+  if(comp){
+    comp.innerHTML = SCORE_CFG.dims.map(d => {
+      const st = getScoreStatus(d.val);
+      const stData = SCORE_LABELS[st];
+      const bar = `<div style="background:var(--border2);border-radius:20px;height:3px;overflow:hidden;margin-top:10px">
+        <div style="height:3px;border-radius:20px;width:${d.val}%;background:linear-gradient(to right,#b8966e,#C7B7AA);transition:width 1s ease"></div></div>`;
+      return `
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;transition:var(--tr)" onmouseenter="this.style.background='var(--card2)'" onmouseleave="this.style.background='var(--card)'">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">
+          <div>
+            <div style="font-family:'Questrial',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">${d.nome}</div>
+            <div style="font-size:10.5px;color:var(--muted);margin-top:3px;font-style:italic">${d.descr}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;margin-left:12px">
+            <div style="font-family:'Questrial',sans-serif;font-size:24px;color:#C7B7AA;line-height:1">${d.val}</div>
+            <div style="margin-top:4px"><span class="scale-badge ${stData.cls}" style="font-size:9px;padding:2px 7px">${stData.txt}</span></div>
+          </div>
+        </div>
+        <div style="font-size:9px;color:var(--muted);font-family:'Bellefair',serif;letter-spacing:2px;text-transform:uppercase;margin-top:8px">Peso: ${d.peso}</div>
+        ${bar}
+      </div>`;
+    }).join('');
+  }
+}
+// ══════════════════════════════════════════════════════════════════════
+
+
+const presSlides=[];
+let presIdx=0;
+
+function openPresentation(){document.getElementById('presentation').classList.add('open');presIdx=0;renderSlide();}
+function closePresentation(){document.getElementById('presentation').classList.remove('open')}
+function presNav(d){presIdx=Math.max(0,Math.min(presSlides.length-1,presIdx+d));renderSlide();}
+function renderSlide(){
+  const s=presSlides[presIdx];
+  document.getElementById('pres-slide').innerHTML=`
+    <div class="pres-label">${s.label}</div>
+    <div class="pres-title">${s.title}</div>
+    <div class="pres-sub">${s.sub}</div>
+    <div class="pres-data">${s.kpis.map(k=>`<div class="pres-kpi"><div class="pres-kv">${k.v}</div><div class="pres-kl">${k.l}</div></div>`).join('')}</div>`;
+  document.getElementById('pres-counter').textContent=`${presIdx+1} / ${presSlides.length}`;
+}
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('presentation').classList.contains('open')){
+    if(e.key==='ArrowRight')presNav(1);
+    if(e.key==='ArrowLeft')presNav(-1);
+    if(e.key==='Escape')closePresentation();
+  }
+  if(document.getElementById('modal-carta').classList.contains('open')&&e.key==='Escape')closeModal();
+  if(document.getElementById('admin-panel').classList.contains('open')&&e.key==='Escape')closeAdmin();
+});
+
+// ADMIN
+function openAdmin(){
+  const c=CFG.cartas[0];
+  document.getElementById('ap-carta-periodo').value=c.mes;
+  document.getElementById('ap-carta-autor').value='Equipe Chanquini';
+  document.getElementById('ap-carta-data').value=`Estratégias Financeiras · ${c.data}`;
+  document.getElementById('ap-carta-txt').value=c.texto.replace(/"/g,'');
+  document.getElementById('ap-aviso1').value=document.getElementById('aviso1')?.textContent||'';
+  document.getElementById('ap-aviso2').value=document.getElementById('aviso2')?.textContent||'';
+  document.getElementById('admin-panel').classList.add('open');
+}
+function closeAdmin(){document.getElementById('admin-panel').classList.remove('open')}
+
+function saveAdmin(){
+  const periodo=document.getElementById('ap-carta-periodo').value;
+  const autor=document.getElementById('ap-carta-autor').value;
+  const data=document.getElementById('ap-carta-data').value;
+  const txt='"'+document.getElementById('ap-carta-txt').value+'"';
+  document.getElementById('carta-periodo-home').textContent=periodo;
+  document.getElementById('carta-texto-home').textContent=txt;
+  document.getElementById('carta-autor-home').textContent=autor;
+  document.getElementById('carta-data-home').textContent=data;
+  const a1=document.getElementById('ap-aviso1').value;
+  const a2=document.getElementById('ap-aviso2').value;
+  if(document.getElementById('aviso1'))document.getElementById('aviso1').textContent=a1;
+  if(document.getElementById('aviso2'))document.getElementById('aviso2').textContent=a2;
+  const nl=document.getElementById('notif-list');
+  if(nl)nl.innerHTML=`<div class="np-i"><div class="ni2">🔔</div><div><div class="np-txt">${a1}</div><div class="np-time">Atualizado agora</div></div></div><div class="np-i"><div class="ni2">✦</div><div><div class="np-txt">${a2}</div><div class="np-time">Atualizado agora</div></div></div>`;
+  const ts=document.getElementById('ap-term-status').value;
+  const tt=document.getElementById('ap-term-txt').value;
+  const badge=document.getElementById('term-badge');
+  const ttxt=document.getElementById('term-txt');
+  const cls=ts==='Verde'?'v':ts==='Amarelo'?'y':'r';
+  const labels={Verde:'● Saudável',Amarelo:'● Atenção',Vermelho:'● Crítico'};
+  if(badge){badge.className='tbadge '+cls;badge.textContent=labels[ts]||'● '+ts;}
+  if(ttxt&&tt)ttxt.textContent=tt;
+  const s=document.getElementById('ap-success');s.style.display='block';
+  setTimeout(()=>{s.style.display='none';closeAdmin();},1800);
+}
+
+// PDF
+function exportPDF(){
+  function gerarPDF(){
+    try{
+    const{jsPDF}=window.jspdf;
+    const doc=new jsPDF({unit:'mm',format:'a4'});
+    const W=210,H=297;
+
+    // ══ DADOS — 100% baseados no dashboard e planilhas reais ══════
+    const MES='—',CLIENTE=CFG.cliente.nome;
+    const abr=SCORE_CFG.historico.find(h=>h.atual)||{val:0,status:'alerta'};
+    const SCORE_VAL=abr.val,SCORE_STATUS=SCORE_LABELS[abr.status]||SCORE_LABELS.alerta;
+    const FAT='R$ 0,00',DESP='R$ 0,00',RES='R$ 0,00',MARGEM='0%',META_MEN='0%';
+    const FAT_ACUM='R$ 0,00',DESP_ACUM='R$ 0,00',RES_ACUM='R$ 0,00',META_ANUAL='R$ 0,00';
+    const EXEC_META='0%',SALDO='R$ 0,00',A_REC='R$ 0,00',A_PAG='R$ 0,00';
+    const CARTA_TXT = (document.getElementById('carta-texto-home')?.textContent||'')
+      .replace(/^[""]|[""]$/g,'').trim()
+      ||'Carta do consultor será adicionada após o primeiro fechamento da Minha Empresa.';
+
+    // ── CORES ──────────────────────────────────────────────────────
+    const NAVY  =[14,26,58];
+    const NAVY2 =[23,38,72];
+    const NAVY3 =[30,48,88];
+    const GOLD  =[201,168,76];
+    const BEIGE =[199,183,170];
+    const WHITE =[255,255,255];
+    const MUTED =[130,148,178];
+    const GREEN =[34,180,94];
+    const RED   =[220,50,50];
+    const YELLOW=[210,140,10];
+    const BG0   =[248,245,238]; // fundo claro geral
+    const BG1   =[238,233,222]; // linha par
+    const BG2   =[248,244,236]; // linha ímpar
+    const BGRED =[255,243,243];
+    const BGGRE =[243,255,248];
+    const BGYEL =[255,252,238];
+    const NAVY_BOX=[18,32,65];
+
+    // ── HELPERS ────────────────────────────────────────────────────
+    // logo GFE — retângulo arredondado, sem polygon/lines/internal
+    const drawLogo=(x,y,size,fill,stroke)=>{
+      doc.setFillColor(...fill);
+      if(stroke){doc.setDrawColor(...stroke);doc.setLineWidth(0.5);}
+      doc.roundedRect(x-size,y-size,size*2,size*2,2,2,stroke?'FD':'F');
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(size*0.9);
+      doc.setTextColor(...(stroke||fill));
+      doc.text('GFE',x,y+size*0.35,{align:'center'});
+    };
+
+    // label de seção com linha dourada
+    const secLbl=(x,y,txt,lineW=90)=>{
+      doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(...GOLD);
+      doc.text(txt,x,y);
+      doc.setDrawColor(...GOLD);doc.setLineWidth(0.2);
+      doc.line(x,y+1,x+lineW,y+1);
+    };
+
+    // linha de tabela com label esq e valor dir — colunas fixas
+    const tRow=(x,y,w,label,value,bg,tc)=>{
+      doc.setFillColor(...bg);doc.rect(x,y-3.5,w,7,'F');
+      doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(65,80,105);
+      doc.text(label,x+3,y+0.5);
+      doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...tc);
+      doc.text(value,x+w-3,y+0.5,{align:'right'});
+    };
+
+    // barra de progresso
+    const pBar=(x,y,w,pct,fillC,bgC=[210,215,225])=>{
+      doc.setFillColor(...bgC);doc.roundedRect(x,y,w,2,1,1,'F');
+      doc.setFillColor(...fillC);doc.roundedRect(x,y,Math.max(1,w*Math.min(pct,1)),2,1,1,'F');
+    };
+
+    // ══════════════════════════════════════════════════════════════
+    // PÁG 1 — RESUMO EXECUTIVO
+    // ══════════════════════════════════════════════════════════════
+
+    // HEADER
+    doc.setFillColor(...NAVY);doc.rect(0,0,W,36,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,0,W,0.8,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,35.2,W,0.8,'F');
+
+    drawLogo(18,18,9,[28,44,88],[201,168,76]);
+
+    doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(...WHITE);
+    doc.text('GFE',31,16);
+    doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...BEIGE);
+    doc.text('GESTÃO FINANCEIRA ESTRATÉGICA',31,21);
+    doc.setFontSize(6.5);doc.setTextColor(...MUTED);
+    doc.text('by Chanquini',31,26);
+
+    // separador vertical
+    doc.setDrawColor(40,60,100);doc.setLineWidth(0.3);doc.line(90,5,90,31);
+
+    // metadados direita
+    doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(...MUTED);
+    doc.text('CLIENTE',95,10);doc.text('PERÍODO',150,10);
+    doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(...WHITE);
+    doc.text(CLIENTE,95,17);doc.text(MES,150,17);
+    doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(...MUTED);
+    doc.text('RELATÓRIO ESTRATÉGICO MENSAL',95,23);
+    doc.text('Confidencial · GFE by Chanquini',150,23);
+
+    // banner título
+    doc.setFillColor(...BG0);doc.rect(0,36,W,9,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,36,2.5,9,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...NAVY);
+    doc.text('RESUMO EXECUTIVO  —  '+MES.toUpperCase(),7,42);
+
+    // ── LAYOUT DUAS COLUNAS ──────────────────────────────────────
+    // Col A: x=14  w=88  (resumo financeiro)
+    // Col B: x=108 w=88  (GFE Score)
+    const CA=14, CW=88, CB=108, CY=50;
+
+    // ── COL A: RESUMO DO MÊS ──
+    secLbl(CA,CY,'RESUMO DO MÊS',CW);
+    let ay=CY+6;
+    [['Faturamento Bruto',FAT,NAVY],
+     ['Despesas Totais',DESP,RED],
+     ['Resultado do Mês',RES,RED],
+     ['Margem Líquida',MARGEM,RED],
+     ['% da Meta Mensal',META_MEN,YELLOW],
+    ].forEach(([l,v,tc],i)=>{tRow(CA,ay,CW,l,v,i%2?BG2:BG1,tc);ay+=7.5;});
+
+    ay+=5;
+    secLbl(CA,ay,'ACUMULADO 2026  (Jan – Abr)',CW);ay+=6;
+    [['Faturamento Acumulado',FAT_ACUM,GREEN],
+     ['Despesas Acumuladas',DESP_ACUM,RED],
+     ['Resultado Acumulado',RES_ACUM,GREEN],
+     ['Meta Anual',META_ANUAL,NAVY],
+     ['Execução da Meta',EXEC_META,[123,47,190]],
+    ].forEach(([l,v,tc],i)=>{tRow(CA,ay,CW,l,v,i%2?BG2:BG1,tc);ay+=7.5;});
+
+    ay+=5;
+    secLbl(CA,ay,'POSIÇÃO FINANCEIRA',CW);ay+=6;
+    [['Saldo em Conta',SALDO,NAVY],
+     ['A Receber (em aberto)',A_REC,[59,130,246]],
+     ['A Pagar (em aberto)',A_PAG,RED],
+    ].forEach(([l,v,tc],i)=>{tRow(CA,ay,CW,l,v,i%2?BG2:BG1,tc);ay+=7.5;});
+
+    // ── COL B: GFE SCORE ──
+    const scoreColor = abr.status==='saudavel'?GREEN:abr.status==='alerta'?YELLOW:abr.status==='critico'?RED:BEIGE;
+
+    // caixa navy
+    doc.setFillColor(...NAVY_BOX);doc.roundedRect(CB,CY-4,CW,130,3,3,'F');
+    doc.setDrawColor(...GOLD);doc.setLineWidth(0.3);doc.roundedRect(CB,CY-4,CW,130,3,3,'S');
+
+    // título
+    doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(...GOLD);
+    doc.text('GFE SCORE  -  '+MES.toUpperCase(),CB+CW/2,CY+4,{align:'center'});
+
+    // gauge: círculo de fundo + círculo colorido
+    const gcx=CB+CW/2, gcr=13;
+    // posiciona o centro do círculo de forma que o número fique visualmente centrado na caixa
+    const gcy=CY+22;
+    doc.setDrawColor(35,50,90);doc.setLineWidth(4.5);doc.circle(gcx,gcy,gcr,'S');
+    doc.setDrawColor(...scoreColor);doc.setLineWidth(4.5);doc.circle(gcx,gcy,gcr,'S');
+
+    // número: baseline no centro geométrico do círculo
+    // em jsPDF o y de text() é a baseline; fonte 18pt ~ altura cap ~6mm
+    // centro visual = gcy - (capHeight/2) + baseline_offset
+    doc.setFont('helvetica','bold');doc.setFontSize(20);doc.setTextColor(...scoreColor);
+    doc.text(String(SCORE_VAL),gcx,gcy+3.5,{align:'center'});
+
+    // /100 logo abaixo do número
+    doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(...MUTED);
+    doc.text('/100',gcx,gcy+9,{align:'center'});
+
+    // badge status — SEM caractere unicode, só texto ASCII
+    const stTxt=SCORE_STATUS.txt.toUpperCase();
+    const badgeW=38,badgeH=6.5;
+    doc.setFillColor(...scoreColor);
+    doc.roundedRect(gcx-badgeW/2, gcy+gcr+3, badgeW, badgeH, 2,2,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(...NAVY);
+    doc.text(stTxt, gcx, gcy+gcr+3+badgeH/2+1.3, {align:'center'});
+
+    // dimensões
+    let dy=gcy+gcr+3+badgeH+6;
+    doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(...GOLD);
+    doc.text('COMPOSICAO DO SCORE',CB+CW/2,dy,{align:'center'});
+    doc.setDrawColor(40,60,100);doc.setLineWidth(0.2);doc.line(CB+4,dy+1.5,CB+CW-4,dy+1.5);
+    dy+=6;
+
+    SCORE_CFG.dims.forEach(d=>{
+      const sc=d.val<=40?RED:d.val<=65?YELLOW:d.val<=85?GREEN:BEIGE;
+      doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...BEIGE);
+      doc.text(d.nome,CB+4,dy);
+      doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...sc);
+      doc.text(String(d.val),CB+CW-4,dy,{align:'right'});
+      pBar(CB+4,dy+1,CW-10,d.val/100,sc,[35,52,90]);
+      dy+=9;
+    });
+
+    // escala legenda
+    dy+=2;
+    doc.setFillColor(22,38,72);doc.roundedRect(CB+2,dy,CW-4,8,1.5,1.5,'F');
+    const esc=[[RED,'0-40 Critico'],[YELLOW,'41-65 Alerta'],[GREEN,'66-85 Saudavel'],[BEIGE,'86-100 Estrategico']];
+    esc.forEach((e,i)=>{
+      const ex=CB+4+i*21;
+      doc.setFillColor(...e[0]);doc.circle(ex+1,dy+4.5,1,'F');
+      doc.setFont('helvetica','normal');doc.setFontSize(5.5);doc.setTextColor(...e[0]);
+      doc.text(e[1],ex+3,dy+5.3);
+    });
+
+    // ── GRÁFICO BARRAS — abaixo das colunas ──────────────────────
+    const GY=ay+8;
+    secLbl(CA,GY,'EVOLUÇÃO MENSAL 2026  (* = parcial)',W-28);
+    const meses=['Jan','Fev','Mar','Abr','Mai*'];
+    const fats=[0,0,0,0,0,0,0,0,0,0,0,0];
+    const desps=[78853,110102,92205,116125,56158];
+    const ress=[55712,-10491,122502,-36706,-16502];
+    const maxV=Math.max(...fats,...desps);
+    const GH=28, bw=(182/meses.length)-2, GBY=GY+8;
+
+    doc.setFillColor(...BG1);doc.rect(CA,GBY-1,182,GH+6,'F');
+
+    meses.forEach((m,i)=>{
+      const bx=CA+i*(182/meses.length)+1;
+      const colW=(bw-2)/3;
+      const hF=Math.max(1,GH*(fats[i]/maxV));
+      const hD=Math.max(1,GH*(desps[i]/maxV));
+      const hR=Math.max(1,GH*(Math.abs(ress[i])/maxV));
+      const by=GBY+GH;
+
+      // Faturamento — verde
+      doc.setFillColor(...GREEN);
+      doc.roundedRect(bx,by-hF,colW,hF,0.3,0.3,'F');
+      // Despesas — vermelho
+      doc.setFillColor(...RED);
+      doc.roundedRect(bx+colW+0.5,by-hD,colW,hD,0.3,0.3,'F');
+      // Resultado — SEMPRE dourado, independente de positivo/negativo
+      doc.setFillColor(...GOLD);
+      doc.roundedRect(bx+colW*2+1,by-hR,colW,hR,0.3,0.3,'F');
+
+      // label mês
+      doc.setFont('helvetica',i===3?'bold':'normal');
+      doc.setFontSize(6);doc.setTextColor(70,85,110);
+      doc.text(m,bx+bw/2,by+4,{align:'center'});
+    });
+
+    // legenda barras
+    const lbY=GBY+GH+9;
+    const legLabels=['Faturamento','Despesas','Resultado'];
+    const legClrs=[GREEN,RED,GOLD];
+    legLabels.forEach((lbl,i)=>{
+      const lx=CA+i*38;
+      doc.setFillColor(...legClrs[i]);doc.rect(lx,lbY,5,3,'F');
+      doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(70,85,110);
+      doc.text(lbl,lx+7,lbY+2.5);
+    });
+
+    // ── CARTA DO CONSULTOR ────────────────────────────────────────
+    const CTY=lbY+8;
+    doc.setFillColor(...NAVY_BOX);doc.roundedRect(CA,CTY,182,35,3,3,'F');
+    doc.setFillColor(...GOLD);doc.rect(CA,CTY,2.5,35,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...GOLD);
+    doc.text('CARTA DO CONSULTOR',CA+6,CTY+7);
+    doc.setFont('helvetica','italic');doc.setFontSize(8.5);doc.setTextColor(...BEIGE);
+    const cl=doc.splitTextToSize('"'+CARTA_TXT+'"',170);
+    doc.text(cl,CA+6,CTY+14);
+    doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(...MUTED);
+    const cartaAutor=(document.getElementById('carta-autor-home')?.textContent)||'Equipe Chanquini';
+    doc.text('— '+cartaAutor,CA+6,CTY+30);
+
+    // FOOTER 1
+    doc.setFillColor(...NAVY);doc.rect(0,H-9,W,9,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,H-9,W,0.5,'F');
+    doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(...MUTED);
+    doc.text('Documento confidencial · Uso exclusivo do cliente · GFE — Gestão Financeira Estratégica by Chanquini',CA,H-4);
+    doc.setFont('helvetica','bold');doc.setTextColor(...GOLD);
+    doc.text('1 / 2',W-CA,H-4,{align:'right'});
+
+    // ══════════════════════════════════════════════════════════════
+    // PÁG 2 — ANÁLISE ESTRATÉGICA
+    // ══════════════════════════════════════════════════════════════
+    doc.addPage();
+
+    // header compacto
+    doc.setFillColor(...NAVY);doc.rect(0,0,W,22,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,0,W,0.8,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,21.2,W,0.8,'F');
+    drawLogo(18,11,7,[28,44,88],[201,168,76]);
+    doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(...WHITE);
+    doc.text('GFE',29,13);
+    doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(...BEIGE);
+    doc.text('GESTÃO FINANCEIRA ESTRATÉGICA  ·  by Chanquini',29,18);
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...GOLD);
+    doc.text('ANÁLISE ESTRATÉGICA  —  '+MES.toUpperCase(),W/2+10,12,{align:'center'});
+    doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(...MUTED);
+    doc.text(CLIENTE+'  ·  Confidencial',W/2+10,18,{align:'center'});
+
+    let p2y=30;
+
+    // ANÁLISE TEXTUAL
+    doc.setFillColor(...BG0);doc.rect(0,p2y-4,W,9,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,p2y-4,2.5,9,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...NAVY);
+    doc.text('ANÁLISE ESTRATÉGICA',7,p2y+1);
+    p2y+=10;
+
+    doc.setFillColor(...BG2);doc.roundedRect(CA,p2y,182,30,2,2,'F');
+    doc.setFillColor(...GOLD);doc.rect(CA,p2y,2.5,30,'F');
+    doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(50,65,90);
+    const analise='Aguardando dados do cliente.';
+    const aLinhas=doc.splitTextToSize(analise,174);
+    doc.text(aLinhas,CA+5,p2y+8);
+    p2y+=36;
+
+    // DESTAQUES
+    doc.setFillColor(...BG0);doc.rect(0,p2y-4,W,9,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,p2y-4,2.5,9,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...NAVY);
+    doc.text('DESTAQUES DO MÊS',7,p2y+1);
+    p2y+=10;
+
+    const destaques=[];
+    destaques.forEach(d=>{
+      doc.setFillColor(...d.bg);doc.roundedRect(CA,p2y,182,13,2,2,'F');
+      doc.setFillColor(...d.tc);doc.rect(CA,p2y,2.5,13,'F');
+      // label colorido
+      doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...d.tc);
+      doc.text(d.lbl,CA+5,p2y+8);
+      // texto alinhado depois do label
+      const lblW=doc.getTextWidth(d.lbl);
+      doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(50,65,90);
+      doc.text(d.txt,CA+8+lblW,p2y+8);
+      p2y+=16;
+    });
+
+    // INDICADORES GFE
+    p2y+=2;
+    doc.setFillColor(...BG0);doc.rect(0,p2y-4,W,9,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,p2y-4,2.5,9,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...NAVY);
+    doc.text('INDICADORES GFE',7,p2y+1);
+    doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...MUTED);
+    doc.text('0 = Crítico  |  41 = Em Alerta  |  66 = Saudável  |  86 = Estratégico',75,p2y+1);
+    p2y+=10;
+
+    const dimsDescr={
+      'Liquidez':'Atualizar com dados reais da Minha Empresa.',
+      'Inadimplência':'Atualizar com dados reais da Minha Empresa.',
+      'Margem':'Atualizar com dados reais da Minha Empresa.',
+      'Fluxo de Caixa':'A pagar representa 158% do saldo. Negociação de prazos é ação prioritária.',
+      'Organização':'Entregas pontuais. Acumulado positivo e controle operacional bem estruturado.',
+    };
+
+    SCORE_CFG.dims.forEach((d,i)=>{
+      const sc=d.val<=40?RED:d.val<=65?YELLOW:d.val<=85?GREEN:BEIGE;
+      const stLbl=d.val<=40?'Crítico':d.val<=65?'Em Alerta':d.val<=85?'Saudável':'Estratégico';
+      const rowBg=i%2?BG2:BG1;
+      doc.setFillColor(...rowBg);doc.rect(CA,p2y-3,182,15,'F');
+      // número grande
+      doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(...sc);
+      doc.text(String(d.val),CA+11,p2y+5.5,{align:'center'});
+      // status badge
+      doc.setFillColor(...sc);doc.roundedRect(CA+18,p2y-1,22,5,1.5,1.5,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(6);doc.setTextColor(...NAVY);
+      doc.text(stLbl,CA+29,p2y+3,{align:'center'});
+      // nome
+      doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(30,45,70);
+      doc.text(d.nome,CA+44,p2y+1);
+      // barra
+      pBar(CA+44,p2y+2.5,100,d.val/100,sc,[215,220,230]);
+      // descr
+      const desc=dimsDescr[d.nome]||d.descr||'';
+      doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(85,100,120);
+      doc.text(desc,CA+44,p2y+9);
+      // peso
+      doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(...MUTED);
+      doc.text('Peso: '+d.peso,CA+176,p2y+1,{align:'right'});
+      p2y+=17;
+    });
+
+    // PROXIMOS PASSOS
+    p2y+=3;
+    doc.setFillColor(...BG0);doc.rect(0,p2y-4,W,9,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,p2y-4,2.5,9,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...NAVY);
+    doc.text('PROXIMOS PASSOS RECOMENDADOS',7,p2y+1);
+    p2y+=10;
+
+    const steps=[
+      'Atualizar recomendações após o primeiro fechamento da Minha Empresa.',
+      'Analisar obrigações em aberto e planejar fluxo de caixa.',
+      'Mapear e contingenciar despesas fixas para os meses de baixa sazonalidade.',
+    ];
+    const stepH=12, stepGap=13;
+    steps.forEach((s,i)=>{
+      doc.setFillColor(...(i%2?BG2:BG1));doc.roundedRect(CA,p2y-2,182,stepH,1.5,1.5,'F');
+      doc.setFillColor(...NAVY_BOX);doc.roundedRect(CA,p2y-2,10,stepH,1.5,1.5,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...GOLD);
+      doc.text(String(i+1),CA+5,p2y+5.5,{align:'center'});
+      doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(50,65,90);
+      doc.text(s,CA+14,p2y+5.5);
+      p2y+=stepGap;
+    });
+
+    // FOOTER 2
+    doc.setFillColor(...NAVY);doc.rect(0,H-9,W,9,'F');
+    doc.setFillColor(...GOLD);doc.rect(0,H-9,W,0.5,'F');
+    doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(...MUTED);
+    doc.text('Gerado em '+new Date().toLocaleDateString('pt-BR')+' · GFE — Gestão Financeira Estratégica by Chanquini · Uso Confidencial',CA,H-4);
+    doc.setFont('helvetica','bold');doc.setTextColor(...GOLD);
+    doc.text('2 / 2',W-CA,H-4,{align:'right'});
+
+    doc.save('GFE_Report_'+CLIENTE.replace(/\s+/g,'_')+'_2026.pdf');
+    }catch(e){console.error('Erro PDF:',e);alert('Erro ao gerar PDF: '+e.message);}
+  }
+  if(window.jspdf){gerarPDF();}
+  else{
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    s.onload=gerarPDF;s.onerror=()=>alert('Erro ao carregar jsPDF.');
+    document.head.appendChild(s);
+  }
+}
+
+</script>
+</body>
+</html>
