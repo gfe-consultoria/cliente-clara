@@ -1448,54 +1448,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 /* ── SVG HEXAGON ──────────────────────────────────────────────── */
 .hex-svg-border{fill:none;stroke:var(--gold);stroke-width:1.5;opacity:.6}
 .hex-svg-fill{fill:rgba(201,168,76,.08)}
-
-/* GFE FINANCEIRO */
-.fin-toolbar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--navy,#0e1a3a);border-radius:var(--r,12px) var(--r,12px) 0 0;flex-wrap:wrap}
-.fin-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.7);font-weight:600}
-.fin-btn{padding:6px 13px;border-radius:8px;font-size:11px;cursor:pointer;border:none;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
-.fin-btn-add{background:#16A34A;color:#fff}.fin-btn-del{background:rgba(220,38,38,.12);color:#DC2626;border:1px solid rgba(220,38,38,.2)}
-.fin-btn-csv{background:rgba(255,255,255,.08);color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.1)}
-.fin-info{margin-left:auto;font-size:10px;color:rgba(255,255,255,.35)}
-.fin-wrap{background:var(--card,#fff);border-radius:var(--r,12px);border:1px solid var(--border,#E2DBD4);overflow:hidden;box-shadow:var(--sh);margin-bottom:20px}
-.fin-scroll{overflow-x:auto;max-height:460px;overflow-y:auto}
-.fin-tbl{width:100%;border-collapse:collapse;font-size:12px;min-width:820px}
-.fin-tbl thead th{background:var(--navy2,#172040);color:rgba(255,255,255,.75);padding:9px 12px;text-align:left;font-size:9.5px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;position:sticky;top:0;z-index:2;white-space:nowrap}
-.fin-tbl thead th:first-child{width:38px;text-align:center}
-.fin-tbl tbody tr{border-bottom:1px solid var(--border);transition:background .12s}
-.fin-tbl tbody tr:hover{background:var(--hover,#F5F4F2)}
-.fin-tbl tbody td{padding:8px 12px;vertical-align:middle}
-.fin-tbl tbody td:first-child{text-align:center;padding:8px 4px}
-.fin-tbl td input[type=checkbox]{accent-color:#7B2FBE;cursor:pointer;width:14px;height:14px}
-.fin-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:12px;font-style:italic}
-.fin-tag{background:var(--card2,#F0EDE8);color:var(--muted);font-size:9.5px;padding:2px 9px;border-radius:20px;border:1px solid var(--border);white-space:nowrap}
-.fin-r{color:#16A34A;font-weight:700;font-size:11px}.fin-d{color:#DC2626;font-weight:700;font-size:11px}
-.fin-ok-s{color:#16A34A;font-size:11px;font-weight:600}.fin-at-s{color:#DC2626;font-size:11px;font-weight:600}.fin-pe-s{color:#B45309;font-size:11px;font-weight:600}
-.fin-val-r{color:#16A34A;font-weight:700;text-align:right!important}.fin-val-d{color:#DC2626;font-weight:700;text-align:right!important}.fin-val-n{font-weight:700;text-align:right!important}
-.fin-act button{background:none;border:none;cursor:pointer;font-size:14px;padding:2px 4px;transition:opacity .15s}
-.fin-krow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.fin-kc{background:var(--card);border-radius:var(--r,12px);padding:18px 20px;border:1px solid var(--border);box-shadow:var(--sh);position:relative;overflow:hidden}
-.fin-kc-g{border-top:3px solid #16A34A}.fin-kc-r{border-top:3px solid #DC2626}.fin-kc-q{border-top:3px solid #7B2FBE}.fin-kc-y{border-top:3px solid #B45309}
-.fin-kl{font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.fin-kv{font-size:22px;font-weight:700;font-family:'Cormorant Garamond',serif;color:var(--text)}
-.fin-kv.pos{color:#16A34A}.fin-kv.neg{color:#DC2626}.fin-kv.go{color:#b8966e}
-.fin-ks{font-size:10px;color:var(--muted);margin-top:4px}.fin-ki{position:absolute;top:14px;right:16px;font-size:20px;opacity:.15}
-.fin-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);z-index:800;align-items:center;justify-content:center;padding:20px}
-.fin-overlay.open{display:flex}
-.fin-box{background:var(--card);border-radius:16px;padding:32px;max-width:540px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,.25);border:1px solid var(--border2,#CFC6BC);max-height:88vh;overflow-y:auto}
-.fin-box-tit{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--navy);margin-bottom:3px}
-.fin-box-sub{font-size:11px;color:var(--muted);margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.fin-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
-.fin-full{grid-column:1/-1}
-.fin-lbl{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block}
-.fin-inp{width:100%;padding:10px 13px;border:1.5px solid var(--border);border-radius:9px;font-size:12.5px;color:var(--text);background:var(--card);outline:none;transition:all .2s;font-family:inherit}
-.fin-inp:focus{border-color:#7B2FBE;box-shadow:0 0 0 3px rgba(123,47,190,.07)}.fin-inp.err{border-color:#DC2626!important}
-.fin-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
-.fin-cancel{padding:9px 18px;border-radius:9px;font-size:12px;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:inherit;transition:all .2s}
-.fin-ok{padding:9px 22px;border-radius:9px;font-size:12px;cursor:pointer;border:none;background:var(--navy);color:#fff;font-family:inherit;transition:all .2s}.fin-ok:hover{opacity:.88}
-.fin-toast{position:fixed;bottom:28px;right:28px;background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px;font-size:12px;transform:translateY(60px);opacity:0;transition:all .28s;z-index:1000;border-left:3px solid #16A34A;pointer-events:none;max-width:320px}
-.fin-toast.show{transform:translateY(0);opacity:1}.fin-toast.err{border-left-color:#DC2626}
-.ni-fin-badge{background:#DC2626;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:auto}
-
 </style>
 </head>
 <body>
@@ -1605,11 +1557,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <a class="ni" onclick="nav('score',this)"><span class="ni-ico">⬡</span>GFE Score</a>
       <a class="ni" onclick="nav('relatorio',this)"><span class="ni-ico">◉</span>Relatório Anual</a>
       <a class="ni" onclick="nav('cartas',this)"><span class="ni-ico">✦</span>Cartas do Consultor</a>
-      <div class="sb-sec">Financeiro</div>
-      <a class="ni" onclick="nav('lancamentos',this)"><span class="ni-ico">📒</span>Lançamentos</a>
-      <a class="ni" onclick="nav('apagar',this)"><span class="ni-ico">💸</span>Contas a Pagar</a>
-      <a class="ni" onclick="nav('areceber',this)"><span class="ni-ico">📬</span>A Receber</a>
-      <a class="ni" onclick="nav('metas',this)"><span class="ni-ico">🎯</span>Metas</a>
       <div class="sb-sec">Gestão</div>
       <a class="ni" onclick="nav('documentos',this)"><span class="ni-ico">◻</span>Documentos</a>
       <a class="ni" onclick="nav('perfil',this)"><span class="ni-ico">◑</span>Perfil da Empresa</a>
@@ -1636,7 +1583,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="np" id="np">
         <div class="np-h"><div class="np-ht">Notificações</div><div class="np-cl" onclick="clearN()">Limpar</div></div>
         <div id="notif-list">
-          <div class="np-i"><div class="ni2">◫</div><div><div class="np-txt">Dashboard de — disponível</div><div class="np-time">Em breve</div></div></div>
+          <div class="np-i"><div class="ni2">◫</div><div><div class="np-txt">Dashboard de Abril 2026 disponível</div><div class="np-time">Em breve</div></div></div>
           <div class="np-i"><div class="ni2">🔔</div><div><div class="np-txt">Entrega dos documentos até dia 03/06</div><div class="np-time">Prazo se aproximando</div></div></div>
           <div class="np-i"><div class="ni2">✦</div><div><div class="np-txt">Fechamento de Abril concluído com sucesso</div><div class="np-time">Chanquini · 05/05/2026</div></div></div>
         </div>
@@ -1672,8 +1619,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div>
           <div class="term-lbl">GFE Score — Status do Mês</div>
           <div class="term-row">
-            <span class="tbadge v" id="term-badge" class="tbadge a">● Em Alerta</span>
-            <span class="term-txt" id="term-txt">Abril 2026 — Em Alerta</span>
+            <span class="tbadge v" id="term-badge" class="tbadge a">● Aguardando dados</span>
+            <span class="term-txt" id="term-txt">Sem dados ainda</span>
           </div>
         </div>
       </div>
@@ -1682,29 +1629,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="period-grid">
         <div class="period-card fat">
           <div class="pc-label">Faturamento</div>
-          <div class="pc-ref" id="pc-ref-fat">Realizado até 26/05/2026</div>
-          <div class="pc-val fat" id="pc-val-fat">R$ 22.271,88</div>
+          <div class="pc-ref" id="pc-ref-fat">Aguardando dados</div>
+          <div class="pc-val fat" id="pc-val-fat">R$ 0,00</div>
           
           <div class="pc-bar-wrap">
-            <div class="pc-bar-lbl"><span>Progresso vs meta mensal</span><span id="pc-pct-fat">110.1%</span></div>
-            <div class="pc-bar"><div class="pc-bar-fill" id="pc-fill-fat" style="width:100%"></div></div>
+            <div class="pc-bar-lbl"><span>Progresso vs meta mensal</span><span id="pc-pct-fat">0%</span></div>
+            <div class="pc-bar"><div class="pc-bar-fill" id="pc-fill-fat" style="width:0%"></div></div>
           </div>
           <div class="pc-sub">Meta mensal: R$ 100.000,00 · Vencidos: R$ 0,00</div>
         </div>
         <div class="period-card desp">
           <div class="pc-label">Despesas</div>
-          <div class="pc-ref" id="pc-ref-desp">Pagas até 26/05/2026</div>
-          <div class="pc-val desp" id="pc-val-desp">R$ 24.053,50</div>
+          <div class="pc-ref" id="pc-ref-desp">Aguardando dados</div>
+          <div class="pc-val desp" id="pc-val-desp">R$ 0,00</div>
           <span class="pc-delta down" id="pc-delta-desp">↑ Atenção ao limite</span>
           <div class="pc-bar-wrap">
             <div class="pc-bar-lbl"><span>% do faturamento esperado</span><span id="pc-pct-desp">28%</span></div>
             <div class="pc-bar"><div class="pc-bar-fill" id="pc-fill-desp" style="width:28%;background:linear-gradient(90deg,var(--red),#F87171)"></div></div>
           </div>
-          <div class="pc-sub">A pagar em aberto: R$ 9.060,00</div>
+          <div class="pc-sub">A pagar em aberto: R$ 4.174.897,36</div>
         </div>
         <div class="period-card res">
           <div class="pc-label">Resultado Acumulado 2026</div>
-          <div class="pc-ref">Jan → Abr · 1,2,3,4 meses fechados</div>
+          <div class="pc-ref">Jan → Abr · 4 meses fechados</div>
           <div class="pc-val res-pos">R$ 0,00</div>
           <span class="pc-delta up">↑ Positivo</span>
           <div class="pc-bar-wrap">
@@ -1715,14 +1662,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         </div>
         <div class="period-card prev">
           <div class="pc-label">A Receber em aberto</div>
-          <div class="pc-ref">Vencimento até Mai/2026 · 1 contratos</div>
+          <div class="pc-ref">Vencimento até 12/Jun · 5 contratos</div>
           <div class="pc-val prev">R$ 0,00</div>
           <span class="pc-delta neutral">◎ Vence em Junho</span>
           <div class="pc-bar-wrap">
             <div class="pc-bar-lbl"><span>—</span><span></span></div>
             <div class="pc-bar"><div class="pc-bar-fill" style="width:35%;background:linear-gradient(90deg,var(--blue),#60A5FA)"></div></div>
           </div>
-          <div class="pc-sub">A receber 30d: R$ 18.000,00</div>
+          <div class="pc-sub">A receber 30d: R$ 993.622,03</div>
         </div>
       </div>
 
@@ -1730,9 +1677,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="prog">
         <div class="prog-h">
           <div class="prog-ttl">Meta Anual 2026</div>
-          <div class="prog-pct">103.6%</div>
+          <div class="prog-pct">0%</div>
         </div>
-        <div class="prog-trk"><div class="prog-fill" style="width:100%"></div></div>
+        <div class="prog-trk"><div class="prog-fill" style="width:0%"></div></div>
         <div class="prog-sub"><span>R$ 0,00 (Jan–Abr)</span><span>Meta: <strong>R$ 0,00</strong></span></div>
       </div>
 
@@ -1819,7 +1766,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
               <div style="font-size:11px;color:var(--muted);font-style:italic;margin-bottom:10px">
                 Arraste para simular diferentes cenários de despesa e ver o impacto na sua reserva de caixa
               </div>
-              <input type="range" id="rw-slider-p" min="1000" max="200000" step="1000" value="10000"
+              <input type="range" id="rw-slider-p"
+                min="20000" max="106199" step="1000" value="62174"
                 style="width:100%;accent-color:var(--gold);height:4px;cursor:pointer">
               <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:4px">
                 <span>—</span><span style="color:var(--muted);font-style:italic">máx: saldo atual —</span>
@@ -1855,7 +1803,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div id="page-dashboards" class="page">
       <div class="ph"><h1>Dashboards</h1><p>Relatórios mensais de fechamento financeiro</p></div>
       <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:14px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"><div><div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#d4b896;margin-bottom:6px">Dashboard Interativo</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;font-weight:300">Atualiza automaticamente com a planilha</div></div><button onclick="window.open('https://gfe-consultoria.github.io/cliente-clara/dashboard.html','_blank')" style="padding:12px 24px;background:#b8966e;color:#0e1a3a;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap">📊 Abrir Dashboard</button></div>
-      <div style="background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:14px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"><div><div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#d4b896;margin-bottom:6px">Dashboard Automático</div><div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;font-weight:300">Gere um dashboard com seus dados atuais</div></div><button onclick="gerarDashboardApp()" style="padding:12px 24px;background:#b8966e;color:#0e1a3a;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit">⚡ Gerar Dashboard</button></div>
       <div class="dg" id="dg"></div>
     </div>
 
@@ -1906,7 +1853,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
           <div style="font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:var(--yellow);line-height:1;letter-spacing:-2px;margin-bottom:6px">84%</div>
           <div style="font-size:12px;color:var(--muted);margin-bottom:14px">— de —</div>
           <div class="pl-trk"><div class="pl-fill" style="width:84%;background:linear-gradient(90deg,var(--yellow),#FCD34D)"></div></div>
-          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:8px"><span>—</span><span style="color:var(--yellow);font-weight:600">84% executado</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);margin-top:8px"><span>—</span><span style="color:var(--yellow);font-weight:600">0% executado</span></div>
         </div>
 
         <div class="card" style="padding:28px">
@@ -2129,66 +2076,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       </div>
     </div>
 
-
-    <div id="page-lancamentos" class="page">
-      <div class="ph"><h1>Lançamentos</h1><p>Extrato bancário</p></div>
-      <div class="fin-krow" id="krow-ext"></div>
-      <div class="fin-wrap"><div class="fin-toolbar"><span class="fin-title">📒 Extrato</span>
-        <button class="fin-btn fin-btn-add" onclick="abrirFin('ext')">＋ Novo Lançamento</button>
-        <button class="fin-btn fin-btn-del" onclick="delSel('ext')">🗑 Deletar</button>
-        <button class="fin-btn fin-btn-csv" onclick="expCSV('ext')">⬇ CSV</button>
-        <span class="fin-info" id="ext-info"></span></div>
-        <div class="fin-scroll"><table class="fin-tbl"><thead><tr>
-          <th><input type="checkbox" onchange="selAll('ext',this)"></th>
-          <th>Data</th><th>Tipo</th><th>Descrição</th><th>Categoria</th>
-          <th style="text-align:right">Valor</th><th>Conta</th><th>Situação</th><th>Ações</th>
-        </tr></thead><tbody id="tbody-ext"></tbody></table></div></div></div>
-    <div id="page-apagar" class="page">
-      <div class="ph"><h1>Contas a Pagar</h1><p>Compromissos em aberto</p></div>
-      <div class="fin-krow" id="krow-apg"></div>
-      <div class="fin-wrap"><div class="fin-toolbar"><span class="fin-title">💸 A Pagar</span>
-        <button class="fin-btn fin-btn-add" onclick="abrirFin('apg')">＋ Nova Conta</button>
-        <button class="fin-btn fin-btn-del" onclick="delSel('apg')">🗑 Deletar</button>
-        <button class="fin-btn fin-btn-csv" onclick="expCSV('apg')">⬇ CSV</button>
-        <span class="fin-info" id="apg-info"></span></div>
-        <div class="fin-scroll"><table class="fin-tbl"><thead><tr>
-          <th><input type="checkbox" onchange="selAll('apg',this)"></th>
-          <th>Fornecedor</th><th>Descrição</th><th>Categoria</th><th>Vencimento</th>
-          <th style="text-align:right">Valor</th><th style="text-align:right">Em Aberto</th><th>Situação</th><th>Ações</th>
-        </tr></thead><tbody id="tbody-apg"></tbody></table></div></div></div>
-    <div id="page-areceber" class="page">
-      <div class="ph"><h1>Contas a Receber</h1><p>Valores em aberto</p></div>
-      <div class="fin-krow" id="krow-arc"></div>
-      <div class="fin-wrap"><div class="fin-toolbar"><span class="fin-title">📬 A Receber</span>
-        <button class="fin-btn fin-btn-add" onclick="abrirFin('arc')">＋ Novo Recebimento</button>
-        <button class="fin-btn fin-btn-del" onclick="delSel('arc')">🗑 Deletar</button>
-        <button class="fin-btn fin-btn-csv" onclick="expCSV('arc')">⬇ CSV</button>
-        <span class="fin-info" id="arc-info"></span></div>
-        <div class="fin-scroll"><table class="fin-tbl"><thead><tr>
-          <th><input type="checkbox" onchange="selAll('arc',this)"></th>
-          <th>Cliente</th><th>Descrição</th><th>Categoria</th><th>Vencimento</th>
-          <th style="text-align:right">Valor</th><th style="text-align:right">Em Aberto</th><th>Situação</th><th>Ações</th>
-        </tr></thead><tbody id="tbody-arc"></tbody></table></div></div></div>
-    <div id="page-metas" class="page">
-      <div class="ph"><h1>Metas Financeiras</h1><p>Configure e acompanhe em tempo real</p></div>
-      <div class="fin-krow" id="krow-metas"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-        <div class="fin-wrap"><div class="fin-toolbar"><span class="fin-title">📅 Metas Mensais</span>
-          <button class="fin-btn fin-btn-add" onclick="salvarMetas()" style="margin-left:auto">💾 Salvar</button></div>
-          <div style="padding:16px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" id="metas-mensais-grid"></div></div></div>
-        <div class="fin-wrap"><div class="fin-toolbar"><span class="fin-title">⚙️ Configurações</span></div>
-          <div style="padding:16px;display:flex;flex-direction:column;gap:14px">
-            <div><label class="fin-lbl">Margem Mínima (%)</label><input class="fin-inp" type="number" id="meta-margem" placeholder="Ex: 30" min="0" max="100" step="0.1"></div>
-            <div><label class="fin-lbl">Saldo Mínimo (R$)</label><input class="fin-inp" type="number" id="meta-saldo-min" placeholder="Ex: 20000" min="0" step="100"></div>
-            <div><label class="fin-lbl">Inadimplência Máxima (%)</label><input class="fin-inp" type="number" id="meta-inadimplencia" placeholder="Ex: 5" min="0" max="100" step="0.1"></div>
-            <div><label class="fin-lbl">Runway Mínimo (meses)</label><input class="fin-inp" type="number" id="meta-runway" placeholder="Ex: 3" min="0" max="24"></div>
-            <button class="fin-ok" style="width:100%" onclick="salvarMetas()">💾 Salvar</button>
-          </div></div>
-      </div>
-      <div class="fin-wrap"><div class="fin-toolbar"><span class="fin-title">📊 Execução vs Meta</span></div>
-        <div style="padding:16px" id="placar-metas"></div></div>
-    </div>
-
   </main>
 
   <footer class="pf">
@@ -2264,43 +2151,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <div class="wm" id="wm">Chanquini · GFE · Portal Privado</div>
 
 
-<div class="fin-overlay" id="fin-modal-ext" onclick="if(event.target===this)fecharFin('ext')"><div class="fin-box"><div class="fin-box-tit">📒 Lançamento</div><div class="fin-box-sub">Preencha os dados</div><div class="fin-grid"><div><label class="fin-lbl">Data *</label><input class="fin-inp" type="date" id="fe-data"></div><div><label class="fin-lbl">Tipo *</label><select class="fin-inp" id="fe-tipo"><option value="">Selecione...</option><option value="Receita">▲ Receita</option><option value="Despesa">▼ Despesa</option></select></div><div class="fin-full"><label class="fin-lbl">Descrição *</label><input class="fin-inp" id="fe-desc" placeholder="Histórico"></div><div><label class="fin-lbl">Categoria *</label><select class="fin-inp" id="fe-cat"><option value="">Selecione...</option><optgroup label='RECEITAS'><option>Receitas de Vendas</option><option>Receitas Financeiras</option><option>Outras Receitas</option></optgroup><optgroup label='PESSOAL'><option>Pró-labore</option><option>Remuneração de Autônomos</option><option>FREELANCERS</option></optgroup><optgroup label='OPERACIONAL'><option>Aluguel</option><option>Marketing e Publicidade</option><option>Software / Licença de Uso</option><option>Materiais de Escritório</option><option>Despesas a identificar</option></optgroup><optgroup label='IMPOSTOS'><option>Simples Nacional - DAS</option><option>Tarifas Bancárias</option></optgroup><optgroup label='HONORÁRIOS'><option>Honorários Consultoria</option><option>Honorários Contábeis</option></optgroup><optgroup label='DISTRIBUIÇÃO'><option>Antecipação de Lucros</option></optgroup><optgroup label='TRANSFERÊNCIAS'><option>Transferência de Entrada</option><option>Transferência de Saída</option></optgroup></select></div><div><label class="fin-lbl">Valor R$ *</label><input class="fin-inp" type="number" id="fe-valor" placeholder="0,00" min="0" step="0.01"></div><div><label class="fin-lbl">Conta</label><select class="fin-inp" id="fe-conta"><option>Conta Corrente</option><option>Conta Poupança</option><option>Cartão de Crédito</option></select></div><div><label class="fin-lbl">Situação</label><select class="fin-inp" id="fe-sit"><option>Conciliado</option><option>Pendente</option><option>Atrasado</option></select></div><div><label class="fin-lbl">Observação</label><input class="fin-inp" id="fe-obs" placeholder="Opcional"></div></div><input type="hidden" id="fe-id"><div class="fin-btns"><button class="fin-cancel" onclick="fecharFin('ext')">Cancelar</button><button class="fin-ok" onclick="salvarExt()">Salvar</button></div></div></div>
-<div class="fin-overlay" id="fin-modal-apg" onclick="if(event.target===this)fecharFin('apg')"><div class="fin-box"><div class="fin-box-tit">💸 Conta a Pagar</div><div class="fin-box-sub">Registre um compromisso</div><div class="fin-grid"><div><label class="fin-lbl">Fornecedor *</label><input class="fin-inp" id="fa-forn" placeholder="Nome"></div><div><label class="fin-lbl">Categoria *</label><select class="fin-inp" id="fa-cat"><option value="">Selecione...</option><optgroup label='PESSOAL'><option>Pró-labore</option><option>Remuneração de Autônomos</option><option>FREELANCERS</option></optgroup><optgroup label='OPERACIONAL'><option>Aluguel</option><option>Marketing e Publicidade</option><option>Software / Licença de Uso</option><option>Materiais de Escritório</option><option>Despesas a identificar</option></optgroup><optgroup label='IMPOSTOS'><option>Simples Nacional - DAS</option><option>Tarifas Bancárias</option></optgroup><optgroup label='HONORÁRIOS'><option>Honorários Consultoria</option><option>Honorários Contábeis</option></optgroup><optgroup label='DISTRIBUIÇÃO'><option>Antecipação de Lucros</option></optgroup></select></div><div class="fin-full"><label class="fin-lbl">Descrição</label><input class="fin-inp" id="fa-desc" placeholder="Detalhe"></div><div><label class="fin-lbl">Vencimento *</label><input class="fin-inp" type="date" id="fa-venc"></div><div><label class="fin-lbl">Valor R$ *</label><input class="fin-inp" type="number" id="fa-valor" placeholder="0,00" min="0" step="0.01"></div><div><label class="fin-lbl">Situação</label><select class="fin-inp" id="fa-sit"><option>Em aberto</option><option>Pago</option><option>Atrasado</option><option>Parcelado</option></select></div><div class="fin-full"><label class="fin-lbl">Observações</label><input class="fin-inp" id="fa-obs" placeholder="Notas"></div></div><input type="hidden" id="fa-id"><div class="fin-btns"><button class="fin-cancel" onclick="fecharFin('apg')">Cancelar</button><button class="fin-ok" onclick="salvarApg()">Salvar</button></div></div></div>
-<div class="fin-overlay" id="fin-modal-arc" onclick="if(event.target===this)fecharFin('arc')"><div class="fin-box"><div class="fin-box-tit">📬 Conta a Receber</div><div class="fin-box-sub">Registre um recebimento</div><div class="fin-grid"><div><label class="fin-lbl">Cliente *</label><input class="fin-inp" id="fr-cli" placeholder="Nome"></div><div><label class="fin-lbl">Categoria</label><select class="fin-inp" id="fr-cat"><option>Receitas de Vendas</option><option>Receitas Financeiras</option><option>Outras Receitas</option></select></div><div class="fin-full"><label class="fin-lbl">Descrição</label><input class="fin-inp" id="fr-desc" placeholder="Serviço"></div><div><label class="fin-lbl">Vencimento *</label><input class="fin-inp" type="date" id="fr-venc"></div><div><label class="fin-lbl">Valor R$ *</label><input class="fin-inp" type="number" id="fr-valor" placeholder="0,00" min="0" step="0.01"></div><div><label class="fin-lbl">Valor Recebido R$</label><input class="fin-inp" type="number" id="fr-recebido" placeholder="0,00" min="0" step="0.01"></div><div><label class="fin-lbl">Situação</label><select class="fin-inp" id="fr-sit"><option>Em aberto</option><option>Recebido</option><option>Atrasado</option><option>Parcialmente recebido</option><option>Cancelado</option></select></div><div class="fin-full"><label class="fin-lbl">Observações</label><input class="fin-inp" id="fr-obs" placeholder="Notas"></div></div><input type="hidden" id="fr-id"><div class="fin-btns"><button class="fin-cancel" onclick="fecharFin('arc')">Cancelar</button><button class="fin-ok" onclick="salvarArc()">Salvar</button></div></div></div>
-<div class="fin-toast" id="fin-toast"></div>
-
 <script>
-
-
 
 // ══ CONFIG — EDITE AQUI TODO MÊS ══════════════════════════════════════
 const CFG = {
-  email:"clara@claraassistance.com.br",
-  senha:"clara2026",
+  email:"cliente@empresa.com.br",
+  senha:"senha2026",
   senhaAdmin:"admin2026",
-  cliente:{
-    nome:"Clara Assistance",
-    segmento:"Assessoria Pessoal e Empresarial",
-    cnpj:"",
-    contato:"clara@claraassistance.com.br"
-  },
-  meta: 20237.3,
-  metaAnual: 92636.73000000001,
-  metaMargem: 30,
-  dashboards:{
-    "Janeiro 2026":{url:"https://gfe-consultoria.github.io/cliente-clara/dashboard.html",entrega:"26/05/2026"},
-    "Fevereiro 2026":{url:"https://gfe-consultoria.github.io/cliente-clara/dashboard.html",entrega:"26/05/2026"},
-    "Março 2026":{url:"https://gfe-consultoria.github.io/cliente-clara/dashboard.html",entrega:"26/05/2026"},
-    "Abril 2026":{url:"https://gfe-consultoria.github.io/cliente-clara/dashboard.html",entrega:"26/05/2026"},
-    "Maio 2026":{url:"https://gfe-consultoria.github.io/cliente-clara/dashboard.html",entrega:"26/05/2026"}
-  },
-  cartas:[
-    
-  ]
+  cliente:{ nome:"Minha Empresa", segmento:"" },
+  meta: 100000,
+  dashboards:{},
+  cartas:[]
 };
 // ══════════════════════════════════════════════════════════════════════
 
-let dadosMensais={labels:[],fat:[],desp:[],res:[]};
+const dadosMensais={labels:[],fat:[],desp:[],res:[]};
 
 // SPLASH → LOGIN
 setTimeout(()=>{
@@ -2353,7 +2218,7 @@ function login(){
     if(id('gb-client-name'))id('gb-client-name').textContent=CFG.cliente.nome+' 👋';
     if(id('pf-nome'))id('pf-nome').textContent=CFG.cliente.nome;
     if(id('pf-seg'))id('pf-seg').textContent=CFG.cliente.segmento;
-    buildDash();buildCal();buildCartas();buildScore();buildScoreAuto();buildRunway();buildTimeline();initCharts();initAnualCharts();gfeSync();
+    buildDash();buildCal();buildCartas();buildScore();buildScoreAuto();buildRunway();buildTimeline();initCharts();initAnualCharts();
   }else{
     err.style.display='block';
     document.getElementById('lp').style.borderColor='var(--red)';
@@ -2371,7 +2236,7 @@ function logout(){
 }
 
 // NAV
-const PNS={inicio:'Início',dashboards:'Dashboards',painel:'Painel Financeiro',estrategia:'Estratégia',score:'GFE Score',relatorio:'Relatório Anual',cartas:'Cartas do Consultor',lancamentos:'Lançamentos',apagar:'Contas a Pagar',areceber:'A Receber',documentos:'Documentos',perfil:'Perfil da Empresa',contato:'Contato Chanquini'};
+const PNS={inicio:'Início',dashboards:'Dashboards',painel:'Painel Financeiro',estrategia:'Estratégia',score:'GFE Score',relatorio:'Relatório Anual',cartas:'Cartas do Consultor',documentos:'Documentos',perfil:'Perfil da Empresa',contato:'Contato Chanquini'};
 function nav(id,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
@@ -2438,17 +2303,9 @@ applyTheme(LIGHT);
 
 // DASH CARDS
 function buildDash(){
-  const g=document.getElementById('dg');
-  if(!g) return;
-  g.innerHTML='';
-  const mesesComDash=Object.keys(CFG.dashboards||{});
-  const hoje_=new Date();
-  const proximos=Array.from({length:6},(_,i)=>{
-    const d=new Date(hoje_.getFullYear(),hoje_.getMonth()+i,1);
-    return d.toLocaleDateString("pt-BR",{month:"long",year:"numeric"}).replace(/^./,s=>s.toUpperCase());
-  });
-  const todos=[...new Set([...mesesComDash,...proximos])];
-  todos.forEach(mes=>{
+  const hoje_=new Date();const meses=Array.from({length:6},(_,i)=>{const d=new Date(hoje_.getFullYear(),hoje_.getMonth()+i,1);return d.toLocaleDateString("pt-BR",{month:"long",year:"numeric"}).replace(/^./,s=>s.toUpperCase());});
+  const g=document.getElementById('dg');g.innerHTML='';
+  meses.forEach(mes=>{
     const d=CFG.dashboards[mes],av=!!d,c=document.createElement('div');
     c.className='dc '+(av?'av':'lk');
     if(av)c.onclick=()=>window.open(d.url,'_blank');
@@ -2494,7 +2351,7 @@ function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];
 
 function getCSSVar(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
 
-function initCharts(){ dadosMensais=gfeDadosMensais();
+function initCharts(){
   const gridColor=getCSSVar('--grid-color')||'rgba(255,255,255,.05)';
   const chartTxt=getCSSVar('--chart-txt')||'#8A9BB8';
   const metaLine=getCSSVar('--meta-line')||'rgba(255,255,255,.18)';
@@ -2529,7 +2386,7 @@ function initCharts(){ dadosMensais=gfeDadosMensais();
   });
 }
 
-function initAnualCharts(){ dadosMensais=gfeDadosMensais();
+function initAnualCharts(){
   const gridColor=getCSSVar('--grid-color')||'rgba(255,255,255,.05)';
   const chartTxt=getCSSVar('--chart-txt')||'#8A9BB8';
   const font={family:'DM Sans',size:10};
@@ -2553,11 +2410,7 @@ function initAnualCharts(){ dadosMensais=gfeDadosMensais();
 }
 
 // ══ RUNWAY DE CAIXA ══════════════════════════════════════════════════════
-const RUNWAY_CFG = {
-  saldo: 0,
-  despMensal: 24053.5,
-  dataRef: '26/05/2026'
-};
+const RUNWAY_CFG = {saldo:0, despMensal:1, dataRef:"—"};
 
 function buildRunway(){
   const {saldo, despMensal} = RUNWAY_CFG;
@@ -2636,7 +2489,7 @@ function buildScoreAuto(){
 
 // ══ TIMELINE DE VENCIMENTOS ═══════════════════════════════════════════════
 // Dados dos vencimentos — atualize todo mês junto com os cards de período
-const VENCIMENTOS = [{"nome":"CLIENTE EXEMPLO","tipo":"receber","valor":"R$ 18.000,00","dia":4,"mes":"Jun"},{"nome":"FORNECEDOR EXEMPLO","tipo":"pagar","valor":"R$ 9.060,00","dia":9,"mes":"Jun"}];
+const VENCIMENTOS = [];
 
 function buildTimeline(){
   const list = document.getElementById('tl-list');
@@ -2681,23 +2534,15 @@ function buildTimeline(){
 
 
 const SCORE_CFG = {
-  atual: 57,
-  status: 'alerta',
-  periodo: 'Abril 2026',
-  evolucao: '+11',
-  dims: [
-    {nome:'Liquidez', val:0, prev:0, peso:'25%', descr:"Saldo cobre 0% dos compromissos (R$ 0,00 disponível, R$ 9.060,00 a pagar)"},
-    {nome:'Inadimplência', val:100, prev:95, peso:'25%', descr:"Sem inadimplência registrada. Todos os recebimentos em dia."},
-    {nome:'Margem Líquida', val:15, prev:10, peso:'20%', descr:"Margem líquida de -8% (meta: ≥ 20%). Despesas superam receitas — atenção urgente."},
-    {nome:'Execução da Meta', val:100, prev:95, peso:'20%', descr:"110.05% da meta mensal atingida (R$ 22.271,88 de R$ 20.237,30). Meta superada! 🎯"},
-    {nome:'Organização Financ.', val:85, prev:80, peso:'10%', descr:"Dados financeiros bem organizados. 1,2,3,4 meses com lançamentos registrados."}
+  atual:0, status:'alerta', periodo:'—', evolucao:'+0',
+  dims:[
+    {nome:'Liquidez',val:0,prev:0,peso:'25%',descr:'Aguardando dados'},
+    {nome:'Inadimplência',val:0,prev:0,peso:'25%',descr:'Aguardando dados'},
+    {nome:'Margem',val:0,prev:0,peso:'20%',descr:'Aguardando dados'},
+    {nome:'Fluxo de Caixa',val:0,prev:0,peso:'20%',descr:'Aguardando dados'},
+    {nome:'Organização',val:0,prev:0,peso:'10%',descr:'Aguardando dados'},
   ],
-  historico: [
-    {mes:'Jan', val:69, status:'saudavel', evolucao:'+0'},
-    {mes:'Fev', val:69, status:'saudavel', evolucao:'+0'},
-    {mes:'Mar', val:46, status:'alerta', evolucao:'-23'},
-    {mes:'Abr', val:58, status:'alerta', atual:true, evolucao:'+12'}
-  ]
+  historico:[]
 };
 
 const SCORE_LABELS = {
@@ -2777,12 +2622,7 @@ function buildScore(){
 // ══════════════════════════════════════════════════════════════════════
 
 
-const presSlides=[
-  {label:'Abril 2026',title:'Clara Assistance',sub:'Fechamento Financeiro — Abril 2026',kpis:[{v:'R$ 22.271,88',l:'Faturamento'},{v:'R$ 24.053,50',l:'Despesas'},{v:'103.6%',l:'Meta Anual'},{v:'-8%',l:'Margem Líquida'}]},
-  {label:'Acumulado 2026',title:'Resultado Acumulado',sub:'Janeiro a Abril de 2026',kpis:[{v:'R$ 95.998,90',l:'Faturamento Total'},{v:'R$ 87.489,52',l:'Despesas Total'},{v:'R$ 8.509,38',l:'Resultado'},{v:'4 meses',l:'Período'}]},
-  {label:'Metas',title:'Progresso das Metas',sub:'Execução vs Planejado 2026',kpis:[{v:'103.6%',l:'Meta Anual'},{v:'-8%',l:'Margem Real'},{v:'110.1%',l:'Meta Mensal'},{v:'R$ 92.636,73',l:'Meta Anual'}]},
-  {label:'Próximos Passos',title:'Estratégia Maio',sub:'Recomendações GFE',kpis:[{v:'R$ 20.237,30',l:'Meta Mensal'},{v:'30%',l:'Margem Meta'},{v:'R$ 18.000,00',l:'A Receber'},{v:'R$ 9.060,00',l:'A Pagar'}]}
-];
+const presSlides=[];
 let presIdx=0;
 
 function openPresentation(){document.getElementById('presentation').classList.add('open');presIdx=0;renderSlide();}
@@ -2856,16 +2696,15 @@ function exportPDF(){
     const W=210,H=297;
 
     // ══ DADOS — 100% baseados no dashboard e planilhas reais ══════
-    const _k=gfeKPIs();
-    const MES=_k.mes,CLIENTE=CFG.cliente.nome;
-    const abr=SCORE_CFG.historico.find(h=>h.atual)||SCORE_CFG.historico[SCORE_CFG.historico.length-1]||{val:0,status:'alerta'};
+    const MES='—',CLIENTE=CFG.cliente.nome;
+    const abr=SCORE_CFG.historico.find(h=>h.atual)||{val:0,status:'alerta'};
     const SCORE_VAL=abr.val,SCORE_STATUS=SCORE_LABELS[abr.status]||SCORE_LABELS.alerta;
-    const FAT=_k.fat,DESP=_k.desp,RES=_k.res,MARGEM=_k.margem,META_MEN=_k.metaMen;
-    const FAT_ACUM=_k.fatAcum,DESP_ACUM=_k.despAcum,RES_ACUM=_k.resAcum,META_ANUAL=_k.metaAnual;
-    const EXEC_META=_k.execMeta,SALDO=_k.saldo,A_REC=_k.aRec,A_PAG=_k.aPag;
+    const FAT='R$ 0,00',DESP='R$ 0,00',RES='R$ 0,00',MARGEM='0%',META_MEN='0%';
+    const FAT_ACUM='R$ 0,00',DESP_ACUM='R$ 0,00',RES_ACUM='R$ 0,00',META_ANUAL='R$ 0,00';
+    const EXEC_META='0%',SALDO='R$ 0,00',A_REC='R$ 0,00',A_PAG='R$ 0,00';
     const CARTA_TXT = (document.getElementById('carta-texto-home')?.textContent||'')
       .replace(/^[""]|[""]$/g,'').trim()
-      ||'Carta do consultor será adicionada após o primeiro fechamento da empresa.';
+      ||'Carta do consultor será adicionada após o primeiro fechamento da Minha Empresa.';
 
     // ── CORES ──────────────────────────────────────────────────────
     const NAVY  =[14,26,58];
@@ -3151,7 +2990,7 @@ function exportPDF(){
     doc.setFillColor(...BG2);doc.roundedRect(CA,p2y,182,30,2,2,'F');
     doc.setFillColor(...GOLD);doc.rect(CA,p2y,2.5,30,'F');
     doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(50,65,90);
-    const analise=_k.analise;
+    const analise='Aguardando dados do cliente.';
     const aLinhas=doc.splitTextToSize(analise,174);
     doc.text(aLinhas,CA+5,p2y+8);
     p2y+=36;
@@ -3163,11 +3002,7 @@ function exportPDF(){
     doc.text('DESTAQUES DO MÊS',7,p2y+1);
     p2y+=10;
 
-    const destaques=[
-      {lbl:'RESULTADO', tc:RED, bg:BGRED, txt:'Abril fechou com resultado negativo de R$ 1.781,62. Despesas (R$ 24.053,50) superaram faturamento (R$ 22.271,88).'},
-      {lbl:'LIQUIDEZ', tc:RED, bg:BGRED, txt:'Saldo disponível: R$ 0,00. A receber: R$ 18.000,00. A pagar: R$ 9.060,00.'},
-      {lbl:'META ANUAL', tc:GREEN, bg:BGGRE, txt:'Meta anual 103.6% executada. Ritmo anualizado: R$ 287.996,70.'},
-    ];
+    const destaques=[];
     destaques.forEach(d=>{
       doc.setFillColor(...d.bg);doc.roundedRect(CA,p2y,182,13,2,2,'F');
       doc.setFillColor(...d.tc);doc.rect(CA,p2y,2.5,13,'F');
@@ -3192,9 +3027,9 @@ function exportPDF(){
     p2y+=10;
 
     const dimsDescr={
-      'Liquidez':'Atualizar com dados reais da empresa.',
-      'Inadimplência':'Atualizar com dados reais da empresa.',
-      'Margem':'Atualizar com dados reais da empresa.',
+      'Liquidez':'Atualizar com dados reais da Minha Empresa.',
+      'Inadimplência':'Atualizar com dados reais da Minha Empresa.',
+      'Margem':'Atualizar com dados reais da Minha Empresa.',
       'Fluxo de Caixa':'A pagar representa 158% do saldo. Negociação de prazos é ação prioritária.',
       'Organização':'Entregas pontuais. Acumulado positivo e controle operacional bem estruturado.',
     };
@@ -3235,7 +3070,7 @@ function exportPDF(){
     p2y+=10;
 
     const steps=[
-      'Atualizar recomendações após o primeiro fechamento da empresa.',
+      'Atualizar recomendações após o primeiro fechamento da Minha Empresa.',
       'Analisar obrigações em aberto e planejar fluxo de caixa.',
       'Mapear e contingenciar despesas fixas para os meses de baixa sazonalidade.',
     ];
@@ -3269,487 +3104,6 @@ function exportPDF(){
     document.head.appendChild(s);
   }
 }
-
-
-// ════════════════════════════════════════════════════════════
-// GFE ENGINE
-// ════════════════════════════════════════════════════════════
-const FDB={
-  get:(k)=>{try{return JSON.parse(localStorage.getItem('gfe_'+k)||'[]');}catch{return [];}},
-  set:(k,v)=>{localStorage.setItem('gfe_'+k,JSON.stringify(v));}
-};
-const MESES_PT_G=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-const MESES_AB_G=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-const MESES_NOMES=MESES_PT_G;
-function fuid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
-function fR(v){v=parseFloat(v)||0;const s=Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2});return(v>=0?'R$\u00a0':'R$\u00a0-')+s;}
-function fD(iso){if(!iso)return'—';const[y,m,d]=iso.split('-');return`${d}/${m}/${y}`;}
-function fToday(){return new Date().toISOString().slice(0,10);}
-function fDias(iso){if(!iso)return 999;return Math.round((new Date(iso+'T00:00')-new Date())/86400000);}
-
-function getMetas(){
-  try{const s=localStorage.getItem('gfe_metas');if(s)return JSON.parse(s);}catch(e){}
-  return{mensais:Array(12).fill(0).map((_,i)=>({mes:i+1,fat:100000})),margem:30,saldoMin:20000,inadimplencia:5,runway:3};
-}
-function setMetas(m){localStorage.setItem('gfe_metas',JSON.stringify(m));if(typeof CFG!=='undefined')CFG.meta=m.mensais[new Date().getMonth()].fat;}
-
-function gfeDadosMensais(){
-  const ext=FDB.get('ext');
-  const fat=Array(12).fill(0),desp=Array(12).fill(0),res=Array(12).fill(0);
-  const hojeStr=fToday();
-  ext.filter(r=>r.data&&r.data<=hojeStr).forEach(r=>{
-    const m=parseInt(r.data.split('-')[1])-1;
-    if(m<0||m>11)return;
-    if(r.tipo==='Receita')fat[m]+=r.valor||0;
-    else desp[m]+=r.valor||0;
-  });
-  for(let i=0;i<12;i++)res[i]=Math.round((fat[i]-desp[i])*100)/100;
-  return{labels:MESES_AB_G.slice(),fat,desp,res};
-}
-
-function gfeKPIs(){
-  const ext=FDB.get('ext'),apg=FDB.get('apg'),arc=FDB.get('arc');
-  const hoje=new Date(),mes=hoje.getMonth()+1,ano=hoje.getFullYear();
-  const mesStr=`${ano}-${String(mes).padStart(2,'0')}`;
-  const hojeStr=fToday();
-  const extReal=ext.filter(r=>r.data&&r.data<=hojeStr);
-  const _mts=typeof getMetas==='function'?getMetas():{mensais:Array(12).fill({fat:100000}),margem:30};
-  const metaM=_mts.mensais[mes-1].fat||100000;
-  const fatMes=extReal.filter(r=>r.tipo==='Receita'&&r.data.startsWith(mesStr)).reduce((s,r)=>s+r.valor,0);
-  const despMes=extReal.filter(r=>r.tipo==='Despesa'&&r.data.startsWith(mesStr)).reduce((s,r)=>s+r.valor,0);
-  const fatAcum=extReal.filter(r=>r.tipo==='Receita').reduce((s,r)=>s+r.valor,0);
-  const despAcum=extReal.filter(r=>r.tipo==='Despesa').reduce((s,r)=>s+r.valor,0);
-  const resAcum=fatAcum-despAcum;
-  const metaA=metaM*12;
-  const metaMenPct=metaM>0?Math.round(fatMes/metaM*100):0;
-  const execMeta=metaA>0?(Math.round(fatAcum/metaA*1000)/10):0;
-  const aPagar=apg.filter(r=>r.sit==='Em aberto'||r.sit==='Atrasado').reduce((s,r)=>s+(r.aberto??r.valor),0);
-  const aRec=arc.filter(r=>r.sit==='Em aberto'||r.sit==='Atrasado'||r.sit==='Parcialmente recebido').reduce((s,r)=>s+(r.aberto??r.valor),0);
-  const margem=fatMes>0?((fatMes-despMes)/fatMes*100).toFixed(1):0;
-  return{
-    mes:MESES_PT_G[mes-1]+' '+ano,
-    fat:fR(fatMes),desp:fR(despMes),res:fR(fatMes-despMes),
-    fatMes:fR(fatMes),despMes:fR(despMes),
-    margem:margem+'%',metaMen:metaMenPct+'%',metaMenPctNum:metaMenPct,
-    fatAcum:fR(fatAcum),despAcum:fR(despAcum),resAcum:fR(resAcum),
-    metaAnual:fR(metaA),execMeta:execMeta+'%',
-    saldo:fR(resAcum),aRec:fR(aRec),aPag:fR(aPagar),
-    analise:ext.length===0?'Nenhum lançamento registrado ainda.':`${MESES_PT_G[mes-1]}: faturamento ${fR(fatMes)}, resultado ${fR(fatMes-despMes)}.`,
-    raw:{fatMes,despMes,resMes:fatMes-despMes,fatAcum,despAcum,resAcum,saldo:resAcum,aPagar,aRec,metaM,metaA,metaMenPct}
-  };
-}
-
-function gfeSync(){
-  dadosMensais=gfeDadosMensais();
-  const k=gfeKPIs();
-  const g=x=>document.getElementById(x);
-  if(g('pc-val-fat'))g('pc-val-fat').textContent=k.fatMes;
-  if(g('pc-ref-fat'))g('pc-ref-fat').textContent='Realizado — via lançamentos';
-  if(g('pc-pct-fat'))g('pc-pct-fat').textContent=k.metaMenPctNum+'%';
-  if(g('pc-fill-fat'))g('pc-fill-fat').style.width=Math.min(k.metaMenPctNum,100)+'%';
-  if(g('pc-val-desp'))g('pc-val-desp').textContent=k.despMes;
-  if(g('pc-ref-desp'))g('pc-ref-desp').textContent='Pagas — via lançamentos';
-  if(g('pc-val-acum'))g('pc-val-acum').textContent=k.resAcum;
-  // Runway
-  const saldoReal=Math.max(0,k.raw.saldo);
-  const despM=k.raw.despMes>0?k.raw.despMes:(k.raw.despAcum/Math.max(1,new Date().getMonth()+1));
-  const days=saldoReal>0&&despM>0?Math.round(saldoReal/(despM/30)):0;
-  if(g('rw-days-p'))g('rw-days-p').textContent=days;
-  if(g('rw-meses-p'))g('rw-meses-p').textContent='~'+(days/30).toFixed(1)+' meses';
-  if(g('rw-meses-label-p')){g('rw-meses-label-p').textContent='~'+(days/30).toFixed(1)+' meses';const cor=days<30?'#DC2626':days<60?'#B45309':days<90?'#16A34A':'#1D4ED8';g('rw-meses-label-p').style.color=cor;}
-  if(g('rw-saldo-label-p'))g('rw-saldo-label-p').textContent=k.saldo;
-  if(g('rw-slider-val-p'))g('rw-slider-val-p').textContent=fR(despM);
-  const sl=document.getElementById('rw-slider-p');
-  if(sl){
-    const maxSl=Math.max(saldoReal,despM*3,10000);
-    sl.min=Math.round(maxSl*0.05/1000)*1000||1000;
-    sl.max=Math.round(maxSl/1000)*1000;
-    sl.step=Math.max(1000,Math.round(maxSl/100/1000)*1000);
-    sl.value=Math.round(despM/1000)*1000||sl.min;
-    if(typeof RUNWAY_CFG!=='undefined'){RUNWAY_CFG.saldo=saldoReal;RUNWAY_CFG.despMensal=despM>0?despM:1;}
-    if(typeof buildRunway==='function')try{buildRunway();}catch(e){}
-  }
-  // Timeline
-  const venc=gfeVencimentos();
-  const list=g('tl-list');
-  if(list){
-    if(!venc.length){list.innerHTML='<div class="tl-empty">Sem vencimentos próximos.</div>';}
-    else{list.innerHTML=venc.slice(0,12).map(v=>{
-      const cor=v.tipo==='pagar'?'#DC2626':'#16A34A';
-      const bg=v.tipo==='pagar'?'rgba(220,38,38,.08)':'rgba(22,163,74,.08)';
-      return'<div style="background:'+bg+';border-left:3px solid '+cor+';border-radius:10px;padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px"><div style="text-align:center;min-width:36px"><div style="font-size:16px;font-weight:700;color:var(--text)">'+v.dia+'</div><div style="font-size:9px;text-transform:uppercase;color:var(--muted)">'+v.mes+'</div></div><div style="flex:1"><div style="font-size:12px;font-weight:600">'+v.nome+'</div><div style="font-size:10px;color:var(--muted)">'+(v.tipo==='pagar'?'💸 A Pagar':'📬 A Receber')+'</div></div><div style="font-size:13px;font-weight:700;color:'+cor+'">'+v.valor+'</div></div>';
-    }).join('');}
-  }
-  try{if(typeof initCharts==='function')initCharts();}catch(e){}
-  renderExt();renderApg();renderArc();
-  atualizarBadge();
-  var pM=document.getElementById('page-metas');if(pM&&pM.classList.contains('active'))renderMetas();
-}
-
-function gfeVencimentos(){
-  const apg=FDB.get('apg'),arc=FDB.get('arc'),res=[];
-  apg.filter(r=>(r.sit==='Em aberto'||r.sit==='Atrasado')&&r.venc).forEach(r=>{
-    const d=fDias(r.venc);if(d>=-5&&d<=45){const[y,m,dia]=r.venc.split('-');res.push({nome:r.forn,tipo:'pagar',valor:fR(r.aberto??r.valor),dia:parseInt(dia),mes:MESES_AB_G[parseInt(m)-1]});}
-  });
-  arc.filter(r=>(r.sit==='Em aberto'||r.sit==='Atrasado')&&r.venc).forEach(r=>{
-    const d=fDias(r.venc);if(d>=0&&d<=45){const[y,m,dia]=r.venc.split('-');res.push({nome:r.cli,tipo:'receber',valor:fR(r.aberto??r.valor),dia:parseInt(dia),mes:MESES_AB_G[parseInt(m)-1]});}
-  });
-  return res.sort((a,b)=>(MESES_AB_G.indexOf(a.mes)*31+a.dia)-(MESES_AB_G.indexOf(b.mes)*31+b.dia));
-}
-
-function atualizarBadge(){
-  document.querySelectorAll('.ni-fin-badge').forEach(b=>b.remove());
-  const u=FDB.get('apg').filter(r=>(r.sit==='Em aberto'||r.sit==='Atrasado')&&fDias(r.venc)<=7).length;
-  if(u>0){const ni=document.querySelector("[onclick*=\"apagar\"]");if(ni){const b=document.createElement('span');b.className='ni-fin-badge';b.textContent=u;ni.appendChild(b);}}
-}
-
-function renderExt(){
-  const data=FDB.get('ext').sort((a,b)=>(b.data||'').localeCompare(a.data||''));
-  const totE=data.filter(r=>r.tipo==='Receita').reduce((s,r)=>s+r.valor,0);
-  const totD=data.filter(r=>r.tipo==='Despesa').reduce((s,r)=>s+r.valor,0);
-  const kr=document.getElementById('krow-ext');
-  if(kr)kr.innerHTML='<div class="fin-kc fin-kc-g"><div class="fin-ki">📥</div><div class="fin-kl">Total Entradas</div><div class="fin-kv pos">'+fR(totE)+'</div><div class="fin-ks">'+data.filter(r=>r.tipo==='Receita').length+' lançamentos</div></div><div class="fin-kc fin-kc-r"><div class="fin-ki">📤</div><div class="fin-kl">Total Saídas</div><div class="fin-kv neg">'+fR(totD)+'</div><div class="fin-ks">'+data.filter(r=>r.tipo==='Despesa').length+' lançamentos</div></div><div class="fin-kc '+(totE-totD>=0?'fin-kc-g':'fin-kc-r')+'"><div class="fin-ki">📊</div><div class="fin-kl">Resultado</div><div class="fin-kv '+(totE-totD>=0?'pos':'neg')+'">'+fR(totE-totD)+'</div><div class="fin-ks">Entradas menos saídas</div></div><div class="fin-kc fin-kc-q"><div class="fin-ki">🗂</div><div class="fin-kl">Registros</div><div class="fin-kv">'+data.length+'</div><div class="fin-ks">Total cadastrado</div></div>';
-  const info=document.getElementById('ext-info');if(info)info.textContent=data.length?data.length+' registros':'';
-  const tb=document.getElementById('tbody-ext');if(!tb)return;
-  if(!data.length){tb.innerHTML='<tr><td colspan="9"><div class="fin-empty">Nenhum lançamento. Clique em <strong>＋ Novo Lançamento</strong>.</div></td></tr>';return;}
-  tb.innerHTML=data.map(r=>'<tr><td><input type="checkbox" class="fchk" data-m="ext" data-id="'+r.id+'"></td><td style="white-space:nowrap;font-size:12px">'+fD(r.data)+'</td><td><span class="'+(r.tipo==='Receita'?'fin-r':'fin-d')+'">'+(r.tipo==='Receita'?'▲ Receita':'▼ Despesa')+'</span></td><td style="font-size:12px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(r.desc||'—')+'</td><td><span class="fin-tag">'+(r.cat||'—')+'</span></td><td class="'+(r.tipo==='Receita'?'fin-val-r':'fin-val-d')+'">'+fR(r.valor)+'</td><td style="font-size:11px;color:var(--muted)">'+(r.conta||'—')+'</td><td><span class="'+(r.sit==='Conciliado'?'fin-ok-s':r.sit==='Atrasado'?'fin-at-s':'fin-pe-s')+'">'+(r.sit||'—')+'</span></td><td class="fin-act"><button onclick="editFin(\'ext\',\''+r.id+'\')" title="Editar">✏️</button><button onclick="delItem(\'ext\',\''+r.id+'\')" title="Deletar">🗑</button></td></tr>').join('');
-}
-
-function renderApg(){
-  const data=FDB.get('apg').sort((a,b)=>(a.venc||'').localeCompare(b.venc||''));
-  const ab=data.filter(r=>r.sit==='Em aberto'||r.sit==='Atrasado');
-  const totA=ab.reduce((s,r)=>s+(r.aberto??r.valor),0);
-  const v15=ab.filter(r=>{const d=fDias(r.venc);return d>=0&&d<=15;}).reduce((s,r)=>s+(r.aberto??r.valor),0);
-  const atras=ab.filter(r=>r.sit==='Atrasado'||fDias(r.venc)<0).reduce((s,r)=>s+(r.aberto??r.valor),0);
-  const kr=document.getElementById('krow-apg');
-  if(kr)kr.innerHTML='<div class="fin-kc fin-kc-r"><div class="fin-ki">💸</div><div class="fin-kl">Total a Pagar</div><div class="fin-kv neg">'+fR(totA)+'</div><div class="fin-ks">'+ab.length+' em aberto</div></div><div class="fin-kc fin-kc-q"><div class="fin-ki">⏰</div><div class="fin-kl">Próximos 15 dias</div><div class="fin-kv">'+fR(v15)+'</div><div class="fin-ks">Vencendo em breve</div></div><div class="fin-kc '+(atras>0?'fin-kc-r':'fin-kc-g')+'"><div class="fin-ki">🔴</div><div class="fin-kl">Vencidos</div><div class="fin-kv '+(atras>0?'neg':'pos')+'">'+fR(atras)+'</div><div class="fin-ks">'+(atras>0?'Ação imediata':'Nenhum ✅')+'</div></div><div class="fin-kc fin-kc-y"><div class="fin-ki">📋</div><div class="fin-kl">Registros</div><div class="fin-kv">'+data.length+'</div><div class="fin-ks">'+data.filter(r=>r.sit==='Pago').length+' pagos</div></div>';
-  const info=document.getElementById('apg-info');if(info)info.textContent=data.length?data.length+' registros':'';
-  const tb=document.getElementById('tbody-apg');if(!tb)return;
-  if(!data.length){tb.innerHTML='<tr><td colspan="9"><div class="fin-empty">Nenhuma conta. Clique em <strong>＋ Nova Conta</strong>.</div></td></tr>';return;}
-  tb.innerHTML=data.map(r=>{const d=fDias(r.venc),venc=r.sit==='Atrasado'||(d<0&&r.sit==='Em aberto');return'<tr style="'+(venc?'background:rgba(220,38,38,.04)':'')+'"><td><input type="checkbox" class="fchk" data-m="apg" data-id="'+r.id+'"></td><td style="font-weight:600;font-size:12px">'+(r.forn||'—')+'</td><td style="font-size:11.5px;color:var(--muted)">'+(r.desc||'—')+'</td><td><span class="fin-tag">'+(r.cat||'—')+'</span></td><td style="text-align:center;white-space:nowrap"><span style="font-size:12px'+(venc?';color:#DC2626;font-weight:700':'')+'">'+fD(r.venc)+'</span>'+(venc?'<br><span style="font-size:9px;color:#DC2626">VENCIDO</span>':d<=7&&d>=0?'<br><span style="font-size:9px;color:#B45309">'+d+'d</span>':'')+'</td><td class="fin-val-n">'+fR(r.valor)+'</td><td class="fin-val-d">'+fR(r.aberto??r.valor)+'</td><td><span class="'+(r.sit==='Pago'?'fin-ok-s':r.sit==='Atrasado'?'fin-at-s':'fin-pe-s')+'">'+r.sit+'</span></td><td class="fin-act"><button onclick="pagarAgora(\''+r.id+'\')" style="color:#16A34A" title="Pago">✅</button><button onclick="editFin(\'apg\',\''+r.id+'\')" title="Editar">✏️</button><button onclick="delItem(\'apg\',\''+r.id+'\')" title="Deletar">🗑</button></td></tr>';}).join('');
-  atualizarBadge();
-}
-
-function renderArc(){
-  const data=FDB.get('arc').sort((a,b)=>(a.venc||'').localeCompare(b.venc||''));
-  const ab=data.filter(r=>r.sit==='Em aberto'||r.sit==='Atrasado'||r.sit==='Parcialmente recebido');
-  const totA=ab.reduce((s,r)=>s+(r.aberto??r.valor),0);
-  const atras=ab.filter(r=>r.sit==='Atrasado'||(fDias(r.venc)<0&&r.sit==='Em aberto')).reduce((s,r)=>s+(r.aberto??r.valor),0);
-  const p30=ab.filter(r=>{const d=fDias(r.venc);return d>=0&&d<=30;}).reduce((s,r)=>s+(r.aberto??r.valor),0);
-  const kr=document.getElementById('krow-arc');
-  if(kr)kr.innerHTML='<div class="fin-kc fin-kc-y"><div class="fin-ki">📬</div><div class="fin-kl">Total a Receber</div><div class="fin-kv go">'+fR(totA)+'</div><div class="fin-ks">'+ab.length+' em aberto</div></div><div class="fin-kc fin-kc-g"><div class="fin-ki">📅</div><div class="fin-kl">Próximos 30 dias</div><div class="fin-kv pos">'+fR(p30)+'</div><div class="fin-ks">A vencer</div></div><div class="fin-kc '+(atras>0?'fin-kc-r':'fin-kc-g')+'"><div class="fin-ki">⚠️</div><div class="fin-kl">Vencidos</div><div class="fin-kv '+(atras>0?'neg':'pos')+'">'+fR(atras)+'</div><div class="fin-ks">'+(atras>0?'Cobrar urgente':'Nenhum ✅')+'</div></div><div class="fin-kc fin-kc-q"><div class="fin-ki">📋</div><div class="fin-kl">Registros</div><div class="fin-kv">'+data.length+'</div><div class="fin-ks">'+data.filter(r=>r.sit==='Recebido').length+' recebidos</div></div>';
-  const info=document.getElementById('arc-info');if(info)info.textContent=data.length?data.length+' registros':'';
-  const tb=document.getElementById('tbody-arc');if(!tb)return;
-  if(!data.length){tb.innerHTML='<tr><td colspan="9"><div class="fin-empty">Nenhum recebimento. Clique em <strong>＋ Novo Recebimento</strong>.</div></td></tr>';return;}
-  tb.innerHTML=data.map(r=>{const d=fDias(r.venc),venc=r.sit==='Atrasado'||(d<0&&r.sit==='Em aberto');return'<tr style="'+(venc?'background:rgba(220,38,38,.04)':'')+'"><td><input type="checkbox" class="fchk" data-m="arc" data-id="'+r.id+'"></td><td style="font-weight:600;font-size:12px">'+(r.cli||'—')+'</td><td style="font-size:11.5px;color:var(--muted)">'+(r.desc||'—')+'</td><td><span class="fin-tag">'+(r.cat||'—')+'</span></td><td style="text-align:center;white-space:nowrap"><span style="font-size:12px'+(venc?';color:#DC2626;font-weight:700':'')+'">'+fD(r.venc)+'</span>'+(venc?'<br><span style="font-size:9px;color:#DC2626">VENCIDO</span>':d<=7&&d>=0?'<br><span style="font-size:9px;color:#B45309">'+d+'d</span>':'')+'</td><td class="fin-val-n">'+fR(r.valor)+'</td><td class="fin-val-r">'+fR(r.aberto??r.valor)+'</td><td><span class="'+(r.sit==='Recebido'?'fin-ok-s':r.sit==='Atrasado'?'fin-at-s':'fin-pe-s')+'">'+r.sit+'</span></td><td class="fin-act"><button onclick="receberAgora(\''+r.id+'\')" style="color:#16A34A" title="Recebido">✅</button><button onclick="editFin(\'arc\',\''+r.id+'\')" title="Editar">✏️</button><button onclick="delItem(\'arc\',\''+r.id+'\')" title="Deletar">🗑</button></td></tr>';}).join('');
-}
-
-function abrirFin(mod){
-  limparFin(mod);
-  if(mod==='ext')document.getElementById('fe-data').value=fToday();
-  else if(mod==='apg'){const d=new Date();d.setDate(d.getDate()+30);document.getElementById('fa-venc').value=d.toISOString().slice(0,10);}
-  else if(mod==='arc'){const d=new Date();d.setDate(d.getDate()+30);document.getElementById('fr-venc').value=d.toISOString().slice(0,10);}
-  document.getElementById('fin-modal-'+mod).classList.add('open');
-}
-function fecharFin(mod){document.getElementById('fin-modal-'+mod).classList.remove('open');}
-function limparFin(mod){
-  const m={ext:['fe-id','fe-data','fe-tipo','fe-desc','fe-cat','fe-valor','fe-conta','fe-sit','fe-obs'],apg:['fa-id','fa-forn','fa-cat','fa-desc','fa-venc','fa-valor','fa-sit','fa-obs'],arc:['fr-id','fr-cli','fr-cat','fr-desc','fr-venc','fr-valor','fr-recebido','fr-sit','fr-obs']};
-  (m[mod]||[]).forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  if(mod==='ext'){const s=document.getElementById('fe-sit');if(s)s.value='Conciliado';}
-  if(mod==='apg'){const s=document.getElementById('fa-sit');if(s)s.value='Em aberto';}
-  if(mod==='arc'){const s=document.getElementById('fr-sit');if(s)s.value='Em aberto';const c=document.getElementById('fr-cat');if(c)c.value='Receitas de Vendas';}
-  document.querySelectorAll('#fin-modal-'+mod+' .fin-inp').forEach(i=>i.classList.remove('err'));
-}
-function validarFin(fs){let ok=true;fs.forEach(function(f){const el=document.getElementById(f.id);if(el){if(!f.check){el.classList.add('err');ok=false;}else el.classList.remove('err');}});return ok;}
-
-function salvarExt(){
-  const data=document.getElementById('fe-data').value,tipo=document.getElementById('fe-tipo').value,
-    desc=document.getElementById('fe-desc').value.trim(),cat=document.getElementById('fe-cat').value,
-    valor=parseFloat(document.getElementById('fe-valor').value)||0;
-  if(!validarFin([{id:'fe-data',check:!!data},{id:'fe-tipo',check:!!tipo},{id:'fe-desc',check:!!desc},{id:'fe-cat',check:!!cat},{id:'fe-valor',check:valor>0}])){finToast('Preencha os campos obrigatórios!',true);return;}
-  const id=document.getElementById('fe-id').value||fuid();
-  const conta=document.getElementById('fe-conta').value,sit=document.getElementById('fe-sit').value,obs=document.getElementById('fe-obs').value.trim();
-  const obj={id,data,tipo,desc,cat,valor,conta,sit,obs};
-  const hoje=fToday(),eFuturo=data>hoje;
-  if(eFuturo){
-    if(tipo==='Despesa'){const apg=FDB.get('apg');const idxA=apg.findIndex(r=>r._extId===id);const nA={id:idxA>=0?apg[idxA].id:fuid(),_extId:id,forn:desc,desc,cat,venc:data,valor,aberto:valor,sit:'Em aberto',obs};if(idxA>=0)apg[idxA]=nA;else apg.push(nA);FDB.set('apg',apg);finToast('📅 Despesa futura → Contas a Pagar!');}
-    else{const arc=FDB.get('arc');const idxA=arc.findIndex(r=>r._extId===id);const nA={id:idxA>=0?arc[idxA].id:fuid(),_extId:id,cli:desc,desc,cat,venc:data,valor,aberto:valor,recebido:0,sit:'Em aberto',obs};if(idxA>=0)arc[idxA]=nA;else arc.push(nA);FDB.set('arc',arc);finToast('📅 Receita futura → Contas a Receber!');}
-    obj.sit='Pendente';
-  }
-  const arr=FDB.get('ext');const idx=arr.findIndex(r=>r.id===id);if(idx>=0)arr[idx]=obj;else arr.push(obj);
-  FDB.set('ext',arr);fecharFin('ext');gfeSync();
-  if(!eFuturo)finToast('✅ Lançamento salvo! Todas as páginas atualizadas.');
-}
-function salvarApg(){
-  const forn=document.getElementById('fa-forn').value.trim(),venc=document.getElementById('fa-venc').value,valor=parseFloat(document.getElementById('fa-valor').value)||0,cat=document.getElementById('fa-cat').value;
-  if(!validarFin([{id:'fa-forn',check:!!forn},{id:'fa-venc',check:!!venc},{id:'fa-valor',check:valor>0},{id:'fa-cat',check:!!cat}])){finToast('Preencha os campos obrigatórios!',true);return;}
-  const id=document.getElementById('fa-id').value||fuid();
-  const sit=document.getElementById('fa-sit').value;
-  const desc=document.getElementById('fa-desc').value.trim();
-  const obs=document.getElementById('fa-obs').value.trim();
-  const obj={id,forn,desc,cat,venc,valor,aberto:sit==='Pago'?0:valor,sit,obs};
-  const arr=FDB.get('apg');const idx=arr.findIndex(r=>r.id===id);
-  const isNovo=idx<0;
-  if(idx>=0)arr[idx]=obj;else arr.push(obj);
-  FDB.set('apg',arr);
-  // Espelhar no Extrato como Pendente (se for novo registro)
-  if(isNovo){
-    const ext=FDB.get('ext');
-    const jaExiste=ext.findIndex(r=>r._apgId===id)>=0;
-    if(!jaExiste){
-      const extObj={
-        id:fuid(),_apgId:id,
-        data:venc,tipo:'Despesa',
-        desc:desc||forn,cat,valor,
-        conta:'Conta Corrente',
-        sit:sit==='Pago'?'Conciliado':'Pendente',
-        obs:'Via Contas a Pagar'+(obs?': '+obs:'')
-      };
-      ext.push(extObj);
-      FDB.set('ext',ext);
-    }
-  }
-  fecharFin('apg');gfeSync();finToast('✅ Conta a pagar salva e lançada no Extrato!');
-}
-function salvarArc(){
-  const cli=document.getElementById('fr-cli').value.trim(),venc=document.getElementById('fr-venc').value,valor=parseFloat(document.getElementById('fr-valor').value)||0;
-  if(!validarFin([{id:'fr-cli',check:!!cli},{id:'fr-venc',check:!!venc},{id:'fr-valor',check:valor>0}])){finToast('Preencha os campos obrigatórios!',true);return;}
-  const id=document.getElementById('fr-id').value||fuid();
-  const recebido=parseFloat(document.getElementById('fr-recebido').value)||0;
-  const sit=document.getElementById('fr-sit').value;
-  const desc=document.getElementById('fr-desc').value.trim();
-  const cat=document.getElementById('fr-cat').value;
-  const obs=document.getElementById('fr-obs').value.trim();
-  const obj={id,cli,desc,cat,venc,valor,aberto:Math.max(0,valor-recebido),recebido,sit,obs};
-  const arr=FDB.get('arc');const idx=arr.findIndex(r=>r.id===id);
-  const isNovo=idx<0;
-  if(idx>=0)arr[idx]=obj;else arr.push(obj);
-  FDB.set('arc',arr);
-  // Espelhar no Extrato como Pendente (se for novo registro)
-  if(isNovo){
-    const ext=FDB.get('ext');
-    const jaExiste=ext.findIndex(r=>r._arcId===id)>=0;
-    if(!jaExiste){
-      const extObj={
-        id:fuid(),_arcId:id,
-        data:venc,tipo:'Receita',
-        desc:desc||cli,cat,valor,
-        conta:'Conta Corrente',
-        sit:sit==='Recebido'?'Conciliado':'Pendente',
-        obs:'Via Contas a Receber'+(obs?': '+obs:'')
-      };
-      ext.push(extObj);
-      FDB.set('ext',ext);
-    }
-  }
-  fecharFin('arc');gfeSync();finToast('✅ Recebimento salvo e lançado no Extrato!');
-}
-function editFin(mod,id){
-  const r=FDB.get(mod).find(function(x){return x.id===id;});if(!r)return;limparFin(mod);
-  if(mod==='ext'){document.getElementById('fe-id').value=r.id;document.getElementById('fe-data').value=r.data||'';document.getElementById('fe-tipo').value=r.tipo||'';document.getElementById('fe-desc').value=r.desc||'';document.getElementById('fe-cat').value=r.cat||'';document.getElementById('fe-valor').value=r.valor||'';document.getElementById('fe-conta').value=r.conta||'Conta Corrente';document.getElementById('fe-sit').value=r.sit||'Conciliado';document.getElementById('fe-obs').value=r.obs||'';}
-  else if(mod==='apg'){document.getElementById('fa-id').value=r.id;document.getElementById('fa-forn').value=r.forn||'';document.getElementById('fa-cat').value=r.cat||'';document.getElementById('fa-desc').value=r.desc||'';document.getElementById('fa-venc').value=r.venc||'';document.getElementById('fa-valor').value=r.valor||'';document.getElementById('fa-sit').value=r.sit||'Em aberto';document.getElementById('fa-obs').value=r.obs||'';}
-  else if(mod==='arc'){document.getElementById('fr-id').value=r.id;document.getElementById('fr-cli').value=r.cli||'';document.getElementById('fr-cat').value=r.cat||'Receitas de Vendas';document.getElementById('fr-desc').value=r.desc||'';document.getElementById('fr-venc').value=r.venc||'';document.getElementById('fr-valor').value=r.valor||'';document.getElementById('fr-recebido').value=r.recebido||'';document.getElementById('fr-sit').value=r.sit||'Em aberto';document.getElementById('fr-obs').value=r.obs||'';}
-  document.getElementById('fin-modal-'+mod).classList.add('open');
-}
-function pagarAgora(id){
-  const arr=FDB.get('apg');const idx=arr.findIndex(function(r){return r.id===id;});if(idx<0)return;const r=arr[idx];
-  const ext=FDB.get('ext');
-  // Atualizar espelho pendente se existir
-  const espIdx=ext.findIndex(function(e){return e._apgId===id;});
-  if(espIdx>=0){
-    ext[espIdx]=Object.assign({},ext[espIdx],{data:fToday(),sit:'Conciliado',obs:'Pago em '+fToday()});
-  } else {
-    // Criar novo lançamento de quitação
-    ext.push({id:fuid(),_apgId:id,data:fToday(),tipo:'Despesa',desc:r.desc||r.forn,cat:r.cat||'Despesas a identificar',valor:r.aberto??r.valor,conta:'Conta Corrente',sit:'Conciliado',obs:'Conta paga'});
-  }
-  FDB.set('ext',ext);arr[idx]=Object.assign({},r,{sit:'Pago',aberto:0});FDB.set('apg',arr);
-  gfeSync();finToast('✅ Pago! Extrato atualizado.');
-}
-function receberAgora(id){
-  const arr=FDB.get('arc');const idx=arr.findIndex(function(r){return r.id===id;});if(idx<0)return;const r=arr[idx];
-  const ext=FDB.get('ext');
-  // Atualizar espelho pendente se existir
-  const espIdx=ext.findIndex(function(e){return e._arcId===id;});
-  if(espIdx>=0){
-    ext[espIdx]=Object.assign({},ext[espIdx],{data:fToday(),sit:'Conciliado',obs:'Recebido em '+fToday()});
-  } else {
-    // Criar novo lançamento de recebimento
-    ext.push({id:fuid(),_arcId:id,data:fToday(),tipo:'Receita',desc:r.desc||r.cli,cat:r.cat||'Receitas de Vendas',valor:r.aberto??r.valor,conta:'Conta Corrente',sit:'Conciliado',obs:'Recebimento confirmado'});
-  }
-  FDB.set('ext',ext);arr[idx]=Object.assign({},r,{sit:'Recebido',aberto:0,recebido:r.valor});FDB.set('arc',arr);
-  gfeSync();finToast('✅ Recebido! Extrato atualizado.');
-}
-function delItem(mod,id){
-  if(!confirm('Deletar este registro?'))return;
-  FDB.set(mod,FDB.get(mod).filter(function(r){return r.id!==id;}));gfeSync();finToast('Deletado.');
-}
-function delSel(mod){
-  const ids=Array.from(document.querySelectorAll('.fchk[data-m="'+mod+'"]:checked')).map(function(c){return c.dataset.id;});
-  if(!ids.length){finToast('Selecione ao menos um.',true);return;}
-  if(!confirm('Deletar '+ids.length+' registro(s)?'))return;
-  FDB.set(mod,FDB.get(mod).filter(function(r){return!ids.includes(r.id);}));gfeSync();finToast(ids.length+' deletado(s).');
-}
-function selAll(mod,cb){document.querySelectorAll('.fchk[data-m="'+mod+'"]').forEach(function(c){c.checked=cb.checked;});}
-function expCSV(mod){
-  const data=FDB.get(mod);if(!data.length){finToast('Nenhum dado.',true);return;}
-  const keys=Object.keys(data[0]).filter(function(k){return k!=='id';});
-  const rows=[keys.join(';')].concat(data.map(function(r){return keys.map(function(k){var v=String(r[k]||'');return v.includes(';')?'"'+v+'"':v;}).join(';');}));
-  const blob=new Blob(['\ufeff'+rows.join('\n')],{type:'text/csv;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='GFE_'+mod+'_'+fToday()+'.csv';a.click();finToast('📄 CSV exportado!');
-}
-function finToast(msg,err){
-  const t=document.getElementById('fin-toast');if(!t)return;
-  t.textContent=msg;t.className='fin-toast'+(err?' err':'');
-  t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3200);
-}
-
-// ── METAS ────────────────────────────────────────────────────────────────────
-function salvarMetas(){
-  const metas=getMetas();
-  for(var i=0;i<12;i++){const el=document.getElementById('meta-m-'+i);if(el)metas.mensais[i].fat=parseFloat(el.value)||0;}
-  const mg=document.getElementById('meta-margem'),sm=document.getElementById('meta-saldo-min'),mi=document.getElementById('meta-inadimplencia'),rw=document.getElementById('meta-runway');
-  if(mg)metas.margem=parseFloat(mg.value)||30;if(sm)metas.saldoMin=parseFloat(sm.value)||0;if(mi)metas.inadimplencia=parseFloat(mi.value)||5;if(rw)metas.runway=parseFloat(rw.value)||3;
-  setMetas(metas);gfeSync();finToast('✅ Metas salvas! Portal atualizado.');
-}
-
-function renderMetas(){
-  const metas=getMetas(),dm=gfeDadosMensais(),hoje=new Date(),mesAtu=hoje.getMonth();
-  const kr=document.getElementById('krow-metas');
-  if(kr){
-    const fatAcum=dm.fat.reduce(function(s,v){return s+v;},0),metaAcum=metas.mensais.reduce(function(s,m){return s+(m.fat||0);},0);
-    const pctAnu=metaAcum>0?Math.round(fatAcum/metaAcum*100):0,fatMes=dm.fat[mesAtu],metaMes=metas.mensais[mesAtu].fat||0;
-    const pctMes=metaMes>0?Math.round(fatMes/metaMes*100):0,despMes=dm.desp[mesAtu];
-    const margemR=fatMes>0?((fatMes-despMes)/fatMes*100).toFixed(1):0,margemOk=parseFloat(margemR)>=metas.margem;
-    const arc=FDB.get('arc'),totAt=arc.filter(function(r){return r.sit==='Atrasado';}).reduce(function(s,r){return s+(r.aberto??r.valor);},0);
-    const totRec=arc.filter(function(r){return r.sit==='Em aberto'||r.sit==='Atrasado';}).reduce(function(s,r){return s+(r.aberto??r.valor);},0);
-    const inadP=totRec>0?(totAt/totRec*100).toFixed(1):0,inadOk=parseFloat(inadP)<=metas.inadimplencia;
-    kr.innerHTML='<div class="fin-kc '+(pctMes>=100?'fin-kc-g':pctMes>=70?'fin-kc-y':'fin-kc-r')+'"><div class="fin-ki">📅</div><div class="fin-kl">Meta do Mês</div><div class="fin-kv '+(pctMes>=100?'pos':pctMes>=70?'go':'neg')+'">'+pctMes+'%</div><div class="fin-ks">'+fR(fatMes)+' de '+fR(metaMes)+'</div><div style="margin-top:8px;background:var(--card2);border-radius:20px;height:4px;overflow:hidden"><div style="height:4px;border-radius:20px;width:'+Math.min(pctMes,100)+'%;background:'+(pctMes>=100?'#16A34A':pctMes>=70?'#B45309':'#DC2626')+';transition:width 1s ease"></div></div></div><div class="fin-kc '+(pctAnu>=100?'fin-kc-g':pctAnu>=50?'fin-kc-y':'fin-kc-r')+'"><div class="fin-ki">📈</div><div class="fin-kl">Meta Anual</div><div class="fin-kv '+(pctAnu>=100?'pos':pctAnu>=50?'go':'neg')+'">'+pctAnu+'%</div><div class="fin-ks">'+fR(fatAcum)+' de '+fR(metaAcum)+'</div><div style="margin-top:8px;background:var(--card2);border-radius:20px;height:4px;overflow:hidden"><div style="height:4px;border-radius:20px;width:'+Math.min(pctAnu,100)+'%;background:'+(pctAnu>=100?'#16A34A':pctAnu>=50?'#B45309':'#DC2626')+';transition:width 1s ease"></div></div></div><div class="fin-kc '+(margemOk?'fin-kc-g':'fin-kc-r')+'"><div class="fin-ki">📊</div><div class="fin-kl">Margem</div><div class="fin-kv '+(margemOk?'pos':'neg')+'">'+margemR+'%</div><div class="fin-ks">Meta: ≥'+metas.margem+'% '+(margemOk?'✅':'⚠️')+'</div></div><div class="fin-kc '+(inadOk?'fin-kc-g':'fin-kc-r')+'"><div class="fin-ki">⚠️</div><div class="fin-kl">Inadimplência</div><div class="fin-kv '+(inadOk?'pos':'neg')+'">'+inadP+'%</div><div class="fin-ks">Meta: ≤'+metas.inadimplencia+'% '+(inadOk?'✅':'⚠️')+'</div></div>';
-  }
-  const grid=document.getElementById('metas-mensais-grid');
-  if(grid){grid.innerHTML=metas.mensais.map(function(m,i){return'<div><label class="fin-lbl">'+MESES_PT_G[i].slice(0,3)+(i===mesAtu?' ★':'')+'</label><input class="fin-inp" type="number" id="meta-m-'+i+'" value="'+(m.fat||'')+'" placeholder="0,00" min="0" step="100" style="'+(i===mesAtu?'border-color:#7B2FBE;font-weight:700':'')+'"></div>';}).join('');}
-  const mg=document.getElementById('meta-margem'),sm=document.getElementById('meta-saldo-min'),mi=document.getElementById('meta-inadimplencia'),rw=document.getElementById('meta-runway');
-  if(mg)mg.value=metas.margem;if(sm)sm.value=metas.saldoMin;if(mi)mi.value=metas.inadimplencia;if(rw)rw.value=metas.runway;
-  const placar=document.getElementById('placar-metas');
-  if(placar){
-    const rows=MESES_PT_G.map(function(nome,i){
-      const fat=dm.fat[i],metaF=metas.mensais[i].fat||0,res=dm.res[i];
-      const pct=metaF>0?Math.round(fat/metaF*100):0,marg=fat>0?((res/fat)*100).toFixed(1):'—';
-      const atual=i===mesAtu,temDado=fat>0||dm.desp[i]>0,atingiu=fat>=metaF&&metaF>0;
-      return'<div style="display:grid;grid-template-columns:100px 1fr 70px 90px 90px 70px;gap:8px;align-items:center;padding:10px '+(atual?'8px':'0')+';border-bottom:1px solid var(--border);'+(atual?'background:rgba(123,47,190,.04);border-radius:8px':'')+'"><div style="font-size:12px;font-weight:'+(atual?700:400)+';color:'+(atual?'var(--q)':'var(--text)')+'">'+nome+(atual?' ★':'')+'</div><div style="background:var(--card2);border-radius:20px;height:6px;overflow:hidden"><div style="height:6px;border-radius:20px;width:'+Math.min(pct,100)+'%;background:'+(atingiu?'#16A34A':pct>=70?'#B45309':'#DC2626')+';transition:width 1s ease"></div></div><div style="font-size:11px;text-align:right;color:'+(atingiu?'#16A34A':pct>=70?'#B45309':'#DC2626')+';font-weight:600">'+pct+'%</div><div style="font-size:11px;text-align:right;color:var(--muted)">'+(metaF>0?fR(metaF):'—')+'</div><div style="font-size:11px;text-align:right;color:'+(fat>0?'#16A34A':'var(--muted)')+'">'+(temDado?fR(fat):'—')+'</div><div style="font-size:11px;text-align:right;color:'+(parseFloat(marg)>=(metas.margem||30)?'#16A34A':'#DC2626')+'">'+(temDado?marg+'%':'—')+'</div></div>';
-    });
-    placar.innerHTML='<div style="display:grid;grid-template-columns:100px 1fr 70px 90px 90px 70px;gap:8px;padding:0 0 8px;border-bottom:2px solid var(--border);margin-bottom:4px">'+['Mês','Progresso','%','Meta','Realizado','Margem'].map(function(h,i){return'<div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)'+(i>0?';text-align:right':'')+'">' +h+'</div>';}).join('')+'</div>'+rows.join('');
-  }
-}
-
-// ── GERAR DASHBOARD ──────────────────────────────────────────────────────────
-function gerarDashboardApp(){
-  const k=gfeKPIs(),dm=gfeDadosMensais();
-  const metas=typeof getMetas==='function'?getMetas():{mensais:Array(12).fill({fat:100000}),margem:30};
-  const hoje=new Date(),mes=hoje.getMonth();
-  const mesNome=MESES_PT_G[mes]+' '+hoje.getFullYear();
-  const empresa=(typeof CFG!=='undefined'&&CFG.cliente&&CFG.cliente.nome)||'Minha Empresa';
-  const metaMes=metas.mensais[mes].fat||100000;
-  const pctMes=metaMes>0?Math.round(dm.fat[mes]/metaMes*100):0;
-  const metaAnu=metas.mensais.reduce(function(s,m){return s+(m.fat||0);},0);
-  const fatAcum=dm.fat.reduce(function(s,v){return s+v;},0);
-  const pctAnu=metaAnu>0?Math.round(fatAcum/metaAnu*100):0;
-  const apg=FDB.get('apg'),arc=FDB.get('arc');
-  const aPagar=apg.filter(function(r){return r.sit==='Em aberto'||r.sit==='Atrasado';}).reduce(function(s,r){return s+(r.aberto??r.valor);},0);
-  const aReceber=arc.filter(function(r){return r.sit==='Em aberto'||r.sit==='Atrasado';}).reduce(function(s,r){return s+(r.aberto??r.valor);},0);
-  const despMes=dm.desp[mes],resMes=dm.fat[mes]-despMes;
-  const margem=dm.fat[mes]>0?((resMes/dm.fat[mes])*100).toFixed(1):0;
-  const corRes=resMes>=0?'#16A34A':'#DC2626',clsRes=resMes>=0?'pos':'neg';
-  const corPM=pctMes>=100?'#16A34A':pctMes>=70?'#B45309':'#DC2626';
-  const corPA=pctAnu>=100?'#16A34A':pctAnu>=50?'#B45309':'#DC2626';
-  const clsAcum=k.raw.resAcum>=0?'pos':'neg';
-  const dataStr=hoje.toLocaleDateString('pt-BR'),timeStr=hoje.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-  const labelsJ=JSON.stringify(dm.labels.map(function(l,i){return i===mes?l+'★':l;}));
-  const fatJ=JSON.stringify(dm.fat),despJ=JSON.stringify(dm.desp),resJ=JSON.stringify(dm.res);
-  const sc=[
-    'const labels='+labelsJ+';',
-    'const fat='+fatJ+';',
-    'const desp='+despJ+';',
-    'const res='+resJ+';',
-    "const opts={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:10},boxWidth:10,padding:10}}},scales:{y:{ticks:{callback:function(v){return'R$'+(Math.abs(v)/1000).toFixed(0)+'k';},font:{size:9.5}},grid:{color:'#E2DBD4'}},x:{ticks:{font:{size:9.5}},grid:{display:false}}}};",
-    "new Chart(document.getElementById('cFat'),{type:'bar',data:{labels:labels,datasets:[{label:'Faturamento',data:fat,backgroundColor:'rgba(22,163,74,.7)',borderRadius:4,borderSkipped:false},{label:'Despesas',data:desp,backgroundColor:'rgba(220,38,38,.7)',borderRadius:4,borderSkipped:false}]},options:opts});",
-    "new Chart(document.getElementById('cRes'),{type:'bar',data:{labels:labels,datasets:[{label:'Resultado',data:res,backgroundColor:res.map(function(v){return v>=0?'rgba(22,163,74,.75)':'rgba(220,38,38,.75)';}),borderRadius:5,borderSkipped:false}]},options:Object.assign({},opts,{plugins:{legend:{display:false}}})});"
-  ].join('\n');
-
-  const parts=[
-    '<!DOCTYPE html><html lang="pt-BR"><head>',
-    '<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">',
-    '<title>Dashboard '+mesNome+' \u2014 '+empresa+'</title>',
-    '<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">',
-    '<scr'+'ipt src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"><\/scr'+'ipt>',
-    '<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:"DM Sans",sans-serif;background:#F5F4F2;color:#0e1a3a}',
-    '.dh{background:#0e1a3a;padding:28px 36px;display:flex;justify-content:space-between;align-items:center}',
-    '.dh-logo{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:300;color:#fff}',
-    '.dh-logo span{color:#b8966e;font-weight:600}.dh-meta{text-align:right}',
-    '.dh-emp{font-size:14px;color:rgba(255,255,255,.7)}.dh-mes{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#b8966e;margin-top:2px}',
-    '.dh-dt{font-size:10px;color:rgba(255,255,255,.35);margin-top:4px}.body{padding:28px 36px}',
-    '.kg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}',
-    '.kg2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}',
-    '.kc{background:#fff;border-radius:12px;padding:18px 20px;border:1px solid #E2DBD4;position:relative;overflow:hidden}',
-    '.kc-g{border-top:3px solid #16A34A}.kc-r{border-top:3px solid #DC2626}.kc-q{border-top:3px solid #7B2FBE}.kc-go{border-top:3px solid #b8966e}.kc-n{border-top:3px solid #0e1a3a}',
-    '.kl{font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:#7a7065;margin-bottom:6px}',
-    '.kv{font-size:22px;font-weight:700;font-family:"Cormorant Garamond",serif;color:#0e1a3a}',
-    '.kv.pos{color:#16A34A}.kv.neg{color:#DC2626}.kv.go{color:#b8966e}.ks{font-size:10px;color:#7a7065;margin-top:4px}',
-    '.pw{background:#fff;border-radius:12px;padding:18px 20px;border:1px solid #E2DBD4;margin-bottom:20px}',
-    '.pt{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}',
-    '.ptrk{background:#F0EDE8;border-radius:20px;height:6px;overflow:hidden}',
-    '.pfill{height:6px;border-radius:20px;background:linear-gradient(90deg,#5B1F9A,#7B2FBE,#9B4FDE)}',
-    '.psub{display:flex;justify-content:space-between;font-size:10.5px;color:#7a7065;margin-top:8px}',
-    '.cc{background:#fff;border-radius:12px;padding:18px;border:1px solid #E2DBD4;margin-bottom:20px}',
-    '.cct{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#7a7065;margin-bottom:12px}',
-    '.ch{position:relative;height:220px}',
-    '.st{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:600;color:#0e1a3a;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #E2DBD4}',
-    '.ft{background:#0e1a3a;padding:16px 36px;text-align:center;font-size:10px;color:rgba(255,255,255,.35);margin-top:8px}</style></head><body>',
-    '<div class="dh"><div><div class="dh-logo">GFE <span>Financeiro</span></div><div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-top:2px">Dashboard Automático</div></div>',
-    '<div class="dh-meta"><div class="dh-emp">'+empresa+'</div><div class="dh-mes">'+mesNome+'</div><div class="dh-dt">Gerado em '+dataStr+' \xe0s '+timeStr+'</div></div></div>',
-    '<div class="body"><div class="st">Resumo do Per\xedodo</div>',
-    '<div class="kg">',
-    '<div class="kc kc-g"><div class="kl">Faturamento</div><div class="kv pos">'+fR(dm.fat[mes])+'</div><div class="ks">'+mesNome+'</div></div>',
-    '<div class="kc kc-r"><div class="kl">Despesas</div><div class="kv neg">'+fR(despMes)+'</div><div class="ks">'+mesNome+'</div></div>',
-    '<div class="kc '+(resMes>=0?'kc-g':'kc-r')+'"><div class="kl">Resultado</div><div class="kv '+clsRes+'">'+fR(resMes)+'</div><div class="ks">Margem: '+margem+'%</div></div>',
-    '<div class="kc kc-n"><div class="kl">Saldo Atual</div><div class="kv">'+k.saldo+'</div><div class="ks">Via lan\xe7amentos</div></div></div>',
-    '<div class="kg">',
-    '<div class="kc kc-q"><div class="kl">% Meta Mensal</div><div class="kv" style="color:'+corPM+'">'+pctMes+'%</div><div class="ks">Meta: '+fR(metaMes)+'</div></div>',
-    '<div class="kc kc-q"><div class="kl">% Meta Anual</div><div class="kv" style="color:'+corPA+'">'+pctAnu+'%</div><div class="ks">Meta: '+fR(metaAnu)+'</div></div>',
-    '<div class="kc kc-go"><div class="kl">A Receber</div><div class="kv go">'+fR(aReceber)+'</div><div class="ks">Em aberto</div></div>',
-    '<div class="kc kc-r"><div class="kl">A Pagar</div><div class="kv neg">'+fR(aPagar)+'</div><div class="ks">Em aberto</div></div></div>',
-    '<div class="pw"><div class="pt"><div><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#7a7065">Meta Anual 2026</div>',
-    '<div style="font-family:\'Cormorant Garamond\',serif;font-size:28px;font-weight:300;color:'+corPA+'">'+pctAnu+'%</div></div>',
-    '<div style="text-align:right;font-size:12px;color:#7a7065">'+fR(fatAcum)+' de '+fR(metaAnu)+'</div></div>',
-    '<div class="ptrk"><div class="pfill" style="width:'+Math.min(pctAnu,100)+'%"></div></div>',
-    '<div class="psub"><span>Faturamento acumulado</span><strong>Meta Anual: '+fR(metaAnu)+'</strong></div></div>',
-    '<div class="st">Evolu\xe7\xe3o Mensal</div>',
-    '<div class="kg2">',
-    '<div class="cc"><div class="cct">📊 Faturamento vs Despesas</div><div class="ch"><canvas id="cFat"></canvas></div></div>',
-    '<div class="cc"><div class="cct">📈 Resultado por M\xeas</div><div class="ch"><canvas id="cRes"></canvas></div></div></div>',
-    '<div class="st">Acumulado 2026</div>',
-    '<div class="kg">',
-    '<div class="kc kc-g"><div class="kl">Fat. Acumulado</div><div class="kv pos">'+k.fatAcum+'</div></div>',
-    '<div class="kc kc-r"><div class="kl">Desp. Acumuladas</div><div class="kv neg">'+k.despAcum+'</div></div>',
-    '<div class="kc '+(k.raw.resAcum>=0?'kc-g':'kc-r')+'"><div class="kl">Resultado Acum.</div><div class="kv '+clsAcum+'">'+k.resAcum+'</div></div>',
-    '<div class="kc kc-q"><div class="kl">Execu\xe7\xe3o Meta Anual</div><div class="kv">'+k.execMeta+'</div></div></div></div>',
-    '<div class="ft">'+empresa+' \xb7 Dashboard GFE \xb7 Gerado em '+dataStr+'</div>',
-    '<scr'+'ipt>'+sc+'<\/scr'+'ipt>',
-    '</body></html>'
-  ];
-  const dashHTML=parts.join('');
-  const blob=new Blob([dashHTML],{type:'text/html;charset=utf-8'});
-  const url=URL.createObjectURL(blob);
-  const win=window.open(url,'_blank');
-  if(!win)finToast('❌ Popup bloqueado! Permita popups.',true);
-  else finToast('✅ Dashboard gerado!');
-}
-
-// Inicializar
-document.addEventListener('DOMContentLoaded',function(){
-  const m=getMetas();if(typeof CFG!=='undefined')CFG.meta=m.mensais[new Date().getMonth()].fat;
-});
-
-
 
 </script>
 </body>
