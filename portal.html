@@ -1619,8 +1619,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         <div>
           <div class="term-lbl">GFE Score — Status do Mês</div>
           <div class="term-row">
-            <span class="tbadge v" id="term-badge" class="tbadge a">● Aguardando dados</span>
-            <span class="term-txt" id="term-txt">Sem dados ainda</span>
+            <span class="tbadge v" id="term-badge" class="tbadge a">● Em Alerta</span>
+            <span class="term-txt" id="term-txt">Abril 2026 — Em Alerta</span>
           </div>
         </div>
       </div>
@@ -1629,29 +1629,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="period-grid">
         <div class="period-card fat">
           <div class="pc-label">Faturamento</div>
-          <div class="pc-ref" id="pc-ref-fat">Aguardando dados</div>
-          <div class="pc-val fat" id="pc-val-fat">R$ 0,00</div>
+          <div class="pc-ref" id="pc-ref-fat">Realizado até 26/05/2026</div>
+          <div class="pc-val fat" id="pc-val-fat">R$ 22.271,88</div>
           
           <div class="pc-bar-wrap">
-            <div class="pc-bar-lbl"><span>Progresso vs meta mensal</span><span id="pc-pct-fat">0%</span></div>
-            <div class="pc-bar"><div class="pc-bar-fill" id="pc-fill-fat" style="width:0%"></div></div>
+            <div class="pc-bar-lbl"><span>Progresso vs meta mensal</span><span id="pc-pct-fat">110.1%</span></div>
+            <div class="pc-bar"><div class="pc-bar-fill" id="pc-fill-fat" style="width:100%"></div></div>
           </div>
           <div class="pc-sub">Meta mensal: R$ 100.000,00 · Vencidos: R$ 0,00</div>
         </div>
         <div class="period-card desp">
           <div class="pc-label">Despesas</div>
-          <div class="pc-ref" id="pc-ref-desp">Aguardando dados</div>
-          <div class="pc-val desp" id="pc-val-desp">R$ 0,00</div>
+          <div class="pc-ref" id="pc-ref-desp">Pagas até 26/05/2026</div>
+          <div class="pc-val desp" id="pc-val-desp">R$ 24.053,50</div>
           <span class="pc-delta down" id="pc-delta-desp">↑ Atenção ao limite</span>
           <div class="pc-bar-wrap">
             <div class="pc-bar-lbl"><span>% do faturamento esperado</span><span id="pc-pct-desp">28%</span></div>
             <div class="pc-bar"><div class="pc-bar-fill" id="pc-fill-desp" style="width:28%;background:linear-gradient(90deg,var(--red),#F87171)"></div></div>
           </div>
-          <div class="pc-sub">A pagar em aberto: R$ 0,00</div>
+          <div class="pc-sub">A pagar em aberto: R$ 20.200,00</div>
         </div>
         <div class="period-card res">
           <div class="pc-label">Resultado Acumulado 2026</div>
-          <div class="pc-ref">Jan → Abr · 4 meses fechados</div>
+          <div class="pc-ref">Jan → Abr · 1,2,3,4 meses fechados</div>
           <div class="pc-val res-pos">R$ 0,00</div>
           <span class="pc-delta up">↑ Positivo</span>
           <div class="pc-bar-wrap">
@@ -1662,14 +1662,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
         </div>
         <div class="period-card prev">
           <div class="pc-label">A Receber em aberto</div>
-          <div class="pc-ref">Vencimento até 12/Jun · 5 contratos</div>
+          <div class="pc-ref">Vencimento até Mai/2026 · 5 contratos</div>
           <div class="pc-val prev">R$ 0,00</div>
           <span class="pc-delta neutral">◎ Vence em Junho</span>
           <div class="pc-bar-wrap">
             <div class="pc-bar-lbl"><span>—</span><span></span></div>
             <div class="pc-bar"><div class="pc-bar-fill" style="width:35%;background:linear-gradient(90deg,var(--blue),#60A5FA)"></div></div>
           </div>
-          <div class="pc-sub">A receber 30d: R$ 0,00</div>
+          <div class="pc-sub">A receber 30d: R$ 30.500,00</div>
         </div>
       </div>
 
@@ -1677,9 +1677,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="prog">
         <div class="prog-h">
           <div class="prog-ttl">Meta Anual 2026</div>
-          <div class="prog-pct">0%</div>
+          <div class="prog-pct">103.6%</div>
         </div>
-        <div class="prog-trk"><div class="prog-fill" style="width:0%"></div></div>
+        <div class="prog-trk"><div class="prog-fill" style="width:100%"></div></div>
         <div class="prog-sub"><span>R$ 0,00 (Jan–Abr)</span><span>Meta: <strong>R$ 0,00</strong></span></div>
       </div>
 
@@ -2154,17 +2154,33 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 // ══ CONFIG — EDITE AQUI TODO MÊS ══════════════════════════════════════
 const CFG = {
-  email:"cliente@empresa.com.br",
-  senha:"senha2026",
+  email:"clara@claraassistance.com.br",
+  senha:"clara2026",
   senhaAdmin:"admin2026",
-  cliente:{ nome:"Minha Empresa", segmento:"" },
-  meta: 100000,
-  dashboards:{},
-  cartas:[]
+  cliente:{
+    nome:"Clara Assistance",
+    segmento:"Assessoria Pessoal e Empresarial",
+    cnpj:"",
+    contato:"clara@claraassistance.com.br"
+  },
+  meta: 20237.3,
+  metaAnual: 92636.73000000001,
+  metaMargem: 30,
+  dashboards:{
+    "Abril 2026":{url:"https://gfe-consultoria.github.io/cliente-clara/dashboard_2026_1779824516.html",entrega:"26/05/2026"}
+  },
+  cartas:[
+    
+  ]
 };
 // ══════════════════════════════════════════════════════════════════════
 
-const dadosMensais={labels:[],fat:[],desp:[],res:[]};
+const dadosMensais={
+  labels:["Jan","Fev","Mar","Abr*","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],
+  fat:[19364,35170.06,19192.96,22271.88,1505.39,4070,0,0,0,0,0,1200],
+  desp:[14914.74,25800.28,22721,24053.5,6061.87,468.9,0,6225.04,0,0,220.4,0],
+  res:[4449.26,9369.78,-3528.04,-1781.62,-4556.48,3601.1,0,-6225.04,0,0,-220.4,1200]
+};
 
 // SPLASH → LOGIN
 setTimeout(()=>{
@@ -2409,7 +2425,11 @@ function initAnualCharts(){
 }
 
 // ══ RUNWAY DE CAIXA ══════════════════════════════════════════════════════
-const RUNWAY_CFG = {saldo:0, despMensal:1, dataRef:"—"};
+const RUNWAY_CFG = {
+  saldo: 0,
+  despMensal: 24053.5,
+  dataRef: '26/05/2026'
+};
 
 function buildRunway(){
   const {saldo, despMensal} = RUNWAY_CFG;
@@ -2488,7 +2508,7 @@ function buildScoreAuto(){
 
 // ══ TIMELINE DE VENCIMENTOS ═══════════════════════════════════════════════
 // Dados dos vencimentos — atualize todo mês junto com os cards de período
-const VENCIMENTOS = [];
+const VENCIMENTOS = [{"nome":"FORNECEDOR ATRASADO","tipo":"pagar","valor":"R$ 3.200,00","dia":27,"mes":"Mai"},{"nome":"CLIENTE ALPHA LTDA","tipo":"receber","valor":"R$ 18.000,00","dia":4,"mes":"Jun"},{"nome":"FORNECEDOR EXEMPLO","tipo":"pagar","valor":"R$ 9.060,00","dia":9,"mes":"Jun"},{"nome":"CLIENTE BETA SA","tipo":"receber","valor":"R$ 12.500,00","dia":9,"mes":"Jun"},{"nome":"GFE CONSULTORIA","tipo":"pagar","valor":"R$ 1.590,00","dia":14,"mes":"Jun"},{"nome":"RECEITA FEDERAL","tipo":"pagar","valor":"R$ 1.850,00","dia":19,"mes":"Jun"}];
 
 function buildTimeline(){
   const list = document.getElementById('tl-list');
@@ -2533,15 +2553,23 @@ function buildTimeline(){
 
 
 const SCORE_CFG = {
-  atual:0, status:'alerta', periodo:'—', evolucao:'+0',
-  dims:[
-    {nome:'Liquidez',val:0,prev:0,peso:'25%',descr:'Aguardando dados'},
-    {nome:'Inadimplência',val:0,prev:0,peso:'25%',descr:'Aguardando dados'},
-    {nome:'Margem',val:0,prev:0,peso:'20%',descr:'Aguardando dados'},
-    {nome:'Fluxo de Caixa',val:0,prev:0,peso:'20%',descr:'Aguardando dados'},
-    {nome:'Organização',val:0,prev:0,peso:'10%',descr:'Aguardando dados'},
+  atual: 57,
+  status: 'alerta',
+  periodo: 'Abril 2026',
+  evolucao: '+11',
+  dims: [
+    {nome:'Liquidez', val:0, prev:0, peso:'25%', descr:"Saldo cobre 0% dos compromissos (R$ 0,00 disponível, R$ 20.200,00 a pagar)"},
+    {nome:'Inadimplência', val:100, prev:95, peso:'25%', descr:"Sem inadimplência registrada. Todos os recebimentos em dia."},
+    {nome:'Margem Líquida', val:15, prev:10, peso:'20%', descr:"Margem líquida de -8% (meta: ≥ 20%). Despesas superam receitas — atenção urgente."},
+    {nome:'Execução da Meta', val:100, prev:95, peso:'20%', descr:"110.05% da meta mensal atingida (R$ 22.271,88 de R$ 20.237,30). Meta superada! 🎯"},
+    {nome:'Organização Financ.', val:85, prev:80, peso:'10%', descr:"Dados financeiros bem organizados. 1,2,3,4 meses com lançamentos registrados."}
   ],
-  historico:[]
+  historico: [
+    {mes:'Jan', val:69, status:'saudavel', evolucao:'+0'},
+    {mes:'Fev', val:69, status:'saudavel', evolucao:'+0'},
+    {mes:'Mar', val:46, status:'alerta', evolucao:'-23'},
+    {mes:'Abr', val:58, status:'alerta', atual:true, evolucao:'+12'}
+  ]
 };
 
 const SCORE_LABELS = {
@@ -2621,7 +2649,12 @@ function buildScore(){
 // ══════════════════════════════════════════════════════════════════════
 
 
-const presSlides=[];
+const presSlides=[
+  {label:'Abril 2026',title:'Clara Assistance',sub:'Fechamento Financeiro — Abril 2026',kpis:[{v:'R$ 22.271,88',l:'Faturamento'},{v:'R$ 24.053,50',l:'Despesas'},{v:'103.6%',l:'Meta Anual'},{v:'-8%',l:'Margem Líquida'}]},
+  {label:'Acumulado 2026',title:'Resultado Acumulado',sub:'Janeiro a Abril de 2026',kpis:[{v:'R$ 95.998,90',l:'Faturamento Total'},{v:'R$ 87.489,52',l:'Despesas Total'},{v:'R$ 8.509,38',l:'Resultado'},{v:'4 meses',l:'Período'}]},
+  {label:'Metas',title:'Progresso das Metas',sub:'Execução vs Planejado 2026',kpis:[{v:'103.6%',l:'Meta Anual'},{v:'-8%',l:'Margem Real'},{v:'110.1%',l:'Meta Mensal'},{v:'R$ 92.636,73',l:'Meta Anual'}]},
+  {label:'Próximos Passos',title:'Estratégia Maio',sub:'Recomendações GFE',kpis:[{v:'R$ 20.237,30',l:'Meta Mensal'},{v:'30%',l:'Margem Meta'},{v:'R$ 81.200,00',l:'A Receber'},{v:'R$ 20.200,00',l:'A Pagar'}]}
+];
 let presIdx=0;
 
 function openPresentation(){document.getElementById('presentation').classList.add('open');presIdx=0;renderSlide();}
@@ -2989,7 +3022,7 @@ function exportPDF(){
     doc.setFillColor(...BG2);doc.roundedRect(CA,p2y,182,30,2,2,'F');
     doc.setFillColor(...GOLD);doc.rect(CA,p2y,2.5,30,'F');
     doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(50,65,90);
-    const analise='Aguardando dados do cliente.';
+    const analise='Abril: faturamento R$ 22.271,88, resultado R$ -1.781,62, margem -8%. Saldo R$ 0,00.';
     const aLinhas=doc.splitTextToSize(analise,174);
     doc.text(aLinhas,CA+5,p2y+8);
     p2y+=36;
@@ -3001,7 +3034,11 @@ function exportPDF(){
     doc.text('DESTAQUES DO MÊS',7,p2y+1);
     p2y+=10;
 
-    const destaques=[];
+    const destaques=[
+      {lbl:'RESULTADO', tc:RED, bg:BGRED, txt:'Abril fechou com resultado negativo de R$ 1.781,62. Despesas (R$ 24.053,50) superaram faturamento (R$ 22.271,88).'},
+      {lbl:'LIQUIDEZ', tc:RED, bg:BGRED, txt:'Saldo disponível: R$ 0,00. A receber: R$ 81.200,00. A pagar: R$ 20.200,00.'},
+      {lbl:'META ANUAL', tc:GREEN, bg:BGGRE, txt:'Meta anual 103.6% executada. Ritmo anualizado: R$ 287.996,70.'},
+    ];
     destaques.forEach(d=>{
       doc.setFillColor(...d.bg);doc.roundedRect(CA,p2y,182,13,2,2,'F');
       doc.setFillColor(...d.tc);doc.rect(CA,p2y,2.5,13,'F');
