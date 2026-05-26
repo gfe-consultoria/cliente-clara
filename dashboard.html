@@ -78,19 +78,35 @@ body{font-family:'DM Sans',sans-serif;background:#F5F4F2;color:#0e1a3a;min-heigh
 <script>
 // ── DADOS INJETADOS PELO APPS SCRIPT ─────────────────────────────────────────
 const CFG = {
-  email:"cliente@empresa.com.br",
-  senha:"senha2026",
-  cliente:{nome:"Minha Empresa",segmento:""},
-  meta:100000,
+  email:"clara@claraassistance.com.br",
+  senha:"clara2026",
+  cliente:{nome:"Clara Assistance",segmento:"Assessoria Pessoal e Empresarial"},
+  meta:20237.3,
   dashboards:{},
   cartas:[]
 };
-const dadosMensais={labels:[],fat:[],desp:[],res:[],metas:[]};
-const SCORE_CFG={
-  atual:0,status:'alerta',periodo:'—',evolucao:'+0',
-  dims:[],historico:[]
+const dadosMensais={
+  labels:["Jan","Fev","Mar","Abr*","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],
+  fat:[19364,35170.06,19192.96,22271.88,1505.39,0,0,0,0,0,0,0],
+  desp:[14914.74,25800.28,22721,24053.5,6061.87,0,0,0,0,0,0,0],
+  res:[4449.26,9369.78,-3528.04,-1781.62,-4556.48,0,0,0,0,0,0,0],
+  metas:[18043.43,18964,24870,20237.3,18043.43,10522,18043.43,18043.43,18043.43,18043.43,18043.43,18043.43]
 };
-const RUNWAY_CFG={saldo:0,despMensal:1,dataRef:'—'};
+const SCORE_CFG={
+  atual:57,
+  status:'alerta',
+  periodo:'Abril 2026',
+  evolucao:'+11',
+  dims:[
+    {nome:'Liquidez',val:0,prev:0,peso:'25%',descr:"Saldo cobre 0% dos compromissos (R$ 0,00 disponível, R$ 9.060,00 a pagar)"},
+    {nome:'Inadimplência',val:100,prev:95,peso:'25%',descr:"Sem inadimplência registrada. Todos os recebimentos em dia."},
+    {nome:'Margem Líquida',val:15,prev:10,peso:'20%',descr:"Margem líquida de -8% (meta: ≥ 20%). Despesas superam receitas — atenção urgente."},
+    {nome:'Execução da Meta',val:100,prev:95,peso:'20%',descr:"110.05% da meta mensal atingida (R$ 22.271,88 de R$ 20.237,30). Meta superada! 🎯"},
+    {nome:'Organização Financ.',val:85,prev:80,peso:'10%',descr:"Dados financeiros bem organizados. 1,2,3,4 meses com lançamentos registrados."}
+  ],
+  historico:[]
+};
+const RUNWAY_CFG={saldo:0,despMensal:24053.5,dataRef:'26/05/2026'};
 const VENCIMENTOS=[];
 // ─────────────────────────────────────────────────────────────────────────────
 
