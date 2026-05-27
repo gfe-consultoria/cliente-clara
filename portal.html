@@ -3075,9 +3075,9 @@ function exportPDF(){
     p2y+=10;
 
     const destaques=[
-      {lbl:'RESULTADO', tc:RED, bg:BGRED, txt:'Abril fechou com resultado negativo de R$ 1.781,62. Despesas (R$ 24.053,50) superaram faturamento (R$ 22.271,88).'},
-      {lbl:'LIQUIDEZ', tc:RED, bg:BGRED, txt:'Saldo disponível: R$ 0,00. A receber: R$ 0,00. A pagar: R$ 0,00.'},
-      {lbl:'META ANUAL', tc:GREEN, bg:BGGRE, txt:'Meta anual 103.6% executada. Ritmo anualizado: R$ 287.996,70.'},
+      {lbl:'RESULTADO', tc:(_res>=0?GREEN:RED), bg:(_res>=0?BGGRE:BGRED), txt:(_res>=0?(_mesNome+' fechou positivo com '+RES+'. Faturamento '+FAT+', despesas '+DESP+'. Margem '+MARGEM+'.'):(_mesNome+' fechou com resultado negativo de '+_fmt(Math.abs(_res))+'. Despesas ('+DESP+') superaram faturamento ('+FAT+').'))},
+      {lbl:'LIQUIDEZ', tc:(_saldo>0?GREEN:RED), bg:(_saldo>0?BGGRE:BGRED), txt:('Saldo disponível: '+SALDO+'. A receber: '+A_REC+'. A pagar: '+A_PAG+'.')},
+      {lbl:'META ANUAL', tc:(_percMetaA>=Math.round((_mesIdx+1)/12*100)?GREEN:YELLOW), bg:(_percMetaA>=Math.round((_mesIdx+1)/12*100)?BGGRE:BGYEL), txt:('Meta anual '+EXEC_META+' executada. Ritmo anualizado: '+_fmt(_ritmo)+'.') },
     ];
     destaques.forEach(d=>{
       // calcular altura necessária para o texto
@@ -3122,13 +3122,22 @@ function exportPDF(){
       doc.text(d.nome,CA+44,p2y+1);
       // barra
       pBar(CA+44,p2y+2.5,100,d.val/100,sc,[215,220,230]);
-      // descr — 1 linha truncada para caber na caixa
-      const _descFull=d.descr||'';
+      // descr â sanitizar chars e renderizar 1 linha
+      const _descRaw=(d.descr||'');
+      const _descSan=_descRaw.split('').map(function(c){
+        var code=c.charCodeAt(0);
+        if(code>255){
+          if(c==='≥')return'>=';
+          if(c==='≤')return'<=';
+          if(c==='→')return'->';
+          if(c==='—'||c==='–')return'-';
+          return'';
+        }return c;
+      }).join('');
       doc.setFont('helvetica','normal');doc.setFontSize(6.5);doc.setTextColor(85,100,120);
-      const _descLines=doc.splitTextToSize(_descFull,110);
-      const _descShow=_descLines.length>1?_descLines[0].replace(/\s+\S*$/,'')+'…':(_descLines[0]||'');
-      doc.text(_descShow,CA+44,p2y+9);
-      // peso
+      const _descLines=doc.splitTextToSize(_descSan,110);
+      doc.text(_descLines[0]||'',CA+44,p2y+9);
+            // peso
       doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(...MUTED);
       doc.text('Peso: '+d.peso,CA+176,p2y+1,{align:'right'});
       p2y+=17;
