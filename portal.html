@@ -2574,7 +2574,8 @@ function buildScoreAuto(){
   // Atualizar badge do termômetro com status real do SCORE_CFG
   const badge=document.getElementById('term-badge');
   const ttxt=document.getElementById('term-txt');
-  const st=SCORE_CFG.status||'alerta';
+  const _sv=SCORE_CFG.atual||0;
+  const st=_sv<=40?'critico':_sv<=65?'alerta':_sv<=85?'saudavel':'estrategico';
   const clsMap={critico:'r',alerta:'y',saudavel:'v',estrategico:'v'};
   const lblMap={critico:'● Crítico',alerta:'● Em Alerta',saudavel:'● Saudável',estrategico:'● Estratégico'};
   if(badge){badge.className='tbadge '+(clsMap[st]||'y');badge.textContent=lblMap[st]||'● Em Alerta';}
@@ -3160,9 +3161,9 @@ function exportPDF(){
     p2y+=10;
 
     const destaques=[
-      {lbl:'RESULTADO', tc:RED, bg:BGRED, txt:'Abril fechou com resultado negativo de R$ 1.781,62. Despesas (R$ 24.053,50) superaram faturamento (R$ 22.271,88).'},
-      {lbl:'LIQUIDEZ', tc:RED, bg:BGRED, txt:'Saldo disponível: R$ 0,00. A receber: R$ 0,00. A pagar: R$ 0,00.'},
-      {lbl:'META ANUAL', tc:GREEN, bg:BGGRE, txt:'Meta anual 103.6% executada. Ritmo anualizado: R$ 287.996,70.'},
+      {lbl:'RESULTADO', tc:(_res>=0?GREEN:RED), bg:(_res>=0?BGGRE:BGRED), txt:(_res>=0?(_mesNome+' fechou positivo com '+RES+'. Faturamento '+FAT+', despesas '+DESP+'. Margem '+MARGEM+'.'):(_mesNome+' fechou com resultado negativo de '+_fmt(Math.abs(_res))+'. Despesas ('+DESP+') superaram faturamento ('+FAT+').'))},
+      {lbl:'LIQUIDEZ', tc:(_saldo>0?GREEN:RED), bg:(_saldo>0?BGGRE:BGRED), txt:('Saldo disponível: '+SALDO+'. A receber: '+A_REC+'. A pagar: '+A_PAG+'.')},
+      {lbl:'META ANUAL', tc:(_percMetaA>=Math.round((_mesIdx+1)/12*100)?GREEN:YELLOW), bg:(_percMetaA>=Math.round((_mesIdx+1)/12*100)?BGGRE:BGYEL), txt:('Meta anual '+EXEC_META+' executada. Ritmo anualizado: '+_fmt(_ritmo)+'.') },
     ];
     destaques.forEach(d=>{
       // calcular altura necessária para o texto
