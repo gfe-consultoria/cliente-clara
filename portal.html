@@ -2736,16 +2736,46 @@ function exportPDF(){
     const W=210,H=297;
 
     // ══ DADOS — 100% baseados no dashboard e planilhas reais ══════
-    const MES='—',CLIENTE=CFG.cliente.nome;
-    const abr=SCORE_CFG.historico.find(h=>h.atual)||{val:0,status:'alerta'};
-    const SCORE_VAL=abr.val,SCORE_STATUS=SCORE_LABELS[abr.status]||SCORE_LABELS.alerta;
-    const FAT='R$ 0,00',DESP='R$ 0,00',RES='R$ 0,00',MARGEM='0%',META_MEN='0%';
-    const FAT_ACUM='R$ 0,00',DESP_ACUM='R$ 0,00',RES_ACUM='R$ 0,00',META_ANUAL='R$ 0,00';
-    const EXEC_META='0%',SALDO='R$ 0,00',A_REC='R$ 0,00',A_PAG='R$ 0,00';
-    const CARTA_TXT = (document.getElementById('carta-texto-home')?.textContent||'')
-      .replace(/^[""]|[""]$/g,'').trim()
-      ||'Carta do consultor será adicionada após o primeiro fechamento da Minha Empresa.';
+    const CLIENTE=CFG.cliente.nome;
+    const abr=SCORE_CFG.historico.find(h=>h.atual)||SCORE_CFG.historico[SCORE_CFG.historico.length-1]||{val:SCORE_CFG.atual,status:SCORE_CFG.status};
+    const SCORE_VAL=abr.val||SCORE_CFG.atual,SCORE_STATUS=SCORE_LABELS[abr.status]||SCORE_LABELS.alerta;
 
+    // Mês de referência: último com dados reais
+    const _mesIdx=dadosMensais.fat.reduce((last,v,i)=>v>0?i:last,-1);
+    const _mesLabels=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const _mesNome=_mesIdx>=0?_mesLabels[_mesIdx]:'—';
+    const MES=_mesIdx>=0?_mesNome+' 2026':'—';
+
+    // Formatador
+    const _fmt=v=>{v=parseFloat(v)||0;const s=Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});return(v>=0?'R$ ':'-R$ ')+s;};
+
+    // KPIs do mês atual
+    const _fat=dadosMensais.fat[_mesIdx]||0;
+    const _desp=dadosMensais.desp[_mesIdx]||0;
+    const _res=dadosMensais.res[_mesIdx]||0;
+    const _meta=(dadosMensais.metas&&dadosMensais.metas[_mesIdx])||CFG.meta||100000;
+    const _margem=_fat>0?Math.round(_res/_fat*1000)/10:0;
+    const _percMeta=_fat>0?Math.round(_fat/_meta*1000)/10:0;
+
+    // Acumulados
+    const _mesesReais=dadosMensais.fat.map((v,i)=>v>0?i:-1).filter(i=>i>=0);
+    const _acumEnt=_mesesReais.reduce((s,i)=>s+dadosMensais.fat[i],0);
+    const _acumSai=_mesesReais.reduce((s,i)=>s+dadosMensais.desp[i],0);
+    const _acumRes=Math.round((_acumEnt-_acumSai)*100)/100;
+    const _metaAnual=CFG.metaAnual||(_meta*12);
+    const _percMetaA=_metaAnual>0?Math.round(_acumEnt/_metaAnual*1000)/10:0;
+    const _ritmo=_mesesReais.length>0?Math.round(_acumEnt/_mesesReais.length*12*100)/100:0;
+
+    // Saldo do RUNWAY_CFG (injetado pelo Apps Script)
+    const _saldo=RUNWAY_CFG.saldo||0;
+
+    const FAT=_fmt(_fat),DESP=_fmt(_desp),RES=_fmt(_res),MARGEM=_margem+'%',META_MEN=_percMeta+'%';
+    const FAT_ACUM=_fmt(_acumEnt),DESP_ACUM=_fmt(_acumSai),RES_ACUM=_fmt(_acumRes),META_ANUAL=_fmt(_metaAnual);
+    const EXEC_META=_percMetaA+'%',SALDO=_fmt(_saldo),A_REC='R$ 0,00',A_PAG='R$ 0,00';
+
+    const CARTA_TXT=(document.getElementById('carta-texto-home')?.textContent||'')
+      .replace(/^[\u201c\u201d"]/g,'').replace(/[\u201c\u201d"]$/g,'').trim()
+      ||(_mesNome+': faturamento '+_fmt(_fat)+', resultado '+_fmt(_res)+', margem '+_margem+'%. Acumulado '+_fmt(_acumEnt)+'. Saldo '+_fmt(_saldo)+'.');
     // ── CORES ──────────────────────────────────────────────────────
     const NAVY  =[14,26,58];
     const NAVY2 =[23,38,72];
@@ -2934,10 +2964,12 @@ function exportPDF(){
     // ── GRÁFICO BARRAS — abaixo das colunas ──────────────────────
     const GY=ay+8;
     secLbl(CA,GY,'EVOLUÇÃO MENSAL 2026  (* = parcial)',W-28);
-    const meses=['Jan','Fev','Mar','Abr','Mai*'];
-    const fats=[0,0,0,0,0,0,0,0,0,0,0,0];
-    const desps=[78853,110102,92205,116125,56158];
-    const ress=[55712,-10491,122502,-36706,-16502];
+    const _mesesComDados=dadosMensais.fat.map((v,i)=>v>0?i:-1).filter(i=>i>=0);
+    const _labGraf=_mesesComDados.map(i=>dadosMensais.labels[i].replace('*','')+(i===_mesIdx?'*':''));
+    const meses=_labGraf;
+    const fats=_mesesComDados.map(i=>dadosMensais.fat[i]);
+    const desps=_mesesComDados.map(i=>dadosMensais.desp[i]);
+    const ress=_mesesComDados.map(i=>dadosMensais.res[i]);
     const maxV=Math.max(...fats,...desps);
     const GH=28, bw=(182/meses.length)-2, GBY=GY+8;
 
@@ -3030,7 +3062,7 @@ function exportPDF(){
     doc.setFillColor(...BG2);doc.roundedRect(CA,p2y,182,30,2,2,'F');
     doc.setFillColor(...GOLD);doc.rect(CA,p2y,2.5,30,'F');
     doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(50,65,90);
-    const analise='Abril: faturamento R$ 22.271,88, resultado R$ -1.781,62, margem -8%. Saldo R$ 0,00.';
+    const analise=(_mesNome+': faturamento '+FAT+', despesas '+DESP+', resultado '+RES+'. Margem líquida '+MARGEM+'. Acumulado '+FAT_ACUM+'. Saldo '+SALDO+'.');
     const aLinhas=doc.splitTextToSize(analise,174);
     doc.text(aLinhas,CA+5,p2y+8);
     p2y+=36;
@@ -3043,9 +3075,9 @@ function exportPDF(){
     p2y+=10;
 
     const destaques=[
-      {lbl:'RESULTADO', tc:RED, bg:BGRED, txt:'Abril fechou com resultado negativo de R$ 1.781,62. Despesas (R$ 24.053,50) superaram faturamento (R$ 22.271,88).'},
-      {lbl:'LIQUIDEZ', tc:RED, bg:BGRED, txt:'Saldo disponível: R$ 0,00. A receber: R$ 0,00. A pagar: R$ 0,00.'},
-      {lbl:'META ANUAL', tc:GREEN, bg:BGGRE, txt:'Meta anual 103.6% executada. Ritmo anualizado: R$ 287.996,70.'},
+      {lbl:'RESULTADO', tc:(_res>=0?GREEN:RED), bg:(_res>=0?BGGRE:BGRED), txt:(_res>=0?(_mesNome+' fechou positivo com '+RES+'. Faturamento '+FAT+', despesas '+DESP+'. Margem '+MARGEM+'.'):(_mesNome+' fechou com resultado negativo de '+_fmt(Math.abs(_res))+'. Despesas ('+DESP+') superaram faturamento ('+FAT+').'))},
+      {lbl:'LIQUIDEZ', tc:(_saldo>0?GREEN:RED), bg:(_saldo>0?BGGRE:BGRED), txt:('Saldo disponível: '+SALDO+'. A receber: '+A_REC+'. A pagar: '+A_PAG+'.')},
+      {lbl:'META ANUAL', tc:(_percMetaA>=Math.round((_mesIdx+1)/12*100)?GREEN:YELLOW), bg:(_percMetaA>=Math.round((_mesIdx+1)/12*100)?BGGRE:BGYEL), txt:('Meta anual '+EXEC_META+' executada. Ritmo anualizado: '+_fmt(_ritmo)+'.') },
     ];
     destaques.forEach(d=>{
       doc.setFillColor(...d.bg);doc.roundedRect(CA,p2y,182,13,2,2,'F');
@@ -3113,10 +3145,11 @@ function exportPDF(){
     doc.text('PROXIMOS PASSOS RECOMENDADOS',7,p2y+1);
     p2y+=10;
 
+    const _proxMes=_mesLabels[Math.min(_mesIdx+1,11)];
     const steps=[
-      'Atualizar recomendações após o primeiro fechamento da Minha Empresa.',
-      'Analisar obrigações em aberto e planejar fluxo de caixa.',
-      'Mapear e contingenciar despesas fixas para os meses de baixa sazonalidade.',
+      (_fat<_meta*0.9?'Faturamento em '+META_MEN+' da meta em '+_mesNome+'. Priorizar contratos e pipeline para '+_proxMes+'.':'Faturamento atingiu '+META_MEN+' da meta em '+_mesNome+'. Manter ritmo para '+_proxMes+'.'),
+      'Revisar obrigações em aberto e planejar fluxo de caixa para os próximos 30 dias.',
+      'Meta anual em '+EXEC_META+'. Ritmo anualizado: '+_fmt(_ritmo)+'. '+(+EXEC_META>=100?'No ritmo para atingir a meta anual.':'Intensificar esforços para fechar a meta de '+META_ANUAL+'.'),
     ];
     const stepH=12, stepGap=13;
     steps.forEach((s,i)=>{
