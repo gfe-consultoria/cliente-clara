@@ -344,7 +344,7 @@ const CFG = {
   senhaAdmin:"admin2026",
   cliente:{nome:"Clara Assistance",segmento:"Assessoria Pessoal e Empresarial"},
   meta:20237.3,
-  metaAnual:92636.73000000001,
+  metaAnual:242847.6,
   metaMargem:30,
   dashboards:{},
   cartas:[]
@@ -357,26 +357,18 @@ const dadosMensais={
   metas:[18043.43,18964,24870,20237.3,18043.43,10522,18043.43,18043.43,18043.43,18043.43,18043.43,18043.43]
 };
 const SCORE_CFG={
-  atual:57,
-  status:'alerta',
-  periodo:'Abril 2026',
-  evolucao:'+11',
+  atual:57,status:'alerta',periodo:'Abril 2026',evolucao:'+11',
   dims:[
     {nome:'Liquidez',val:0,prev:0,peso:'25%',descr:"Saldo cobre 0% dos compromissos (R$ 0,00 disponível, R$ 9.060,00 a pagar)"},
     {nome:'Inadimplência',val:100,prev:95,peso:'25%',descr:"Sem inadimplência registrada. Todos os recebimentos em dia."},
-    {nome:'Margem Líquida',val:15,prev:10,peso:'20%',descr:"Margem líquida de -8% (meta: ≥ 20%). Despesas superam receitas — atenção urgente."},
-    {nome:'Execução da Meta',val:100,prev:95,peso:'20%',descr:"110.05% da meta mensal atingida (R$ 22.271,88 de R$ 20.237,30). Meta superada! 🎯"},
-    {nome:'Organização Financ.',val:85,prev:80,peso:'10%',descr:"Dados financeiros bem organizados. 1,2,3,4 meses com lançamentos registrados."}
+    {nome:'Margem Líquida',val:15,prev:10,peso:'20%',descr:"Margem líquida de -8% (meta: ≥ 30%). Despesas superam receitas."},
+    {nome:'Execução da Meta',val:100,prev:95,peso:'20%',descr:"110.05% da meta mensal atingida. Meta superada! 🎯"},
+    {nome:'Organização Financ.',val:85,prev:80,peso:'10%',descr:"Dados financeiros bem organizados. 4 meses com lançamentos."}
   ],
-  historico:[
-    {mes:'Jan',val:69,status:'saudavel',evolucao:'+0'},
-    {mes:'Fev',val:69,status:'saudavel',evolucao:'+0'},
-    {mes:'Mar',val:46,status:'alerta',evolucao:'+0'},
-    {mes:'Abr',val:58,status:'alerta',atual:true,evolucao:'+0'}
-  ]
+  historico:[]
 };
 const RUNWAY_CFG={saldo:0,despMensal:24053.5,dataRef:'27/05/2026'};
-const VENCIMENTOS=[{"nome":"CLIENTE EXEMPLO","tipo":"receber","valor":"R$ 12.000,00","dia":4,"mes":"Jun"},{"nome":"FORNECEDOR EXEMPLO","tipo":"pagar","valor":"R$ 9.060,00","dia":9,"mes":"Jun"}];
+const VENCIMENTOS=[];
 // ──────────────────────────────────────────────────────────────────────────
 
 const MESES_FULL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
