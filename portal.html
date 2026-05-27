@@ -1814,13 +1814,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="estrat-grid">
         <div class="card" style="margin-bottom:0">
           <div class="ct">✦ Insights do Consultor</div>
-          <div class="ins-list">
-            <div class="ins-item"><div class="ins-n">1</div><div class="ins-txt"><strong>Inadimplência controlada em 3.4%</strong> — Dentro da meta de 5%. R$ 19.301,00 em atraso.</div></div>
-            <div class="ins-item"><div class="ins-n">2</div><div class="ins-txt"><strong>Resultado negativo em Abril</strong> — Saídas (R$ 0,00) superaram entradas (R$ 0,00) em R$ 890,10.</div></div>
-            <div class="ins-item"><div class="ins-n">3</div><div class="ins-txt"><strong>R$ 0,00 a pagar</strong> — Representa 762% do saldo (R$ 0,00). Gestão de caixa prioritária.</div></div>
-            <div class="ins-item"><div class="ins-n">4</div><div class="ins-txt"><strong>R$ 0,00 a receber</strong> — R$ 80.850,35 vencem nos próximos 30 dias.</div></div>
-            <div class="ins-item"><div class="ins-n">5</div><div class="ins-txt"><strong>Ritmo anualizado: R$ 1.094.530,92</strong> — Ano fecha em 30.4% da meta anual (R$ 0,00).</div></div>
-          </div>
+          <div class="ins-list" id="ins-list"></div>
         </div>
         <div class="card cal-compact" style="margin-bottom:0">
           <div class="ct" style="margin-bottom:10px">◎ Calendário — Mai 2026</div>
@@ -2239,7 +2233,7 @@ function login(){
     if(id('gb-client-name'))id('gb-client-name').textContent=CFG.cliente.nome+' 👋';
     if(id('pf-nome'))id('pf-nome').textContent=CFG.cliente.nome;
     if(id('pf-seg'))id('pf-seg').textContent=CFG.cliente.segmento;
-    buildDash();buildCal();buildCartas();buildScore();buildScoreAuto();buildRunway();buildTimeline();setTimeout(function(){initCharts();initAnualCharts();},200);
+    buildDash();buildCal();buildCartas();buildScore();buildScoreAuto();buildRunway();buildTimeline();buildInsights();setTimeout(function(){initCharts();initAnualCharts();},200);
   }else{
     err.style.display='block';
     document.getElementById('lp').style.borderColor='var(--red)';
@@ -2335,6 +2329,88 @@ function buildDash(){
     c.innerHTML=`<div class="dc-ico">◫</div><div class="dc-m">${mes}</div><button class="bd on">Ver Dashboard</button><div class="dc-del">Entregue em ${d.entrega}</div>`;
     g.appendChild(c);
   });
+}
+
+// INSIGHTS DO CONSULTOR — gerados dinamicamente pelos dados da planilha
+function buildInsights(){
+  const el=document.getElementById('ins-list');
+  if(!el)return;
+
+  // Utilitários
+  const fR=v=>{v=parseFloat(v)||0;const s=Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});return(v>=0?'R$ ':'-R$ ')+s;};
+  const r1=v=>Math.round(v*10)/10;
+
+  // Mês de referência
+  const mesIdx=dadosMensais.fat.reduce((last,v,i)=>v>0?i:last,-1);
+  const mesNomes=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const mesNome=mesIdx>=0?mesNomes[mesIdx]:'—';
+
+  // Dados do mês
+  const fat=dadosMensais.fat[mesIdx]||0;
+  const desp=dadosMensais.desp[mesIdx]||0;
+  const res=dadosMensais.res[mesIdx]||0;
+  const meta=(dadosMensais.metas&&dadosMensais.metas[mesIdx])||CFG.meta||100000;
+
+  // Acumulados
+  const mesesReais=dadosMensais.fat.map((v,i)=>v>0?i:-1).filter(i=>i>=0);
+  const acumEnt=mesesReais.reduce((s,i)=>s+dadosMensais.fat[i],0);
+  const metaAnual=CFG.metaAnual||(meta*12);
+  const percMetaA=metaAnual>0?r1(acumEnt/metaAnual*100):0;
+  const ritmo=mesesReais.length>0?Math.round(acumEnt/mesesReais.length*12*100)/100:0;
+
+  // Saldo, a pagar, a receber do RUNWAY_CFG e VENCIMENTOS
+  const saldo=RUNWAY_CFG.saldo||0;
+  const totalPagar=VENCIMENTOS.filter(v=>v.tipo==='pagar').reduce((s,v)=>s+parseFloat((v.valor||'0').replace(/[^0-9,.]/g,'').replace(',','.'))||0,0);
+  const totalReceber=VENCIMENTOS.filter(v=>v.tipo==='receber').reduce((s,v)=>s+parseFloat((v.valor||'0').replace(/[^0-9,.]/g,'').replace(',','.'))||0,0);
+  const recProx30=totalReceber; // VENCIMENTOS já filtra 30 dias no Apps Script
+  const comprPct=saldo>0?r1(totalPagar/saldo*100):totalPagar>0?999:0;
+
+  // Inadimplência — vem do SCORE_CFG
+  const dimInad=SCORE_CFG.dims.find(d=>d.nome==='Inadimplência');
+  const inadVal=dimInad?r1(100-dimInad.val):0; // val=100 → 0% inad; val=75 → ~5% inad
+  // usar descr do dim que já tem o valor calculado pelo Apps Script
+  const inadDescr=dimInad?dimInad.descr:'';
+
+  // Montar os 5 insights
+  const insights=[];
+
+  // 1. Inadimplência
+  if(dimInad&&dimInad.val>=95){
+    insights.push({strong:'Inadimplência zerada',txt:' — '+inadDescr});
+  } else {
+    insights.push({strong:'Inadimplência: atenção',txt:' — '+inadDescr});
+  }
+
+  // 2. Resultado do mês
+  if(res>=0){
+    insights.push({strong:'Resultado positivo em '+mesNome,txt:' — Entradas ('+fR(fat)+') superaram saídas ('+fR(desp)+') em '+fR(res)+'.'});
+  } else {
+    insights.push({strong:'Resultado negativo em '+mesNome,txt:' — Saídas ('+fR(desp)+') superaram entradas ('+fR(fat)+') em '+fR(Math.abs(res))+'.'});
+  }
+
+  // 3. A pagar
+  if(totalPagar>0){
+    const compTxt=comprPct>=100?' Gestão de caixa prioritária.':comprPct>=70?' Monitorar fluxo de caixa.':' Saldo cobre os compromissos.';
+    insights.push({strong:fR(totalPagar)+' a pagar',txt:' — Representa '+comprPct+'% do saldo ('+fR(saldo)+').'+compTxt});
+  } else {
+    insights.push({strong:'Sem contas a pagar registradas',txt:' — Atualizar contas a pagar na planilha.'});
+  }
+
+  // 4. A receber
+  if(totalReceber>0){
+    insights.push({strong:fR(totalReceber)+' a receber',txt:' — '+fR(recProx30)+' vencem nos próximos 30 dias.'});
+  } else {
+    insights.push({strong:'Sem contas a receber registradas',txt:' — Atualizar contas a receber na planilha.'});
+  }
+
+  // 5. Ritmo anualizado
+  const ritmoTxt=ritmo>=metaAnual?' No ritmo para atingir a meta anual.':' Intensificar para alcançar a meta.';
+  insights.push({strong:'Ritmo anualizado: '+fR(ritmo),txt:' — Ano fecha em '+percMetaA+'% da meta anual ('+fR(metaAnual)+').'+ritmoTxt});
+
+  // Renderizar
+  el.innerHTML=insights.map((ins,i)=>
+    '<div class="ins-item"><div class="ins-n">'+(i+1)+'</div><div class="ins-txt"><strong>'+ins.strong+'</strong>'+ins.txt+'</div></div>'
+  ).join('');
 }
 
 // CALENDÁRIO
@@ -3075,9 +3151,9 @@ function exportPDF(){
     p2y+=10;
 
     const destaques=[
-      {lbl:'RESULTADO', tc:RED, bg:BGRED, txt:'Abril fechou com resultado negativo de R$ 1.781,62. Despesas (R$ 24.053,50) superaram faturamento (R$ 22.271,88).'},
-      {lbl:'LIQUIDEZ', tc:RED, bg:BGRED, txt:'Saldo disponível: R$ 0,00. A receber: R$ 0,00. A pagar: R$ 0,00.'},
-      {lbl:'META ANUAL', tc:GREEN, bg:BGGRE, txt:'Meta anual 103.6% executada. Ritmo anualizado: R$ 287.996,70.'},
+      {lbl:'RESULTADO', tc:(_res>=0?GREEN:RED), bg:(_res>=0?BGGRE:BGRED), txt:(_res>=0?(_mesNome+' fechou positivo com '+RES+'. Faturamento '+FAT+', despesas '+DESP+'. Margem '+MARGEM+'.'):(_mesNome+' fechou com resultado negativo de '+_fmt(Math.abs(_res))+'. Despesas ('+DESP+') superaram faturamento ('+FAT+').'))},
+      {lbl:'LIQUIDEZ', tc:(_saldo>0?GREEN:RED), bg:(_saldo>0?BGGRE:BGRED), txt:('Saldo disponível: '+SALDO+'. A receber: '+A_REC+'. A pagar: '+A_PAG+'.')},
+      {lbl:'META ANUAL', tc:(_percMetaA>=Math.round((_mesIdx+1)/12*100)?GREEN:YELLOW), bg:(_percMetaA>=Math.round((_mesIdx+1)/12*100)?BGGRE:BGYEL), txt:('Meta anual '+EXEC_META+' executada. Ritmo anualizado: '+_fmt(_ritmo)+'.') },
     ];
     destaques.forEach(d=>{
       // calcular altura necessária para o texto
