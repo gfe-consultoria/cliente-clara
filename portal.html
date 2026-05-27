@@ -3075,21 +3075,24 @@ function exportPDF(){
     p2y+=10;
 
     const destaques=[
-      {lbl:'RESULTADO', tc:RED, bg:BGRED, txt:'Abril fechou com resultado negativo de R$ 1.781,62. Despesas (R$ 24.053,50) superaram faturamento (R$ 22.271,88).'},
-      {lbl:'LIQUIDEZ', tc:RED, bg:BGRED, txt:'Saldo disponível: R$ 0,00. A receber: R$ 0,00. A pagar: R$ 0,00.'},
-      {lbl:'META ANUAL', tc:GREEN, bg:BGGRE, txt:'Meta anual 103.6% executada. Ritmo anualizado: R$ 287.996,70.'},
+      {lbl:'RESULTADO', tc:(_res>=0?GREEN:RED), bg:(_res>=0?BGGRE:BGRED), txt:(_res>=0?(_mesNome+' fechou positivo com '+RES+'. Faturamento '+FAT+', despesas '+DESP+'. Margem '+MARGEM+'.'):(_mesNome+' fechou com resultado negativo de '+_fmt(Math.abs(_res))+'. Despesas ('+DESP+') superaram faturamento ('+FAT+').'))},
+      {lbl:'LIQUIDEZ', tc:(_saldo>0?GREEN:RED), bg:(_saldo>0?BGGRE:BGRED), txt:('Saldo disponível: '+SALDO+'. A receber: '+A_REC+'. A pagar: '+A_PAG+'.')},
+      {lbl:'META ANUAL', tc:(_percMetaA>=Math.round((_mesIdx+1)/12*100)?GREEN:YELLOW), bg:(_percMetaA>=Math.round((_mesIdx+1)/12*100)?BGGRE:BGYEL), txt:('Meta anual '+EXEC_META+' executada. Ritmo anualizado: '+_fmt(_ritmo)+'.') },
     ];
     destaques.forEach(d=>{
-      doc.setFillColor(...d.bg);doc.roundedRect(CA,p2y,182,13,2,2,'F');
-      doc.setFillColor(...d.tc);doc.rect(CA,p2y,2.5,13,'F');
-      // label colorido
+      // calcular altura necessária para o texto
+      doc.setFont('helvetica','normal');doc.setFontSize(7.5);
+      const _dtxtLines=doc.splitTextToSize(d.txt,148);
+      const _dh=Math.max(13,6+_dtxtLines.length*5);
+      doc.setFillColor(...d.bg);doc.roundedRect(CA,p2y,182,_dh,2,2,'F');
+      doc.setFillColor(...d.tc);doc.rect(CA,p2y,2.5,_dh,'F');
+      // label colorido em negrito
       doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...d.tc);
-      doc.text(d.lbl,CA+5,p2y+8);
-      // texto alinhado depois do label
-      const lblW=doc.getTextWidth(d.lbl);
-      doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(50,65,90);
-      doc.text(d.txt,CA+8+lblW,p2y+8);
-      p2y+=16;
+      doc.text(d.lbl,CA+5,p2y+6);
+      // texto quebrado abaixo do label
+      doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(50,65,90);
+      doc.text(_dtxtLines,CA+5,p2y+11);
+      p2y+=_dh+4;
     });
 
     // INDICADORES GFE
@@ -3127,10 +3130,11 @@ function exportPDF(){
       doc.text(d.nome,CA+44,p2y+1);
       // barra
       pBar(CA+44,p2y+2.5,100,d.val/100,sc,[215,220,230]);
-      // descr
+      // descr com splitText
       const desc=dimsDescr[d.nome]||d.descr||'';
       doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(85,100,120);
-      doc.text(desc,CA+44,p2y+9);
+      const _descLines=doc.splitTextToSize(desc,125);
+      doc.text(_descLines,CA+44,p2y+9);
       // peso
       doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(...MUTED);
       doc.text('Peso: '+d.peso,CA+176,p2y+1,{align:'right'});
@@ -3153,13 +3157,16 @@ function exportPDF(){
     ];
     const stepH=12, stepGap=13;
     steps.forEach((s,i)=>{
-      doc.setFillColor(...(i%2?BG2:BG1));doc.roundedRect(CA,p2y-2,182,stepH,1.5,1.5,'F');
-      doc.setFillColor(...NAVY_BOX);doc.roundedRect(CA,p2y-2,10,stepH,1.5,1.5,'F');
+      doc.setFont('helvetica','normal');doc.setFontSize(8);
+      const _sLines=doc.splitTextToSize(s,162);
+      const _sh=Math.max(stepH,5+_sLines.length*5);
+      doc.setFillColor(...(i%2?BG2:BG1));doc.roundedRect(CA,p2y-2,182,_sh,1.5,1.5,'F');
+      doc.setFillColor(...NAVY_BOX);doc.roundedRect(CA,p2y-2,10,_sh,1.5,1.5,'F');
       doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...GOLD);
-      doc.text(String(i+1),CA+5,p2y+5.5,{align:'center'});
+      doc.text(String(i+1),CA+5,p2y+_sh/2+2,{align:'center'});
       doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(50,65,90);
-      doc.text(s,CA+14,p2y+5.5);
-      p2y+=stepGap;
+      doc.text(_sLines,CA+14,p2y+6);
+      p2y+=_sh+3;
     });
 
     // FOOTER 2
