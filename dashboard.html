@@ -343,39 +343,40 @@ const CFG = {
   senha:"clara2026",
   senhaAdmin:"admin2026",
   cliente:{nome:"Stellar",segmento:""},
-  meta:20237.3,
+  meta:18043.43,
   metaAnual:92636.73000000001,
   metaMargem:30,
   dashboards:{},
   cartas:[]
 };
 const dadosMensais={
-  labels:["Jan","Fev","Mar","Abr*","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"],
+  labels:["Jan","Fev","Mar","Abr","Mai*","Jun","Jul","Ago","Set","Out","Nov","Dez"],
   fat:[19364,35170.06,19192.96,22271.88,1505.39,0,0,0,0,0,0,0],
   desp:[14914.74,25800.28,22721,24053.5,6061.87,0,0,0,0,0,0,0],
   res:[4449.26,9369.78,-3528.04,-1781.62,-4556.48,0,0,0,0,0,0,0],
-  metas:[18043.43,18964,24870,20237.3,18043.43,10522,18043.43,18043.43,18043.43,18043.43,18043.43,18043.43]
+  metas:[10522,18964,24870,20237.3,18043.43,10522,10522,10522,10522,10522,10522,10522]
 };
 const SCORE_CFG={
-  atual:56,
-  status:'alerta',
-  periodo:'Abril 2026',
-  evolucao:'+10',
+  atual:34,
+  status:'critico',
+  periodo:'Maio 2026',
+  evolucao:'-23',
   dims:[
     {nome:'Liquidez',val:0,prev:0,peso:'25%',descr:"Saldo disponível: R$ 0,00. Sem compromissos a pagar registrados."},
     {nome:'Inadimplência',val:100,prev:95,peso:'25%',descr:"Sem inadimplência registrada. Todos os recebimentos em dia."},
-    {nome:'Margem Líquida',val:15,prev:10,peso:'20%',descr:"Margem líquida de -8% (meta: ≥ 20%). Despesas superam receitas — atenção urgente."},
-    {nome:'Execução da Meta',val:100,prev:95,peso:'20%',descr:"110.05% da meta mensal atingida (R$ 22.271,88 de R$ 20.237,30). Meta superada! 🎯"},
-    {nome:'Organização Financ.',val:80,prev:75,peso:'10%',descr:"Dados financeiros bem organizados. 1,2,3,4 meses com lançamentos registrados."}
+    {nome:'Margem Líquida',val:0,prev:0,peso:'20%',descr:"Margem líquida de -302.68% (meta: ≥ 20%). Despesas superam receitas — atenção urgente."},
+    {nome:'Execução da Meta',val:5,prev:0,peso:'20%',descr:"8.34% da meta mensal atingida (R$ 1.505,39 de R$ 18.043,43). Abaixo da meta — intensificar vendas."},
+    {nome:'Organização Financ.',val:80,prev:75,peso:'10%',descr:"Dados financeiros bem organizados. 1,2,3,4,5 meses com lançamentos registrados."}
   ],
   historico:[
     {mes:'Jan',val:69,status:'saudavel',evolucao:'+0'},
     {mes:'Fev',val:69,status:'saudavel',evolucao:'+0'},
     {mes:'Mar',val:46,status:'alerta',evolucao:'+0'},
-    {mes:'Abr',val:57,status:'alerta',atual:true,evolucao:'+0'}
+    {mes:'Abr',val:57,status:'alerta',evolucao:'+0'},
+    {mes:'Mai',val:35,status:'critico',atual:true,evolucao:'+0'}
   ]
 };
-const RUNWAY_CFG={saldo:0,despMensal:24053.5,dataRef:'31/05/2026'};
+const RUNWAY_CFG={saldo:0,despMensal:6061.87,dataRef:'01/06/2026'};
 const VENCIMENTOS=[];
 // ──────────────────────────────────────────────────────────────────────────
 
